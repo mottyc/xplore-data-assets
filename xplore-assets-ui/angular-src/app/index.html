@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+
+<html lang="en" class="layout-pf layout-pf-fixed" ng-app="myApp">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>xplore.io data assets</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- build:css(.) styles/vendor.css -->
+
+  <!-- no_bower:css -->
+  <link rel="stylesheet" href="bower_components/patternfly/dist/css/patternfly.css" />
+  <link rel="stylesheet" href="bower_components/patternfly/dist/css/patternfly-additions.css" />
+  <link rel="stylesheet" href="bower_components/angular-patternfly/dist/styles/angular-patternfly.css" />
+  <link rel="stylesheet" href="bower_components/c3/c3.css" />
+  <link rel="stylesheet" href="bower_components/datatables/media/css/jquery.dataTables.css" />
+  <link rel="stylesheet" href="bower_components/datatables-colvis/css/dataTables.colVis.css" />
+  <!-- no_endbower -->
+
+  <!-- endbuild -->
+
+  <!-- build:css(.tmp) styles/main.css -->
+  <link rel="stylesheet" href="styles/app.css">
+  <!-- endbuild -->
+
+</head>
+<body>
+
+<!-- toolbar -->
+<main-toolbar></main-toolbar>
+
+<!-- sidebar -->
+<main-navbar></main-navbar>
+
+<!-- content view -->
+<div ui-view></div>
+
+<!-- build:js(.) scripts/vendor.js -->
+<!-- no_bower:js -->
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-messages/angular-messages.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-loader/angular-loader.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="bower_components/lodash/lodash.js"></script>
+<script src="bower_components/bootstrap-combobox/js/bootstrap-combobox.js"></script>
+<script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<script src="bower_components/bootstrap-select/dist/js/bootstrap-select.js"></script>
+<script src="bower_components/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
+<script src="bower_components/d3/d3.js"></script>
+<script src="bower_components/c3/c3.js"></script>
+<script src="bower_components/datatables/media/js/jquery.dataTables.js"></script>
+<script src="bower_components/datatables-colreorder/js/dataTables.colReorder.js"></script>
+<script src="bower_components/datatables-colvis/js/dataTables.colVis.js"></script>
+<script src="bower_components/google-code-prettify/bin/prettify.min.js"></script>
+<script src="bower_components/matchHeight/dist/jquery.matchHeight.js"></script>
+<script src="bower_components/moment/moment.js"></script>
+<script src="bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js"></script>
+<script src="bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+<script src="bower_components/patternfly-bootstrap-treeview/dist/bootstrap-treeview.min.js"></script>
+<script src="bower_components/patternfly/dist/js/patternfly.js"></script>
+<script src="bower_components/angular-patternfly/dist/angular-patternfly.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="bower_components/angular-busy/dist/angular-busy.js"></script>
+<script src="bower_components/underscore/underscore.js"></script>
+<script src="bower_components/angular-underscore-module/angular-underscore-module.js"></script>
+<!-- no_endbower -->
+<!-- endbuild -->
+
+<!-- build:js({.tmp,app}) scripts/scripts.js -->
+
+<script src="app/app.config.js"></script>
+<script src="app/app.routes.js"></script>
+
+<!-- Directives -->
+<script src="app/directives/mainToolbar/mainToolbar.js"></script>
+<script src="app/directives/mainNavbar/mainNavbar.js"></script>
+
+<!-- Components -->
+<script src="app/components/columns/columns.controller.js"></script>
+<script src="app/components/dashboard/dashboard.controller.js"></script>
+<script src="app/components/databases/databases.controller.js"></script>
+<script src="app/components/entities/entities.controller.js"></script>
+<script src="app/components/relations/relations.controller.js"></script>
+<script src="app/components/schemas/schemas.controller.js"></script>
+<script src="app/components/servers/servers.controller.js"></script>
+<script src="app/components/systems/systems.controller.js"></script>
+<script src="app/components/tables/tables.controller.js"></script>
+<script src="app/components/users/users.controller.js"></script>
+
+<!-- Services -->
+<script src="app/services/settings.js"></script>
+<script src="app/services/apiRequest.js"></script>
+<script src="app/services/arrayService.js"></script>
+<script src="app/services/units.js"></script>
+
+
+<!-- Models -->
+<script src="app/services/models/AddressModel.js"></script>
+<script src="app/services/models/ProviderContactModel.js"></script>
+<script src="app/services/models/ProviderModel.js"></script>
+
+
+<!-- endbuild -->
+
+</body>
+</html>
+
