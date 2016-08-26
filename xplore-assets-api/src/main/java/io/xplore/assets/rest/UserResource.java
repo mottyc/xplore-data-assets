@@ -5,6 +5,7 @@ import io.xplore.assets.messages.QueryResponse;
 import io.xplore.assets.messages.TokenData;
 import io.xplore.assets.model.MdaTable;
 import io.xplore.assets.model.MdaUser;
+import io.xplore.assets.service.UserService;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.enterprise.context.RequestScoped;
@@ -22,6 +23,9 @@ public class UserResource extends BaseResource {
 
     @Inject
     private Logger log;
+
+    @Inject
+    private UserService service;
 
     // ------------------ Main entity actions --------------------------------------------------------------------------
 

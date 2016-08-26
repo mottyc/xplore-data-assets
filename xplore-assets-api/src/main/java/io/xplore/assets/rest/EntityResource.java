@@ -4,6 +4,7 @@ import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
 import io.xplore.assets.messages.TokenData;
 import io.xplore.assets.model.MdaBusinessEntity;
+import io.xplore.assets.service.BusinessEntityService;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.enterprise.context.RequestScoped;
@@ -21,6 +22,9 @@ public class EntityResource extends BaseResource {
 
     @Inject
     private Logger log;
+
+    @Inject
+    private BusinessEntityService service;
 
     // ------------------ Main entity actions --------------------------------------------------------------------------
     /**

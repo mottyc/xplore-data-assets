@@ -4,6 +4,7 @@ import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
 import io.xplore.assets.messages.TokenData;
 import io.xplore.assets.model.MdaSystem;
+import io.xplore.assets.service.SystemService;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.enterprise.context.RequestScoped;
@@ -21,6 +22,9 @@ public class SystemResource extends BaseResource {
 
     @Inject
     private Logger log;
+
+    @Inject
+    private SystemService service;
 
     // ------------------ Main entity actions --------------------------------------------------------------------------
 
