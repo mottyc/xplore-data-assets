@@ -6,11 +6,14 @@
 package io.xplore.assets.database.services;
 
 
-import io.xplore.assets.database.converters.MdaColumnEntityConverter;
-import io.xplore.assets.database.model.MdaColumnEntity;
+import io.xplore.assets.database.converters.MdaTableEntityConverter;
+import io.xplore.assets.database.converters.MdaUserEntityConverter;
+import io.xplore.assets.database.model.MdaTableEntity;
+import io.xplore.assets.database.model.MdaUsernameEntity;
 import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
-import io.xplore.assets.model.MdaColumn;
+import io.xplore.assets.model.MdaTable;
+import io.xplore.assets.model.MdaUser;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -19,10 +22,10 @@ import javax.persistence.TypedQuery;
 import java.util.logging.Logger;
 
 /**
- * Column DB service
+ * User DB service
  */
 @Stateless
-public class DbColumnServiceImpl  {
+public class DbUserServiceImpl {
 
     @Inject
     private Logger log;
@@ -32,37 +35,34 @@ public class DbColumnServiceImpl  {
 
 
     /**
-     * Get single column by key
+     * Get single user by key
      *
-     * @param key Column key
-     * @return EntityResponse<MdaColumn>
+     * @param key user key
+     * @return EntityResponse<MdaUser>
      */
-    public EntityResponse<MdaColumn> get(int key) {
+    public EntityResponse<MdaUser> get(int key) {
 
         try {
-            MdaColumnEntity entity = em.find(MdaColumnEntity.class, key);
-            return new EntityResponse<MdaColumn>(MdaColumnEntityConverter.get(entity));
+            MdaUsernameEntity entity = em.find(MdaUsernameEntity.class, key);
+            return new EntityResponse<MdaUser>(MdaUserEntityConverter.get(entity));
         } catch (Exception ex) {
             String err = String.format("Action failed: %s", ex.getMessage());
             log.severe(err);
-            return new EntityResponse<MdaColumn>(err);
+            return new EntityResponse<MdaUser>(err);
         }
     }
 
     /**
-     * Get list of columns
-     * @param tableKey Filter by table key (-1 for no filter)
+     * Get list of users
      * @param pageNumber Page number for pagination
      * @param pageSize   Number of items per page
-     * @return QueryResponse<MdaColumn>
+     * @return QueryResponse<MdaUser>
      */
-    public QueryResponse<MdaColumn> find(int tableKey, int pageNumber, int pageSize) {
+    public QueryResponse<MdaUser> find(int pageNumber, int pageSize) {
         try {
-            QueryResponse<MdaColumn> response = new QueryResponse<MdaColumn>();
+            QueryResponse<MdaUser> response = new QueryResponse<MdaUser>();
 
-            TypedQuery<MdaColumnEntity> query = (tableKey > 0) ?
-                    em.createNamedQuery("MdaColumnEntity.findByTable", MdaColumnEntity.class).setParameter("tableKey", tableKey):
-                    em.createNamedQuery("MdaColumnEntity.findAll", MdaColumnEntity.class);
+            TypedQuery<MdaUsernameEntity> query = em.createNamedQuery("MdaUsernameEntity.findAll", MdaUsernameEntity.class);
 
             // Set pages
             int count = query.getResultList().size();
@@ -74,12 +74,12 @@ public class DbColumnServiceImpl  {
             query.setFirstResult((pageNumber - 1) * pageSize);
             query.setMaxResults(pageSize);
 
-            query.getResultList().forEach(entity -> {response.getList().add(MdaColumnEntityConverter.get(entity));});
+            query.getResultList().forEach(entity -> {response.getList().add(MdaUserEntityConverter.get(entity));});
             return response;
         } catch (Exception ex) {
             String err = String.format("Action failed: %s", ex.getMessage());
             log.severe(err);
-            return new QueryResponse<MdaColumn>(err);
+            return new QueryResponse<MdaUser>(err);
         }
     }
 }

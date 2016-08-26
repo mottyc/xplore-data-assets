@@ -10,7 +10,8 @@ import java.sql.Timestamp;
 @Table(name = "mda_db", schema = "dbo", catalog = "data_asset")
 @NamedQueries({
         @NamedQuery(name="MdaDbEntity.findAll", query="SELECT a FROM MdaDbEntity a"),
-        @NamedQuery(name="MdaDbEntity.findByKey", query="SELECT a FROM MdaDbEntity a WHERE a.domainKey = :domainKey")
+        @NamedQuery(name="MdaDbEntity.findByKey", query="SELECT a FROM MdaDbEntity a WHERE a.domainKey = :domainKey"),
+        @NamedQuery(name="MdaDbEntity.findByServer", query="SELECT a FROM MdaDbEntity a WHERE a.serverKey = :serverKey")
 })
 public class MdaDbEntity {
     private int domainKey;
