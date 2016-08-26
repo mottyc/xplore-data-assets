@@ -53,13 +53,12 @@ public class DbSystemServiceImpl implements SystemService {
 
     /**
      * Get list of systems
-     * @param typeCode Filter by server type code (empty string for no filter)
      * @param pageNumber Page number for pagination
      * @param pageSize   Number of items per page
      * @return QueryResponse<MdaSystem>
      */
     @Override
-    public QueryResponse<MdaSystem> find(String typeCode, int pageNumber, int pageSize) {
+    public QueryResponse<MdaSystem> find(int pageNumber, int pageSize) {
         try {
             QueryResponse<MdaSystem> response = new QueryResponse<MdaSystem>();
 

@@ -1,5 +1,6 @@
 package io.xplore.assets.rest;
 
+import io.xplore.assets.Consts;
 import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
 import io.xplore.assets.messages.TokenData;
@@ -32,19 +33,32 @@ public class ServerResource extends BaseResource {
     /**
      * Get list of servers
      * @param accessToken Access token
+     * @param filter Filter by name
+     * @param type Filter by server type
+     * @param sort Sort by field in the format of field:{asc|desc}
+     * @param page Page number (for pagination)
+     * @param pageSize Number of results per page (default size: 50 items)
      * @return QueryResponse[MdaServer]
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/")
-    public QueryResponse<MdaServer> find(@HeaderParam("X-Access-Token") String accessToken) {
+    public QueryResponse<MdaServer> find(@HeaderParam("X-Access-Token") String accessToken,
+                                         @QueryParam("filter") @DefaultValue("") String filter,
+                                         @QueryParam("type") @DefaultValue("") String type,
+                                         @QueryParam("sort") @DefaultValue("") String sort,
+                                         @QueryParam("page") @DefaultValue("1") int page,
+                                         @QueryParam("pageSize") @DefaultValue("0") int pageSize) {
         try {
             // Validation
             TokenData token = this.parseJWT(accessToken);
 
-            throw new NotImplementedException();
-            //return this.service.findSystems(token);
+            // Pagination
+            page = (page > 0) ? page : 1;
+            pageSize = (pageSize > 0) ? pageSize : Consts.DB_PAGE_SIZE;
+
+            return this.service.find(type, page, pageSize);
         } catch (Exception e) {
             return new QueryResponse<MdaServer>(e.getMessage());
         }
@@ -65,8 +79,7 @@ public class ServerResource extends BaseResource {
             // Validation
             TokenData token = this.parseJWT(accessToken);
 
-            throw new NotImplementedException();
-            //return this.service.findSystems(token);
+            return this.service.get(serverKey);
         } catch (Exception e) {
             return new EntityResponse<MdaServer>(e.getMessage());
         }
