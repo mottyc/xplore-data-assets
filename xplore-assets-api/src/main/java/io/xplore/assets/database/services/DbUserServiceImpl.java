@@ -14,6 +14,7 @@ import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
 import io.xplore.assets.model.MdaTable;
 import io.xplore.assets.model.MdaUser;
+import io.xplore.assets.service.UserService;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -25,7 +26,7 @@ import java.util.logging.Logger;
  * User DB service
  */
 @Stateless
-public class DbUserServiceImpl {
+public class DbUserServiceImpl implements UserService {
 
     @Inject
     private Logger log;
@@ -40,6 +41,7 @@ public class DbUserServiceImpl {
      * @param key user key
      * @return EntityResponse<MdaUser>
      */
+    @Override
     public EntityResponse<MdaUser> get(int key) {
 
         try {
@@ -58,6 +60,7 @@ public class DbUserServiceImpl {
      * @param pageSize   Number of items per page
      * @return QueryResponse<MdaUser>
      */
+    @Override
     public QueryResponse<MdaUser> find(int pageNumber, int pageSize) {
         try {
             QueryResponse<MdaUser> response = new QueryResponse<MdaUser>();

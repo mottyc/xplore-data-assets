@@ -11,6 +11,7 @@ import io.xplore.assets.database.model.MdaSystemEntity;
 import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
 import io.xplore.assets.model.MdaSystem;
+import io.xplore.assets.service.SystemService;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -22,7 +23,7 @@ import java.util.logging.Logger;
  * System DB service
  */
 @Stateless
-public class DbSystemServiceImpl {
+public class DbSystemServiceImpl implements SystemService {
 
     @Inject
     private Logger log;
@@ -37,6 +38,7 @@ public class DbSystemServiceImpl {
      * @param key system key
      * @return EntityResponse<MdaSystem>
      */
+    @Override
     public EntityResponse<MdaSystem> get(int key) {
 
         try {
@@ -56,6 +58,7 @@ public class DbSystemServiceImpl {
      * @param pageSize   Number of items per page
      * @return QueryResponse<MdaSystem>
      */
+    @Override
     public QueryResponse<MdaSystem> find(String typeCode, int pageNumber, int pageSize) {
         try {
             QueryResponse<MdaSystem> response = new QueryResponse<MdaSystem>();

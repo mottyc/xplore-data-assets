@@ -11,6 +11,7 @@ import io.xplore.assets.database.model.MdaSchemaEntity;
 import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
 import io.xplore.assets.model.MdaSchema;
+import io.xplore.assets.service.SchemaService;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -22,7 +23,7 @@ import java.util.logging.Logger;
  * Schema DB service
  */
 @Stateless
-public class DbSchemaServiceImpl {
+public class DbSchemaServiceImpl implements SchemaService {
 
     @Inject
     private Logger log;
@@ -37,6 +38,7 @@ public class DbSchemaServiceImpl {
      * @param key schema key
      * @return EntityResponse<MdaSchema>
      */
+    @Override
     public EntityResponse<MdaSchema> get(int key) {
 
         try {
@@ -56,6 +58,7 @@ public class DbSchemaServiceImpl {
      * @param pageSize   Number of items per page
      * @return QueryResponse<MdaSchema>
      */
+    @Override
     public QueryResponse<MdaSchema> find(int databaseKey, int pageNumber, int pageSize) {
         try {
             QueryResponse<MdaSchema> response = new QueryResponse<MdaSchema>();

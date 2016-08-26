@@ -11,6 +11,7 @@ import io.xplore.assets.database.model.MdaColumnEntity;
 import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
 import io.xplore.assets.model.MdaColumn;
+import io.xplore.assets.service.ColumnService;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -22,7 +23,7 @@ import java.util.logging.Logger;
  * Column DB service
  */
 @Stateless
-public class DbColumnServiceImpl  {
+public class DbColumnServiceImpl implements ColumnService {
 
     @Inject
     private Logger log;
@@ -37,6 +38,7 @@ public class DbColumnServiceImpl  {
      * @param key Column key
      * @return EntityResponse<MdaColumn>
      */
+    @Override
     public EntityResponse<MdaColumn> get(int key) {
 
         try {
@@ -56,6 +58,7 @@ public class DbColumnServiceImpl  {
      * @param pageSize   Number of items per page
      * @return QueryResponse<MdaColumn>
      */
+    @Override
     public QueryResponse<MdaColumn> find(int tableKey, int pageNumber, int pageSize) {
         try {
             QueryResponse<MdaColumn> response = new QueryResponse<MdaColumn>();

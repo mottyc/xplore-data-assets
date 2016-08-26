@@ -11,6 +11,7 @@ import io.xplore.assets.database.model.MdaRelationEntity;
 import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
 import io.xplore.assets.model.MdaRelation;
+import io.xplore.assets.service.RelationService;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -22,7 +23,7 @@ import java.util.logging.Logger;
  * Relation DB service
  */
 @Stateless
-public class DbRelationServiceImpl {
+public class DbRelationServiceImpl implements RelationService {
 
     @Inject
     private Logger log;
@@ -37,6 +38,7 @@ public class DbRelationServiceImpl {
      * @param key Relation key
      * @return EntityResponse<MdaRelation>
      */
+    @Override
     public EntityResponse<MdaRelation> get(int key) {
 
         try {
@@ -56,6 +58,7 @@ public class DbRelationServiceImpl {
      * @param pageSize   Number of items per page
      * @return QueryResponse<MdaRelation>
      */
+    @Override
     public QueryResponse<MdaRelation> find(int parentKey, int pageNumber, int pageSize) {
         try {
             QueryResponse<MdaRelation> response = new QueryResponse<MdaRelation>();

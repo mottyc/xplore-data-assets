@@ -11,6 +11,7 @@ import io.xplore.assets.database.model.MdaDbEntity;
 import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
 import io.xplore.assets.model.MdaDatabase;
+import io.xplore.assets.service.DatabaseService;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -22,7 +23,7 @@ import java.util.logging.Logger;
  * Database DB service
  */
 @Stateless
-public class DbDatabaseServiceImpl {
+public class DbDatabaseServiceImpl implements DatabaseService {
 
     @Inject
     private Logger log;
@@ -37,6 +38,7 @@ public class DbDatabaseServiceImpl {
      * @param key Database key
      * @return EntityResponse<MdaDatabase>
      */
+    @Override
     public EntityResponse<MdaDatabase> get(int key) {
 
         try {
@@ -56,6 +58,7 @@ public class DbDatabaseServiceImpl {
      * @param pageSize   Number of items per page
      * @return QueryResponse<MdaDatabase>
      */
+    @Override
     public QueryResponse<MdaDatabase> find(int serverKey, int pageNumber, int pageSize) {
         try {
             QueryResponse<MdaDatabase> response = new QueryResponse<MdaDatabase>();
