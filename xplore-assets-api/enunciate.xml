@@ -1,0 +1,28 @@
+<!--
+  ~ Copyright (c) 2016. ArtRunners Ltd.
+  ~
+  -->
+
+<enunciate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://enunciate.webcohesion.com/schemas/enunciate-2.0.0.xsd">
+
+    <title>xplore.io Assets API</title>
+    <description>Data assets API layer</description>
+    <copyright>Copyright (c) 2016. xplore.io.</copyright>
+
+    <api-classes>
+        <exclude pattern="org.jboss.**"/>
+        <exclude pattern="org.wildfly.**"/>
+    </api-classes>
+
+    <modules>
+        <php forceEnable="false" />
+        <gwt disableCompile="false" />
+        <ruby forceEnable="false" />
+        <java-client disableCompile="true" />
+        <jackson disabled="true"/>
+
+        <docs docsDir="${basedir}/src/main/webapp" />
+        <!-- swagger / -->
+    </modules>
+
+</enunciate>

@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.xplore</groupId>
+    <artifactId>xplore-assets-api</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+  	<name>${project.artifactId}</name>
+  	<description>xplore.io data assets management api</description>
+
+    <contributors>
+  		<contributor>
+  			<name>Motty Cohen</name>
+  			<email>motty.cohen@gmail.com</email>
+  			<url>https://il.linkedin.com/in/mottycohen</url>
+  			<organization>xplore.io</organization>
+  			<organizationUrl>http://xplore.io/</organizationUrl>
+  			<roles>
+  				<role>CTO</role>
+  			</roles>
+  			<timezone/>
+  			<properties/>
+  		</contributor>
+  	</contributors>
+
+
+    <properties>
+		<version.java.compiler>1.8</version.java.compiler>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  		<version.arquillian_core>1.1.4.Final</version.arquillian_core>
+  		<enunciate.version>2.3.0</enunciate.version>
+		<version.junit>4.12</version.junit>
+		<version.wildfly>10.0.0.Final</version.wildfly>
+		<buildNumber>11</buildNumber>
+  	</properties>
+
+    <build>
+      <finalName>${project.artifactId}</finalName>
+      <plugins>
+        <!-- clean plugin -->
+        <plugin>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>3.0.0</version>
+          <executions>
+            <execution>
+              <id>auto-clean</id>
+              <phase>initialize</phase>
+              <goals>
+                <goal>clean</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <filesets>
+              <fileset>
+                <directory>src/main/webapp/apidocs</directory>
+                <includes>
+                  <include>**/*.*</include>
+                </includes>
+              </fileset>
+            </filesets>
+          </configuration>
+        </plugin>
+
+        <!-- Compiler plugin -->
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.5.1</version>
+          <configuration>
+            <source>1.8</source>
+            <target>1.8</target>
+          </configuration>
+        </plugin>
+
+        <!-- WAR plugin -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>2.6</version>
+          <configuration>
+            <failOnMissingWebXml>false</failOnMissingWebXml>
+            <archive>
+              <manifest>
+                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+              </manifest>
+              <manifestEntries>
+                <implementation-version>${project.version}</implementation-version>
+                <implementation-build>${buildNumber}</implementation-build>
+              </manifestEntries>
+            </archive>
+          </configuration>
+        </plugin>
+
+        <!-- Build number plugin -->
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>buildnumber-maven-plugin</artifactId>
+          <version>1.4</version>
+          <executions>
+            <execution>
+              <phase>validate</phase>
+              <goals>
+                <goal>create</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <doCheck>false</doCheck>
+            <doUpdate>false</doUpdate>
+            <revisionOnScmFailure/>
+              <!--
+                            Generate sequence build number based on:
+                            build number and timestamp
+                           -->
+              <format>Build: #{0} ({1,date})</format>
+              <items>
+                <item>buildNumber\d*</item>
+                <item>timestamp</item>
+              </items>
+
+          </configuration>
+        </plugin>
+
+        <!-- Use only to find run-time properties (mvn validate) -->
+        <!--
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <version>1.7</version>
+          <executions>
+            <execution>
+              <phase>validate</phase>
+              <goals>
+                <goal>run</goal>
+              </goals>
+              <configuration>
+                <tasks>
+                  <echoproperties />
+                </tasks>
+              </configuration>
+            </execution>
+          </executions>
+            </plugin>
+        -->
+
+      </plugins>
+  	</build>
+
+
+    <dependencyManagement>
+      <dependencies>
+        <!-- Wildfly -->
+        <dependency>
+          <groupId>org.wildfly</groupId>
+          <artifactId>wildfly-spec-api</artifactId>
+          <version>${version.wildfly}</version>
+          <type>pom</type>
+          <scope>import</scope>
+        </dependency>
+      </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+  		<!-- Import Wildfly Spec  -->
+  		<dependency>
+  			<groupId>org.wildfly</groupId>
+  			<artifactId>wildfly-spec-api</artifactId>
+  			<version>${version.wildfly}</version>
+  			<type>pom</type>
+  			<scope>provided</scope>
+  		</dependency>
+
+		<dependency>
+              <groupId>org.jboss.spec.javax.servlet</groupId>
+              <artifactId>jboss-servlet-api_3.1_spec</artifactId>
+              <scope>provided</scope>
+          </dependency>
+		<dependency>
+              <groupId>org.jboss.spec.javax.ws.rs</groupId>
+              <artifactId>jboss-jaxrs-api_2.0_spec</artifactId>
+              <scope>provided</scope>
+          </dependency>
+		<dependency>
+              <groupId>javax.enterprise</groupId>
+              <artifactId>cdi-api</artifactId>
+              <scope>provided</scope>
+          </dependency>
+		<dependency>
+              <groupId>javax.annotation</groupId>
+              <artifactId>jsr250-api</artifactId>
+              <version>1.0</version>
+              <scope>provided</scope>
+          </dependency>
+		<dependency>
+              <groupId>org.hibernate.javax.persistence</groupId>
+              <artifactId>hibernate-jpa-2.1-api</artifactId>
+              <scope>provided</scope>
+          </dependency>
+  		<dependency>
+  			<groupId>org.hibernate</groupId>
+  			<artifactId>hibernate-core</artifactId>
+  			<scope>provided</scope>
+  		</dependency>
+
+  		<!-- Import Resteasy client  -->
+  		<dependency>
+  			<groupId>org.jboss.resteasy</groupId>
+  			<artifactId>resteasy-client</artifactId>
+  			<scope>provided</scope>
+  		</dependency>
+
+  		<dependency>
+  			<groupId>org.jboss.resteasy</groupId>
+  			<artifactId>resteasy-jackson-provider</artifactId>
+  			<scope>provided</scope>
+  		</dependency>
+
+  		<!-- Import Resteasy for files upload  -->
+  		<dependency>
+  			<groupId>org.jboss.resteasy</groupId>
+  			<artifactId>resteasy-jaxrs</artifactId>
+  			<scope>provided</scope>
+  		</dependency>
+
+  		<dependency>
+  			<groupId>org.jboss.resteasy</groupId>
+  			<artifactId>resteasy-multipart-provider</artifactId>
+  			<scope>provided</scope>
+  		</dependency>
+
+  		<!-- Jackson mapper for JSON serialization) -->
+  		<dependency>
+  			<groupId>org.codehaus.jackson</groupId>
+  			<artifactId>jackson-mapper-asl</artifactId>
+  			<version>1.9.13</version>
+  		</dependency>
+
+
+  		<!-- Apache Commons IO -->
+  		<dependency>
+  			<groupId>org.apache.directory.studio</groupId>
+  			<artifactId>org.apache.commons.io</artifactId>
+  			<version>2.4</version>
+  		</dependency>
+
+  		<!-- JWT (JSON Web Token) -->
+  		<dependency>
+  			<groupId>io.jsonwebtoken</groupId>
+  			<artifactId>jjwt</artifactId>
+  			<version>0.6.0</version>
+  		</dependency>
+
+
+  		<!-- JUnit -->
+  		<dependency>
+  			<groupId>junit</groupId>
+  			<artifactId>junit</artifactId>
+  			<version>${version.junit}</version>
+  			<scope>test</scope>
+  		</dependency>
+
+  	</dependencies>
+
+
+  	<profiles>
+
+  		<!-- Generate API docs -->
+  		<profile>
+  			<id>api-docs</id>
+  			<activation>
+  				<activeByDefault>false</activeByDefault>
+  			</activation>
+  			<build>
+  				<plugins>
+  					<!-- clean plugin -->
+  					<plugin>
+  						<artifactId>maven-clean-plugin</artifactId>
+  						<version>3.0.0</version>
+  						<executions>
+  							<execution>
+  								<id>auto-clean</id>
+  								<phase>initialize</phase>
+  								<goals>
+  									<goal>clean</goal>
+  								</goals>
+  							</execution>
+  						</executions>
+  						<configuration>
+  							<filesets>
+  								<fileset>
+  									<directory>src/main/webapp/apidocs</directory>
+  									<includes>
+  										<include>**/*.*</include>
+  									</includes>
+  								</fileset>
+  							</filesets>
+  						</configuration>
+  					</plugin>
+
+  					<!-- enunciate plugin -->
+  					<plugin>
+  						<groupId>com.webcohesion.enunciate</groupId>
+  						<artifactId>enunciate-maven-plugin</artifactId>
+  						<version>${enunciate.version}</version>
+  						<executions>
+  							<execution>
+  								<goals>
+  									<goal>docs</goal>
+  								</goals>
+  							</execution>
+  						</executions>
+  					</plugin>
+
+  					<!-- Skip unit tests -->
+  					<plugin>
+  						<groupId>org.apache.maven.plugins</groupId>
+  						<artifactId>maven-surefire-plugin</artifactId>
+  						<version>2.19.1</version>
+  						<configuration>
+  							<skipTests>true</skipTests>
+  						</configuration>
+  					</plugin>
+  				</plugins>
+  			</build>
+  		</profile>
+
+  	</profiles>
+
+</project>
