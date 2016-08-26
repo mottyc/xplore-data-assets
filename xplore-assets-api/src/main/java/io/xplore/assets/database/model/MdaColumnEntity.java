@@ -8,6 +8,11 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "mda_column", schema = "dbo", catalog = "data_asset")
+@NamedQueries({
+        @NamedQuery(name="MdaColumnEntity.findAll", query="SELECT a FROM MdaColumnEntity a"),
+        @NamedQuery(name="MdaColumnEntity.findByKey", query="SELECT a FROM MdaColumnEntity a WHERE a.columnKey = :columnKey"),
+        @NamedQuery(name="MdaColumnEntity.findByTable", query="SELECT a FROM MdaColumnEntity a WHERE a.tableKey = :tableKey")
+})
 public class MdaColumnEntity {
     private int columnKey;
     private String fullColumnName;
@@ -30,11 +35,11 @@ public class MdaColumnEntity {
     private String updateBy;
 
     @Id
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
     @Column(name = "column_key")
     public int getColumnKey() {
         return columnKey;
     }
-
     public void setColumnKey(int columnKey) {
         this.columnKey = columnKey;
     }
@@ -44,7 +49,6 @@ public class MdaColumnEntity {
     public String getFullColumnName() {
         return fullColumnName;
     }
-
     public void setFullColumnName(String fullColumnName) {
         this.fullColumnName = fullColumnName;
     }
@@ -54,7 +58,6 @@ public class MdaColumnEntity {
     public Integer getTableKey() {
         return tableKey;
     }
-
     public void setTableKey(Integer tableKey) {
         this.tableKey = tableKey;
     }
@@ -64,7 +67,6 @@ public class MdaColumnEntity {
     public String getDbName() {
         return dbName;
     }
-
     public void setDbName(String dbName) {
         this.dbName = dbName;
     }
@@ -74,7 +76,6 @@ public class MdaColumnEntity {
     public String getSchemaName() {
         return schemaName;
     }
-
     public void setSchemaName(String schemaName) {
         this.schemaName = schemaName;
     }
@@ -84,7 +85,6 @@ public class MdaColumnEntity {
     public String getTableName() {
         return tableName;
     }
-
     public void setTableName(String tableName) {
         this.tableName = tableName;
     }
@@ -94,7 +94,6 @@ public class MdaColumnEntity {
     public String getColumnName() {
         return columnName;
     }
-
     public void setColumnName(String columnName) {
         this.columnName = columnName;
     }
@@ -104,7 +103,6 @@ public class MdaColumnEntity {
     public String getColumnDesc() {
         return columnDesc;
     }
-
     public void setColumnDesc(String columnDesc) {
         this.columnDesc = columnDesc;
     }
@@ -114,7 +112,6 @@ public class MdaColumnEntity {
     public String getColumnNameDisplay() {
         return columnNameDisplay;
     }
-
     public void setColumnNameDisplay(String columnNameDisplay) {
         this.columnNameDisplay = columnNameDisplay;
     }
@@ -124,7 +121,6 @@ public class MdaColumnEntity {
     public String getColumnDataType() {
         return columnDataType;
     }
-
     public void setColumnDataType(String columnDataType) {
         this.columnDataType = columnDataType;
     }
@@ -134,7 +130,6 @@ public class MdaColumnEntity {
     public Integer getColumnIsPk() {
         return columnIsPk;
     }
-
     public void setColumnIsPk(Integer columnIsPk) {
         this.columnIsPk = columnIsPk;
     }
@@ -144,7 +139,6 @@ public class MdaColumnEntity {
     public String getColumnPkSource() {
         return columnPkSource;
     }
-
     public void setColumnPkSource(String columnPkSource) {
         this.columnPkSource = columnPkSource;
     }
@@ -154,7 +148,6 @@ public class MdaColumnEntity {
     public Integer getColumnId() {
         return columnId;
     }
-
     public void setColumnId(Integer columnId) {
         this.columnId = columnId;
     }
@@ -164,7 +157,6 @@ public class MdaColumnEntity {
     public Integer getTableId() {
         return tableId;
     }
-
     public void setTableId(Integer tableId) {
         this.tableId = tableId;
     }
@@ -174,7 +166,6 @@ public class MdaColumnEntity {
     public Integer getDxpColumnGk() {
         return dxpColumnGk;
     }
-
     public void setDxpColumnGk(Integer dxpColumnGk) {
         this.dxpColumnGk = dxpColumnGk;
     }
@@ -184,7 +175,6 @@ public class MdaColumnEntity {
     public Integer getDxpTableGk() {
         return dxpTableGk;
     }
-
     public void setDxpTableGk(Integer dxpTableGk) {
         this.dxpTableGk = dxpTableGk;
     }
@@ -194,7 +184,6 @@ public class MdaColumnEntity {
     public Timestamp getCreateDate() {
         return createDate;
     }
-
     public void setCreateDate(Timestamp createDate) {
         this.createDate = createDate;
     }
@@ -204,7 +193,6 @@ public class MdaColumnEntity {
     public Timestamp getUpdateDate() {
         return updateDate;
     }
-
     public void setUpdateDate(Timestamp updateDate) {
         this.updateDate = updateDate;
     }
@@ -214,7 +202,6 @@ public class MdaColumnEntity {
     public String getUpdateBy() {
         return updateBy;
     }
-
     public void setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
     }

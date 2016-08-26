@@ -8,6 +8,12 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "mda_system", schema = "dbo", catalog = "data_asset")
+@NamedQueries({
+        @NamedQuery(name="MdaSystemEntity.findAll", query="SELECT a FROM MdaSystemEntity a"),
+        @NamedQuery(name="MdaSystemEntity.findByKey", query="SELECT a FROM MdaSystemEntity a WHERE a.systemKey = :systemKey"),
+        @NamedQuery(name="MdaSystemEntity.findByAppExpert", query="SELECT a FROM MdaSystemEntity a WHERE a.appExpertUsernameKey = :appExpertUsernameKey"),
+        @NamedQuery(name="MdaSystemEntity.findByAppOwner", query="SELECT a FROM MdaSystemEntity a WHERE a.appOwnerUsernameKey = :appOwnerUsernameKey")
+})
 public class MdaSystemEntity {
     private int systemKey;
     private String systemName;
@@ -23,11 +29,11 @@ public class MdaSystemEntity {
     private String updateBy;
 
     @Id
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
     @Column(name = "system_key")
     public int getSystemKey() {
         return systemKey;
     }
-
     public void setSystemKey(int systemKey) {
         this.systemKey = systemKey;
     }
@@ -37,7 +43,6 @@ public class MdaSystemEntity {
     public String getSystemName() {
         return systemName;
     }
-
     public void setSystemName(String systemName) {
         this.systemName = systemName;
     }
@@ -47,7 +52,6 @@ public class MdaSystemEntity {
     public String getAppName() {
         return appName;
     }
-
     public void setAppName(String appName) {
         this.appName = appName;
     }
@@ -57,7 +61,6 @@ public class MdaSystemEntity {
     public String getAppExpertUsernameKey() {
         return appExpertUsernameKey;
     }
-
     public void setAppExpertUsernameKey(String appExpertUsernameKey) {
         this.appExpertUsernameKey = appExpertUsernameKey;
     }
@@ -67,7 +70,6 @@ public class MdaSystemEntity {
     public String getAppOwnerUsernameKey() {
         return appOwnerUsernameKey;
     }
-
     public void setAppOwnerUsernameKey(String appOwnerUsernameKey) {
         this.appOwnerUsernameKey = appOwnerUsernameKey;
     }
@@ -77,7 +79,6 @@ public class MdaSystemEntity {
     public String getModuleOwnerUsernameKey() {
         return moduleOwnerUsernameKey;
     }
-
     public void setModuleOwnerUsernameKey(String moduleOwnerUsernameKey) {
         this.moduleOwnerUsernameKey = moduleOwnerUsernameKey;
     }
@@ -87,7 +88,6 @@ public class MdaSystemEntity {
     public String getSystemNameDisplay() {
         return systemNameDisplay;
     }
-
     public void setSystemNameDisplay(String systemNameDisplay) {
         this.systemNameDisplay = systemNameDisplay;
     }
@@ -97,7 +97,6 @@ public class MdaSystemEntity {
     public String getSystemDesc() {
         return systemDesc;
     }
-
     public void setSystemDesc(String systemDesc) {
         this.systemDesc = systemDesc;
     }
@@ -107,7 +106,6 @@ public class MdaSystemEntity {
     public String getSystemDepartment() {
         return systemDepartment;
     }
-
     public void setSystemDepartment(String systemDepartment) {
         this.systemDepartment = systemDepartment;
     }
@@ -117,7 +115,6 @@ public class MdaSystemEntity {
     public Timestamp getCreateDate() {
         return createDate;
     }
-
     public void setCreateDate(Timestamp createDate) {
         this.createDate = createDate;
     }
@@ -127,7 +124,6 @@ public class MdaSystemEntity {
     public Timestamp getUpdateDate() {
         return updateDate;
     }
-
     public void setUpdateDate(Timestamp updateDate) {
         this.updateDate = updateDate;
     }
@@ -137,7 +133,6 @@ public class MdaSystemEntity {
     public String getUpdateBy() {
         return updateBy;
     }
-
     public void setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
     }

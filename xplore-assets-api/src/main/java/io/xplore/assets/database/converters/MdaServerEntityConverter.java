@@ -6,14 +6,14 @@ import io.xplore.assets.model.MdaServer;
 /**
  * Column entity domain model converter
  */
-public class MdbServerEntityConverter extends _BaseConverter {
+public class MdaServerEntityConverter extends _BaseConverter {
 
     /**
      * Convert database entity to domain model
      * @param entity Entity to convert
      * @return Domain model
      */
-    public static MdaServer convert(MdaServerEntity entity) {
+    public static MdaServer get(MdaServerEntity entity) {
 
         MdaServer item = new MdaServer();
 

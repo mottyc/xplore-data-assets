@@ -8,6 +8,11 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "mda_schema", schema = "dbo", catalog = "data_asset")
+@NamedQueries({
+        @NamedQuery(name="MdaSchemaEntity.findAll", query="SELECT a FROM MdaSchemaEntity a"),
+        @NamedQuery(name="MdaSchemaEntity.findByKey", query="SELECT a FROM MdaSchemaEntity a WHERE a.schemaKey = :schemaKey"),
+        @NamedQuery(name="MdaSchemaEntity.findByDatabase", query="SELECT a FROM MdaSchemaEntity a WHERE a.domainKey = :domainKey")
+})
 public class MdaSchemaEntity {
     private int schemaKey;
     private String fullSchemaName;
@@ -21,11 +26,11 @@ public class MdaSchemaEntity {
     private String updateBy;
 
     @Id
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
     @Column(name = "schema_key")
     public int getSchemaKey() {
         return schemaKey;
     }
-
     public void setSchemaKey(int schemaKey) {
         this.schemaKey = schemaKey;
     }
@@ -35,7 +40,6 @@ public class MdaSchemaEntity {
     public String getFullSchemaName() {
         return fullSchemaName;
     }
-
     public void setFullSchemaName(String fullSchemaName) {
         this.fullSchemaName = fullSchemaName;
     }
@@ -45,7 +49,6 @@ public class MdaSchemaEntity {
     public Integer getDomainKey() {
         return domainKey;
     }
-
     public void setDomainKey(Integer domainKey) {
         this.domainKey = domainKey;
     }
@@ -55,7 +58,6 @@ public class MdaSchemaEntity {
     public String getDbName() {
         return dbName;
     }
-
     public void setDbName(String dbName) {
         this.dbName = dbName;
     }
@@ -65,7 +67,6 @@ public class MdaSchemaEntity {
     public String getSchemaName() {
         return schemaName;
     }
-
     public void setSchemaName(String schemaName) {
         this.schemaName = schemaName;
     }
@@ -75,7 +76,6 @@ public class MdaSchemaEntity {
     public String getSchemaDesc() {
         return schemaDesc;
     }
-
     public void setSchemaDesc(String schemaDesc) {
         this.schemaDesc = schemaDesc;
     }
@@ -85,7 +85,6 @@ public class MdaSchemaEntity {
     public String getSchemaNameDisplay() {
         return schemaNameDisplay;
     }
-
     public void setSchemaNameDisplay(String schemaNameDisplay) {
         this.schemaNameDisplay = schemaNameDisplay;
     }
@@ -95,7 +94,6 @@ public class MdaSchemaEntity {
     public Timestamp getCreateDate() {
         return createDate;
     }
-
     public void setCreateDate(Timestamp createDate) {
         this.createDate = createDate;
     }
@@ -105,7 +103,6 @@ public class MdaSchemaEntity {
     public Timestamp getUpdateDate() {
         return updateDate;
     }
-
     public void setUpdateDate(Timestamp updateDate) {
         this.updateDate = updateDate;
     }
@@ -115,7 +112,6 @@ public class MdaSchemaEntity {
     public String getUpdateBy() {
         return updateBy;
     }
-
     public void setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
     }

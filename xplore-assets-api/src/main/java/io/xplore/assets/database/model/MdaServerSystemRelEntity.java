@@ -18,11 +18,11 @@ public class MdaServerSystemRelEntity {
     private String updateBy;
 
     @Id
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
     @Column(name = "mda_server_system_key")
     public int getMdaServerSystemKey() {
         return mdaServerSystemKey;
     }
-
     public void setMdaServerSystemKey(int mdaServerSystemKey) {
         this.mdaServerSystemKey = mdaServerSystemKey;
     }
@@ -32,7 +32,6 @@ public class MdaServerSystemRelEntity {
     public String getMdaServerSystemName() {
         return mdaServerSystemName;
     }
-
     public void setMdaServerSystemName(String mdaServerSystemName) {
         this.mdaServerSystemName = mdaServerSystemName;
     }
@@ -42,7 +41,6 @@ public class MdaServerSystemRelEntity {
     public Integer getServerKey() {
         return serverKey;
     }
-
     public void setServerKey(Integer serverKey) {
         this.serverKey = serverKey;
     }
@@ -52,7 +50,6 @@ public class MdaServerSystemRelEntity {
     public Integer getSystemKey() {
         return systemKey;
     }
-
     public void setSystemKey(Integer systemKey) {
         this.systemKey = systemKey;
     }
@@ -62,7 +59,6 @@ public class MdaServerSystemRelEntity {
     public Timestamp getCreateDate() {
         return createDate;
     }
-
     public void setCreateDate(Timestamp createDate) {
         this.createDate = createDate;
     }
@@ -72,7 +68,6 @@ public class MdaServerSystemRelEntity {
     public Timestamp getUpdateDate() {
         return updateDate;
     }
-
     public void setUpdateDate(Timestamp updateDate) {
         this.updateDate = updateDate;
     }
@@ -82,7 +77,6 @@ public class MdaServerSystemRelEntity {
     public String getUpdateBy() {
         return updateBy;
     }
-
     public void setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
     }

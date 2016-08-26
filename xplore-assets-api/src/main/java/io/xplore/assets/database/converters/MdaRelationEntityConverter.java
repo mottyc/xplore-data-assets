@@ -6,14 +6,14 @@ import io.xplore.assets.model.MdaRelation;
 /**
  * Column entity domain model converter
  */
-public class MdbRelationEntityConverter extends _BaseConverter {
+public class MdaRelationEntityConverter extends _BaseConverter {
 
     /**
      * Convert database entity to domain model
      * @param entity Entity to convert
      * @return Domain model
      */
-    public static MdaRelation convert(MdaRelationEntity entity) {
+    public static MdaRelation get(MdaRelationEntity entity) {
 
         MdaRelation item = new MdaRelation();
 

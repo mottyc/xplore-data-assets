@@ -18,11 +18,11 @@ public class MdaBusinessEntityTableRelEntity {
     private String updateBy;
 
     @Id
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
     @Column(name = "business_entity_table_rel_key")
     public int getBusinessEntityTableRelKey() {
         return businessEntityTableRelKey;
     }
-
     public void setBusinessEntityTableRelKey(int businessEntityTableRelKey) {
         this.businessEntityTableRelKey = businessEntityTableRelKey;
     }
@@ -32,7 +32,6 @@ public class MdaBusinessEntityTableRelEntity {
     public String getBusinessEntityTableRelName() {
         return businessEntityTableRelName;
     }
-
     public void setBusinessEntityTableRelName(String businessEntityTableRelName) {
         this.businessEntityTableRelName = businessEntityTableRelName;
     }
@@ -42,7 +41,6 @@ public class MdaBusinessEntityTableRelEntity {
     public Integer getBusinessEntityKey() {
         return businessEntityKey;
     }
-
     public void setBusinessEntityKey(Integer businessEntityKey) {
         this.businessEntityKey = businessEntityKey;
     }
@@ -52,7 +50,6 @@ public class MdaBusinessEntityTableRelEntity {
     public Integer getTableKey() {
         return tableKey;
     }
-
     public void setTableKey(Integer tableKey) {
         this.tableKey = tableKey;
     }
@@ -62,7 +59,6 @@ public class MdaBusinessEntityTableRelEntity {
     public Timestamp getCreateDate() {
         return createDate;
     }
-
     public void setCreateDate(Timestamp createDate) {
         this.createDate = createDate;
     }
@@ -72,7 +68,6 @@ public class MdaBusinessEntityTableRelEntity {
     public Timestamp getUpdateDate() {
         return updateDate;
     }
-
     public void setUpdateDate(Timestamp updateDate) {
         this.updateDate = updateDate;
     }
@@ -82,7 +77,6 @@ public class MdaBusinessEntityTableRelEntity {
     public String getUpdateBy() {
         return updateBy;
     }
-
     public void setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
     }

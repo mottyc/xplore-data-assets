@@ -6,14 +6,14 @@ import io.xplore.assets.model.MdaColumn;
 /**
  * Column entity domain model converter
  */
-public class MdbColumnEntityConverter extends _BaseConverter {
+public class MdaColumnEntityConverter extends _BaseConverter {
 
     /**
      * Convert database entity to domain model
      * @param entity Entity to convert
      * @return Domain model
      */
-    public static MdaColumn convert(MdaColumnEntity entity) {
+    public static MdaColumn get(MdaColumnEntity entity) {
 
         MdaColumn item = new MdaColumn();
 

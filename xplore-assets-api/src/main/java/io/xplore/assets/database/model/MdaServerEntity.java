@@ -8,6 +8,11 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "mda_server", schema = "dbo", catalog = "data_asset")
+@NamedQueries({
+        @NamedQuery(name="MdaServerEntity.findAll", query="SELECT a FROM MdaServerEntity a"),
+        @NamedQuery(name="MdaServerEntity.findByKey", query="SELECT a FROM MdaServerEntity a WHERE a.serverKey = :serverKey"),
+        @NamedQuery(name="MdaServerEntity.findByType", query="SELECT a FROM MdaServerEntity a WHERE a.serverTypeCd = :serverTypeCd")
+})
 public class MdaServerEntity {
     private int serverKey;
     private String serverName;
@@ -19,11 +24,11 @@ public class MdaServerEntity {
     private String updateBy;
 
     @Id
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
     @Column(name = "server_key")
     public int getServerKey() {
         return serverKey;
     }
-
     public void setServerKey(int serverKey) {
         this.serverKey = serverKey;
     }
@@ -33,7 +38,6 @@ public class MdaServerEntity {
     public String getServerName() {
         return serverName;
     }
-
     public void setServerName(String serverName) {
         this.serverName = serverName;
     }
@@ -43,7 +47,6 @@ public class MdaServerEntity {
     public String getServerNameDisplay() {
         return serverNameDisplay;
     }
-
     public void setServerNameDisplay(String serverNameDisplay) {
         this.serverNameDisplay = serverNameDisplay;
     }
@@ -53,7 +56,6 @@ public class MdaServerEntity {
     public String getServerDesc() {
         return serverDesc;
     }
-
     public void setServerDesc(String serverDesc) {
         this.serverDesc = serverDesc;
     }
@@ -63,7 +65,6 @@ public class MdaServerEntity {
     public String getServerTypeCd() {
         return serverTypeCd;
     }
-
     public void setServerTypeCd(String serverTypeCd) {
         this.serverTypeCd = serverTypeCd;
     }
@@ -73,7 +74,6 @@ public class MdaServerEntity {
     public Timestamp getCreateDate() {
         return createDate;
     }
-
     public void setCreateDate(Timestamp createDate) {
         this.createDate = createDate;
     }
@@ -83,7 +83,6 @@ public class MdaServerEntity {
     public Timestamp getUpdateDate() {
         return updateDate;
     }
-
     public void setUpdateDate(Timestamp updateDate) {
         this.updateDate = updateDate;
     }
@@ -93,7 +92,6 @@ public class MdaServerEntity {
     public String getUpdateBy() {
         return updateBy;
     }
-
     public void setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
     }

@@ -33,8 +33,8 @@ public class QueryFilter {
 	public QueryFilter() {}
 
 	/**
-	 * Create sorting object from query param
-	 * @param queryParam Sort phrase in the format of field:direction
+	 * Create query object from query param
+	 * @param queryParams Sort phrase in the format of field:direction
 	 * @return
 	 */
 	public static QueryFilter create(List<String> queryParams) {

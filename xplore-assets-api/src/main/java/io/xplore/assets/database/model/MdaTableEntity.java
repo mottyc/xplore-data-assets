@@ -8,6 +8,11 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "mda_table", schema = "dbo", catalog = "data_asset")
+@NamedQueries({
+        @NamedQuery(name="MdaTableEntity.findAll", query="SELECT a FROM MdaTableEntity a"),
+        @NamedQuery(name="MdaTableEntity.findByKey", query="SELECT a FROM MdaTableEntity a WHERE a.tableKey = :tableKey"),
+        @NamedQuery(name="MdaTableEntity.findBySchema", query="SELECT a FROM MdaTableEntity a WHERE a.schemaKey = :schemaKey")
+})
 public class MdaTableEntity {
     private int tableKey;
     private String fullTableName;
@@ -28,11 +33,11 @@ public class MdaTableEntity {
     private String updateBy;
 
     @Id
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
     @Column(name = "table_key")
     public int getTableKey() {
         return tableKey;
     }
-
     public void setTableKey(int tableKey) {
         this.tableKey = tableKey;
     }
@@ -42,7 +47,6 @@ public class MdaTableEntity {
     public String getFullTableName() {
         return fullTableName;
     }
-
     public void setFullTableName(String fullTableName) {
         this.fullTableName = fullTableName;
     }
@@ -52,7 +56,6 @@ public class MdaTableEntity {
     public Integer getSchemaKey() {
         return schemaKey;
     }
-
     public void setSchemaKey(Integer schemaKey) {
         this.schemaKey = schemaKey;
     }
@@ -62,7 +65,6 @@ public class MdaTableEntity {
     public String getDbName() {
         return dbName;
     }
-
     public void setDbName(String dbName) {
         this.dbName = dbName;
     }
@@ -72,7 +74,6 @@ public class MdaTableEntity {
     public String getSchemaName() {
         return schemaName;
     }
-
     public void setSchemaName(String schemaName) {
         this.schemaName = schemaName;
     }
@@ -92,7 +93,6 @@ public class MdaTableEntity {
     public String getTableDesc() {
         return tableDesc;
     }
-
     public void setTableDesc(String tableDesc) {
         this.tableDesc = tableDesc;
     }
@@ -102,7 +102,6 @@ public class MdaTableEntity {
     public String getTableNameDisplay() {
         return tableNameDisplay;
     }
-
     public void setTableNameDisplay(String tableNameDisplay) {
         this.tableNameDisplay = tableNameDisplay;
     }
@@ -112,7 +111,6 @@ public class MdaTableEntity {
     public Integer getTableRowCount() {
         return tableRowCount;
     }
-
     public void setTableRowCount(Integer tableRowCount) {
         this.tableRowCount = tableRowCount;
     }
@@ -122,7 +120,6 @@ public class MdaTableEntity {
     public Integer getTableNumOfCols() {
         return tableNumOfCols;
     }
-
     public void setTableNumOfCols(Integer tableNumOfCols) {
         this.tableNumOfCols = tableNumOfCols;
     }
@@ -132,7 +129,6 @@ public class MdaTableEntity {
     public String getObjectType() {
         return objectType;
     }
-
     public void setObjectType(String objectType) {
         this.objectType = objectType;
     }
@@ -142,7 +138,6 @@ public class MdaTableEntity {
     public String getTablePk() {
         return tablePk;
     }
-
     public void setTablePk(String tablePk) {
         this.tablePk = tablePk;
     }
@@ -152,7 +147,6 @@ public class MdaTableEntity {
     public Integer getTableId() {
         return tableId;
     }
-
     public void setTableId(Integer tableId) {
         this.tableId = tableId;
     }
@@ -162,7 +156,6 @@ public class MdaTableEntity {
     public Integer getDxpTableGk() {
         return dxpTableGk;
     }
-
     public void setDxpTableGk(Integer dxpTableGk) {
         this.dxpTableGk = dxpTableGk;
     }
@@ -172,7 +165,6 @@ public class MdaTableEntity {
     public Timestamp getCreateDate() {
         return createDate;
     }
-
     public void setCreateDate(Timestamp createDate) {
         this.createDate = createDate;
     }
@@ -182,7 +174,6 @@ public class MdaTableEntity {
     public Timestamp getUpdateDate() {
         return updateDate;
     }
-
     public void setUpdateDate(Timestamp updateDate) {
         this.updateDate = updateDate;
     }
@@ -192,7 +183,6 @@ public class MdaTableEntity {
     public String getUpdateBy() {
         return updateBy;
     }
-
     public void setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
     }

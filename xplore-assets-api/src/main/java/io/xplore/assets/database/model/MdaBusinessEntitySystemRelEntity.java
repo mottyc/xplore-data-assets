@@ -18,11 +18,11 @@ public class MdaBusinessEntitySystemRelEntity {
     private String updateBy;
 
     @Id
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
     @Column(name = "business_entity_system_rel_key")
     public int getBusinessEntitySystemRelKey() {
         return businessEntitySystemRelKey;
     }
-
     public void setBusinessEntitySystemRelKey(int businessEntitySystemRelKey) {
         this.businessEntitySystemRelKey = businessEntitySystemRelKey;
     }
@@ -32,7 +32,6 @@ public class MdaBusinessEntitySystemRelEntity {
     public String getBusinessEntitySystemRelName() {
         return businessEntitySystemRelName;
     }
-
     public void setBusinessEntitySystemRelName(String businessEntitySystemRelName) {
         this.businessEntitySystemRelName = businessEntitySystemRelName;
     }
@@ -42,7 +41,6 @@ public class MdaBusinessEntitySystemRelEntity {
     public Integer getBusinessEntityKey() {
         return businessEntityKey;
     }
-
     public void setBusinessEntityKey(Integer businessEntityKey) {
         this.businessEntityKey = businessEntityKey;
     }
@@ -52,7 +50,6 @@ public class MdaBusinessEntitySystemRelEntity {
     public Integer getSystemKey() {
         return systemKey;
     }
-
     public void setSystemKey(Integer systemKey) {
         this.systemKey = systemKey;
     }
@@ -62,7 +59,6 @@ public class MdaBusinessEntitySystemRelEntity {
     public Timestamp getCreateDate() {
         return createDate;
     }
-
     public void setCreateDate(Timestamp createDate) {
         this.createDate = createDate;
     }
@@ -72,7 +68,6 @@ public class MdaBusinessEntitySystemRelEntity {
     public Timestamp getUpdateDate() {
         return updateDate;
     }
-
     public void setUpdateDate(Timestamp updateDate) {
         this.updateDate = updateDate;
     }
@@ -82,7 +77,6 @@ public class MdaBusinessEntitySystemRelEntity {
     public String getUpdateBy() {
         return updateBy;
     }
-
     public void setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
     }

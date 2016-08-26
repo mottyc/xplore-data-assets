@@ -8,6 +8,10 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "mda_db", schema = "dbo", catalog = "data_asset")
+@NamedQueries({
+        @NamedQuery(name="MdaDbEntity.findAll", query="SELECT a FROM MdaDbEntity a"),
+        @NamedQuery(name="MdaDbEntity.findByKey", query="SELECT a FROM MdaDbEntity a WHERE a.domainKey = :domainKey")
+})
 public class MdaDbEntity {
     private int domainKey;
     private String fullDbName;
@@ -23,11 +27,11 @@ public class MdaDbEntity {
     private String updateBy;
 
     @Id
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
     @Column(name = "domain_key")
     public int getDomainKey() {
         return domainKey;
     }
-
     public void setDomainKey(int domainKey) {
         this.domainKey = domainKey;
     }
@@ -37,7 +41,6 @@ public class MdaDbEntity {
     public String getFullDbName() {
         return fullDbName;
     }
-
     public void setFullDbName(String fullDbName) {
         this.fullDbName = fullDbName;
     }
@@ -47,7 +50,6 @@ public class MdaDbEntity {
     public Integer getServerKey() {
         return serverKey;
     }
-
     public void setServerKey(Integer serverKey) {
         this.serverKey = serverKey;
     }
@@ -57,7 +59,6 @@ public class MdaDbEntity {
     public String getDbName() {
         return dbName;
     }
-
     public void setDbName(String dbName) {
         this.dbName = dbName;
     }
@@ -67,7 +68,6 @@ public class MdaDbEntity {
     public String getDbDesc() {
         return dbDesc;
     }
-
     public void setDbDesc(String dbDesc) {
         this.dbDesc = dbDesc;
     }
@@ -77,7 +77,6 @@ public class MdaDbEntity {
     public String getDbNameDisplay() {
         return dbNameDisplay;
     }
-
     public void setDbNameDisplay(String dbNameDisplay) {
         this.dbNameDisplay = dbNameDisplay;
     }
@@ -87,7 +86,6 @@ public class MdaDbEntity {
     public String getTechnicalOwnerUsernameKey() {
         return technicalOwnerUsernameKey;
     }
-
     public void setTechnicalOwnerUsernameKey(String technicalOwnerUsernameKey) {
         this.technicalOwnerUsernameKey = technicalOwnerUsernameKey;
     }
@@ -97,7 +95,6 @@ public class MdaDbEntity {
     public String getDbTypeCd() {
         return dbTypeCd;
     }
-
     public void setDbTypeCd(String dbTypeCd) {
         this.dbTypeCd = dbTypeCd;
     }
@@ -107,7 +104,6 @@ public class MdaDbEntity {
     public Integer getDxpConnectionId() {
         return dxpConnectionId;
     }
-
     public void setDxpConnectionId(Integer dxpConnectionId) {
         this.dxpConnectionId = dxpConnectionId;
     }
@@ -117,7 +113,6 @@ public class MdaDbEntity {
     public Timestamp getCreateDate() {
         return createDate;
     }
-
     public void setCreateDate(Timestamp createDate) {
         this.createDate = createDate;
     }
@@ -127,7 +122,6 @@ public class MdaDbEntity {
     public Timestamp getUpdateDate() {
         return updateDate;
     }
-
     public void setUpdateDate(Timestamp updateDate) {
         this.updateDate = updateDate;
     }
@@ -137,7 +131,6 @@ public class MdaDbEntity {
     public String getUpdateBy() {
         return updateBy;
     }
-
     public void setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
     }

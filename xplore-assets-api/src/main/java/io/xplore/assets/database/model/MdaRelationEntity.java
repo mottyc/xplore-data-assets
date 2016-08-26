@@ -8,6 +8,12 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "mda_relation", schema = "dbo", catalog = "data_asset")
+@NamedQueries({
+        @NamedQuery(name="MdaRelationEntity.findAll", query="SELECT a FROM MdaRelationEntity a"),
+        @NamedQuery(name="MdaRelationEntity.findByKey", query="SELECT a FROM MdaRelationEntity a WHERE a.relationKey = :relationKey"),
+        @NamedQuery(name="MdaRelationEntity.findByParent", query="SELECT a FROM MdaRelationEntity a WHERE a.columnKeyPar = :columnKeyPar"),
+        @NamedQuery(name="MdaRelationEntity.findByReferenced", query="SELECT a FROM MdaRelationEntity a WHERE a.columnKeyRef = :columnKeyRef")
+})
 public class MdaRelationEntity {
     private int relationKey;
     private String fullRelationName;
@@ -32,11 +38,11 @@ public class MdaRelationEntity {
     private String updateBy;
 
     @Id
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
     @Column(name = "relation_key")
     public int getRelationKey() {
         return relationKey;
     }
-
     public void setRelationKey(int relationKey) {
         this.relationKey = relationKey;
     }
@@ -46,7 +52,6 @@ public class MdaRelationEntity {
     public String getFullRelationName() {
         return fullRelationName;
     }
-
     public void setFullRelationName(String fullRelationName) {
         this.fullRelationName = fullRelationName;
     }
@@ -56,7 +61,6 @@ public class MdaRelationEntity {
     public Integer getColumnKeyPar() {
         return columnKeyPar;
     }
-
     public void setColumnKeyPar(Integer columnKeyPar) {
         this.columnKeyPar = columnKeyPar;
     }
@@ -66,7 +70,6 @@ public class MdaRelationEntity {
     public Integer getColumnKeyRef() {
         return columnKeyRef;
     }
-
     public void setColumnKeyRef(Integer columnKeyRef) {
         this.columnKeyRef = columnKeyRef;
     }
@@ -86,7 +89,6 @@ public class MdaRelationEntity {
     public String getSchemaNamePar() {
         return schemaNamePar;
     }
-
     public void setSchemaNamePar(String schemaNamePar) {
         this.schemaNamePar = schemaNamePar;
     }
@@ -96,7 +98,6 @@ public class MdaRelationEntity {
     public String getTableNamePar() {
         return tableNamePar;
     }
-
     public void setTableNamePar(String tableNamePar) {
         this.tableNamePar = tableNamePar;
     }
@@ -106,7 +107,6 @@ public class MdaRelationEntity {
     public String getColumnNamePar() {
         return columnNamePar;
     }
-
     public void setColumnNamePar(String columnNamePar) {
         this.columnNamePar = columnNamePar;
     }
@@ -116,7 +116,6 @@ public class MdaRelationEntity {
     public String getSchemaNameRef() {
         return schemaNameRef;
     }
-
     public void setSchemaNameRef(String schemaNameRef) {
         this.schemaNameRef = schemaNameRef;
     }
@@ -126,7 +125,6 @@ public class MdaRelationEntity {
     public String getTableNameRef() {
         return tableNameRef;
     }
-
     public void setTableNameRef(String tableNameRef) {
         this.tableNameRef = tableNameRef;
     }
@@ -136,7 +134,6 @@ public class MdaRelationEntity {
     public String getColumnNameRef() {
         return columnNameRef;
     }
-
     public void setColumnNameRef(String columnNameRef) {
         this.columnNameRef = columnNameRef;
     }
@@ -166,7 +163,6 @@ public class MdaRelationEntity {
     public String getRelationTypeCd() {
         return relationTypeCd;
     }
-
     public void setRelationTypeCd(String relationTypeCd) {
         this.relationTypeCd = relationTypeCd;
     }
@@ -176,7 +172,6 @@ public class MdaRelationEntity {
     public String getRelationSource() {
         return relationSource;
     }
-
     public void setRelationSource(String relationSource) {
         this.relationSource = relationSource;
     }
@@ -186,7 +181,6 @@ public class MdaRelationEntity {
     public Double getRelationScore() {
         return relationScore;
     }
-
     public void setRelationScore(Double relationScore) {
         this.relationScore = relationScore;
     }
@@ -196,7 +190,6 @@ public class MdaRelationEntity {
     public Integer getDxpColumnGkPar() {
         return dxpColumnGkPar;
     }
-
     public void setDxpColumnGkPar(Integer dxpColumnGkPar) {
         this.dxpColumnGkPar = dxpColumnGkPar;
     }
@@ -206,7 +199,6 @@ public class MdaRelationEntity {
     public Integer getDxpColumnGkRef() {
         return dxpColumnGkRef;
     }
-
     public void setDxpColumnGkRef(Integer dxpColumnGkRef) {
         this.dxpColumnGkRef = dxpColumnGkRef;
     }
@@ -216,7 +208,6 @@ public class MdaRelationEntity {
     public Timestamp getCreateDate() {
         return createDate;
     }
-
     public void setCreateDate(Timestamp createDate) {
         this.createDate = createDate;
     }
@@ -226,7 +217,6 @@ public class MdaRelationEntity {
     public Timestamp getUpdateDate() {
         return updateDate;
     }
-
     public void setUpdateDate(Timestamp updateDate) {
         this.updateDate = updateDate;
     }
@@ -236,7 +226,6 @@ public class MdaRelationEntity {
     public String getUpdateBy() {
         return updateBy;
     }
-
     public void setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
     }

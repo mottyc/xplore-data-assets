@@ -18,11 +18,11 @@ public class MdaTableSystemRelEntity {
     private String updateBy;
 
     @Id
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
     @Column(name = "table_system_rel_key")
     public int getTableSystemRelKey() {
         return tableSystemRelKey;
     }
-
     public void setTableSystemRelKey(int tableSystemRelKey) {
         this.tableSystemRelKey = tableSystemRelKey;
     }
@@ -32,7 +32,6 @@ public class MdaTableSystemRelEntity {
     public String getTableSystemRelName() {
         return tableSystemRelName;
     }
-
     public void setTableSystemRelName(String tableSystemRelName) {
         this.tableSystemRelName = tableSystemRelName;
     }
@@ -42,7 +41,6 @@ public class MdaTableSystemRelEntity {
     public Integer getTableKey() {
         return tableKey;
     }
-
     public void setTableKey(Integer tableKey) {
         this.tableKey = tableKey;
     }
@@ -52,7 +50,6 @@ public class MdaTableSystemRelEntity {
     public Integer getSystemKey() {
         return systemKey;
     }
-
     public void setSystemKey(Integer systemKey) {
         this.systemKey = systemKey;
     }
@@ -62,7 +59,6 @@ public class MdaTableSystemRelEntity {
     public Timestamp getCreateDate() {
         return createDate;
     }
-
     public void setCreateDate(Timestamp createDate) {
         this.createDate = createDate;
     }
@@ -72,7 +68,6 @@ public class MdaTableSystemRelEntity {
     public Timestamp getUpdateDate() {
         return updateDate;
     }
-
     public void setUpdateDate(Timestamp updateDate) {
         this.updateDate = updateDate;
     }
@@ -82,7 +77,6 @@ public class MdaTableSystemRelEntity {
     public String getUpdateBy() {
         return updateBy;
     }
-
     public void setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
     }

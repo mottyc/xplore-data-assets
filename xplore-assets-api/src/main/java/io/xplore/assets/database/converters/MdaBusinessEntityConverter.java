@@ -6,14 +6,14 @@ import io.xplore.assets.model.MdaBusinessEntity;
 /**
  * Business entity domain model to entity converter
  */
-public class MdbBusinessEntityConverter extends _BaseConverter {
+public class MdaBusinessEntityConverter extends _BaseConverter {
 
     /**
      * Convert database entity to domain model
      * @param entity Entity to convert
      * @return Domain model
      */
-    public static MdaBusinessEntity convert(MdaBusinessEntityEntity entity) {
+    public static MdaBusinessEntity get(MdaBusinessEntityEntity entity) {
 
         MdaBusinessEntity item = new MdaBusinessEntity();
 

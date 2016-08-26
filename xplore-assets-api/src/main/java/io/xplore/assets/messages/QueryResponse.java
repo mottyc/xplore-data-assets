@@ -40,7 +40,7 @@ public class QueryResponse<T> extends BaseResponse {
      */
     private long count;
     public long getCount() { return count; }
-    public void setCount(long value) { this.count = value; }
+    public void setCount(int value) { this.count = value; }
 
     /**
      * Default constructor
@@ -83,4 +83,5 @@ public class QueryResponse<T> extends BaseResponse {
      * Increase total count by one
      */
     public long increase() { return this.increase(1); }
+
 }

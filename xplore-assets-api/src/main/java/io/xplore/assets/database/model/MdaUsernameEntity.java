@@ -8,6 +8,10 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "mda_username", schema = "dbo", catalog = "data_asset")
+@NamedQueries({
+        @NamedQuery(name="MdaUsernameEntity.findAll", query="SELECT a FROM MdaUsernameEntity a"),
+        @NamedQuery(name="MdaUsernameEntity.findByKey", query="SELECT a FROM MdaUsernameEntity a WHERE a.usernameKey = :usernameKey")
+})
 public class MdaUsernameEntity {
     private String usernameKey;
     private String employeeFirstName;
@@ -18,11 +22,11 @@ public class MdaUsernameEntity {
     private String updateBy;
 
     @Id
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
     @Column(name = "username_key")
     public String getUsernameKey() {
         return usernameKey;
     }
-
     public void setUsernameKey(String usernameKey) {
         this.usernameKey = usernameKey;
     }
@@ -32,7 +36,6 @@ public class MdaUsernameEntity {
     public String getEmployeeFirstName() {
         return employeeFirstName;
     }
-
     public void setEmployeeFirstName(String employeeFirstName) {
         this.employeeFirstName = employeeFirstName;
     }
@@ -42,7 +45,6 @@ public class MdaUsernameEntity {
     public String getEmployeeLastName() {
         return employeeLastName;
     }
-
     public void setEmployeeLastName(String employeeLastName) {
         this.employeeLastName = employeeLastName;
     }
@@ -52,7 +54,6 @@ public class MdaUsernameEntity {
     public String getEmployeeNameDisplay() {
         return employeeNameDisplay;
     }
-
     public void setEmployeeNameDisplay(String employeeNameDisplay) {
         this.employeeNameDisplay = employeeNameDisplay;
     }
@@ -62,7 +63,6 @@ public class MdaUsernameEntity {
     public Timestamp getCreateDate() {
         return createDate;
     }
-
     public void setCreateDate(Timestamp createDate) {
         this.createDate = createDate;
     }
@@ -72,7 +72,6 @@ public class MdaUsernameEntity {
     public Timestamp getUpdateDate() {
         return updateDate;
     }
-
     public void setUpdateDate(Timestamp updateDate) {
         this.updateDate = updateDate;
     }
@@ -82,7 +81,6 @@ public class MdaUsernameEntity {
     public String getUpdateBy() {
         return updateBy;
     }
-
     public void setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
     }
