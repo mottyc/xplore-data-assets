@@ -30,7 +30,7 @@ angular.module('myApp')
             token: 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI0IiwiaWF0IjoxNDYwNTM2MjU5LCJzdWIiOiJjdXN0b21lciIsImlzcyI6IjIifQ.cHh9uW2YVszpFmvlsgHAUZMiRzXymme_RAQ9Py5lsvQ',
             userName: 'Demo User',
             userAvatar: 'images/demo/user_avatar.png',
-            apiHost: 'http://mvp.artrunners.com/api/v0/',
+            apiHost: 'http://localhost:8080/api/v0/',
             accountStatus: 'INCOMPLETE',
             locale: 'GB',
             dateFormat: {

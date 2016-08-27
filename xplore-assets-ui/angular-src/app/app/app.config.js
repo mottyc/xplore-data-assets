@@ -14,7 +14,7 @@ angular.module('myApp', [
     .constant('CONFIG', {
         DebugMode: true,
         StepCounter: 0,
-        APIHost: 'http://localhost:12017'
+        APIHost: 'http://localhost:8080/api/v0/'
     })
 
     .config(['settingsProvider', function (settingsProvider) {

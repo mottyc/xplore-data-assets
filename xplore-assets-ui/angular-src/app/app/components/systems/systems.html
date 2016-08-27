@@ -1,57 +1,40 @@
-<div class="container-fluid container-cards-pf container-pf-nav-pf-vertical container-pf-nav-pf-vertical-with-sub-menus   ">
-    <div class="row row-cards-pf">
-        <div class="col-xs-12 col-sm-6 col-md-3">
-            <div class="card-pf card-pf-accented card-pf-aggregate-status">
-                <h2 class="card-pf-title">
-                    <span class="fa fa-shield"></span><span class="card-pf-aggregate-status-count">0</span> Ipsum
-                </h2>
-                <div class="card-pf-body">
-                    <p class="card-pf-aggregate-status-notifications">
-                        <span class="card-pf-aggregate-status-notification"><a href="#" class="add" data-toggle="tooltip" data-placement="top" title="Add Ipsum"><span class="pficon pficon-add-circle-o"></span></a></span>
-                    </p>
+
+<!--<div class="container-fluid container-cards-pf container-pf-nav-pf-vertical container-pf-nav-pf-vertical-with-sub-menus   ">-->
+<div class="container-fluid container-cards-pf container-pf-nav-pf-vertical">
+    <div ng-controller="systemsController" class="row">
+
+        <div class="col-md-12">
+            <div pf-toolbar id="exampleToolbar" config="toolbarConfig"></div>
+        </div>
+    </div>
+
+    <hr class="col-md-12">
+
+    <h3>{{ctrlSystems.Heading}}</h3>
+    <h4>{{ctrlSystems.Description}}</h4>
+
+    <hr class="col-md-12">
+
+    <!-- The listview -->
+    <div class="col-md-12 list-view-container" ng-if="viewType == 'listView'">
+        <div pf-list-view config="listConfig" items="items">
+            <div class="list-view-pf-description">
+                <div class="list-group-item-heading">
+                    {{item.name}}
+                </div>
+                <div class="list-group-item-text">
+                    {{item.address}}
                 </div>
             </div>
-
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-3">
-            <div class="card-pf card-pf-accented card-pf-aggregate-status">
-                <h2 class="card-pf-title">
-                    <a href="#"><span class="fa fa-shield"></span><span class="card-pf-aggregate-status-count">20</span> Amet</a>
-                </h2>
-                <div class="card-pf-body">
-                    <p class="card-pf-aggregate-status-notifications">
-                        <span class="card-pf-aggregate-status-notification"><a href="#"><span class="pficon pficon-error-circle-o"></span>4</a></span>
-                        <span class="card-pf-aggregate-status-notification"><a href="#"><span class="pficon pficon-warning-triangle-o"></span>1</a></span>
-                    </p>
+            <div class="list-view-pf-additional-info">
+                <div class="list-view-pf-additional-info-item">
+                    {{item.age}}
                 </div>
-            </div>
-
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-3">
-            <div class="card-pf card-pf-accented card-pf-aggregate-status">
-                <h2 class="card-pf-title">
-                    <a href="#"><span class="fa fa-shield"></span><span class="card-pf-aggregate-status-count">9</span> Adipiscing</a>
-                </h2>
-                <div class="card-pf-body">
-                    <p class="card-pf-aggregate-status-notifications">
-                        <span class="card-pf-aggregate-status-notification"><span class="pficon pficon-ok"></span></span>
-                    </p>
-                </div>
-            </div>
-
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-3">
-            <div class="card-pf card-pf-accented card-pf-aggregate-status">
-                <h2 class="card-pf-title">
-                    <a href="#"><span class="fa fa-shield"></span><span class="card-pf-aggregate-status-count">12</span> Lorem</a>
-                </h2>
-                <div class="card-pf-body">
-                    <p class="card-pf-aggregate-status-notifications">
-                        <a href="#"><span class="card-pf-aggregate-status-notification"><span class="pficon pficon-error-circle-o"></span>1</span></a>
-                    </p>
+                <div class="list-view-pf-additional-info-item">
+                    {{item.birthMonth}}
                 </div>
             </div>
         </div>
     </div>
-
 </div>
+
