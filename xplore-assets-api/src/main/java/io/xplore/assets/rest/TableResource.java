@@ -4,6 +4,7 @@ import io.xplore.assets.Consts;
 import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
 import io.xplore.assets.messages.TokenData;
+import io.xplore.assets.model.MdaSchema;
 import io.xplore.assets.model.MdaTable;
 import io.xplore.assets.service.TableService;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;

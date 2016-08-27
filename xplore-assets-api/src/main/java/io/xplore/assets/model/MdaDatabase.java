@@ -6,6 +6,8 @@
 package io.xplore.assets.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Column domain model
@@ -76,6 +78,10 @@ public class MdaDatabase implements Serializable {
      */
     public String updateBy;
 
+    /**
+     * List of schemas
+     */
+    public List<MdaSchema> schemas = new ArrayList<>();
 
     /**
      * Default Constructor

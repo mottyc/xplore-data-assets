@@ -24,4 +24,5 @@ public interface DatabaseService {
      * @return QueryResponse<MdaDatabase>
      */
     QueryResponse<MdaDatabase> find(int serverKey, int pageNumber, int pageSize);
+
 }

@@ -6,6 +6,8 @@
 package io.xplore.assets.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Table domain model
@@ -99,6 +101,10 @@ public class MdaTable implements Serializable {
      */
     public String updateBy;
 
+    /**
+     * List of columns
+     */
+    public List<MdaColumn> columns = new ArrayList<>();
 
     /**
      * Default Constructor
