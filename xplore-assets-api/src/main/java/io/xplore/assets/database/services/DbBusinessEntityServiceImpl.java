@@ -12,6 +12,9 @@ import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
 import io.xplore.assets.model.MdaBusinessEntity;
 import io.xplore.assets.service.BusinessEntityService;
+import org.hibernate.Query;
+import org.hibernate.ScrollMode;
+import org.hibernate.ScrollableResults;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -70,9 +73,9 @@ public class DbBusinessEntityServiceImpl implements BusinessEntityService {
             response.setPage(pageNumber);
             response.setPages((count / pageSize) + ((count % pageSize) == 0 ? 0 : 1));
 
-            // Pagination
-            query.setFirstResult((pageNumber - 1) * pageSize);
-            query.setMaxResults(pageSize);
+            // Pagination (currently, SQL do not support pagination)
+            //query.setFirstResult((pageNumber - 1) * pageSize);
+            //query.setMaxResults(pageSize);
 
             query.getResultList().forEach(entity -> {response.getList().add(MdaBusinessEntityConverter.get(entity));});
             return response;

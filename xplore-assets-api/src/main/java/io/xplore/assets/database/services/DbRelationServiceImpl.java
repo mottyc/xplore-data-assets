@@ -74,8 +74,8 @@ public class DbRelationServiceImpl implements RelationService {
             response.setPages((count / pageSize) + ((count % pageSize) == 0 ? 0 : 1));
 
             // Pagination
-            query.setFirstResult((pageNumber - 1) * pageSize);
-            query.setMaxResults(pageSize);
+            //query.setFirstResult((pageNumber - 1) * pageSize);
+            //query.setMaxResults(pageSize);
 
             query.getResultList().forEach(entity -> {response.getList().add(MdaRelationEntityConverter.get(entity));});
             return response;

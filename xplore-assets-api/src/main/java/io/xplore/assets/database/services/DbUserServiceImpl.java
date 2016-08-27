@@ -74,8 +74,8 @@ public class DbUserServiceImpl implements UserService {
             response.setPages((count / pageSize) + ((count % pageSize) == 0 ? 0 : 1));
 
             // Pagination
-            query.setFirstResult((pageNumber - 1) * pageSize);
-            query.setMaxResults(pageSize);
+            //query.setFirstResult((pageNumber - 1) * pageSize);
+            //query.setMaxResults(pageSize);
 
             query.getResultList().forEach(entity -> {response.getList().add(MdaUserEntityConverter.get(entity));});
             return response;

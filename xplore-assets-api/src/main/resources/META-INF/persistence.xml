@@ -32,11 +32,9 @@
         <properties>
             <!-- Properties for Hibernate -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect"/>
-            <property name="hibernate.show_sql" value="false" />
-            <!--
-            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3307/artrunners"/>
-            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
-            -->
+            <!--<property name="hibernate.dialect_resolvers" value="io.xplore.assets.database.SqlServer2014DialectResolver" />-->
+            <property name="hibernate.show_sql" value="true" />
+
 
 
             <!-- New properties of JPA 2.1 -->
