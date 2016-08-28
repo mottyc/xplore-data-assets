@@ -22,11 +22,11 @@
  * }
  */
 angular.module('myApp')
-    .factory('MdaBusinessEntity', [
+    .factory('MdaBusinessEntityModel', [
         function () {
             var self = this;
 
-            function MdaBusinessEntity(data) {
+            function MdaBusinessEntityModel(data) {
                 this.businessEntityKey = null;
                 this.businessEntityName = null;
                 this.displayName = null;
@@ -41,12 +41,12 @@ angular.module('myApp')
                 }
             }
 
-            MdaBusinessEntity.prototype = {
+            MdaBusinessEntityModel.prototype = {
                 setData: function (data) {
                     angular.extend(this, data, this);
                 }
             };
 
-            return MdaBusinessEntity;
+            return MdaBusinessEntityModel;
         }
     ]);

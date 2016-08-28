@@ -60,6 +60,11 @@ angular.module('myApp')
                     templateUrl: 'app/components/systems/systems.html',
                     controller: 'systemsController',
                     controllerAs: 'ctrlSystems'
+                    // resolve: {
+                    //     items: function (systemsManager) {
+                    //         return systemsManager.getAll();
+                    //     }
+                    // }
                 })
                 .state('tables', {
                     url: '/tables',

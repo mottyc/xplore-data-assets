@@ -9,49 +9,125 @@
     angular.module('myApp')
         .controller('systemsController', systemsController);
 
-    systemsController.$inject = ["$scope", "$q", 'pfViewUtils'];
+    systemsController.$inject = ["$scope", "$q", 'pfViewUtils', 'systemsManager'];
 
-    function systemsController($scope, $q, pfViewUtils) {
+    function systemsController($scope, $q, pfViewUtils, systemsManager) {
 
         var self = this;
         self.Heading = "Systems Page";
         self.Description = "This is a systems list page.";
+        $scope.systems = null;
 
-        $scope.filtersText = '';
+        // region --- Event handlers -----------------------------------------------------------------------------------
+
+        $scope.eventText = '';
+        var handleSelect = function (item, e) {
+            $scope.eventText = item.name + ' selected\r\n' + $scope.eventText;
+        };
+
+        var handleSelectionChange = function (selectedItems, e) {
+            $scope.eventText = selectedItems.length + ' items selected\r\n' + $scope.eventText;
+        };
+
+        var handleClick = function (item, e) {
+            $scope.eventText = item.name + ' clicked\r\n' + $scope.eventText;
+        };
+
+        var handleDblClick = function (item, e) {
+            $scope.eventText = item.name + ' double clicked\r\n' + $scope.eventText;
+        };
+
+        var handleCheckBoxChange = function (item, selected, e) {
+            $scope.eventText = item.name + ' checked: ' + item.selected + '\r\n' + $scope.eventText;
+        };
+
+        var checkDisabledItem = function(item) {
+            return $scope.showDisabled && (item.name === "John Smith");
+        };
+
+        $scope.enableButtonForItemFn = function(action, item) {
+            return (action.name !=='Action 2') || (item.name !== "Frank Livingston");
+        };
+
+        $scope.updateMenuActionForItemFn = function(action, item) {
+            if (action.name === 'Another Action') {
+                action.isVisible = (item.name !== "John Smith");
+            }
+        };
+        // endregion
+
+        // region --- List View config ---------------------------------------------------------------------------------
+        $scope.selectType = 'none'; //'checkbox';
+        $scope.updateSelectionType = function() {
+            if ($scope.selectType === 'checkbox') {
+                $scope.config.selectItems = false;
+                $scope.config.showSelectBox = true;
+            } else if ($scope.selectType === 'row') {
+                $scope.config.selectItems = true;
+                $scope.config.showSelectBox = false;
+            } else {
+                $scope.config.selectItems = false
+                $scope.config.showSelectBox = false;
+            }
+        };
+
+        $scope.showDisabled = false;
+
+        $scope.listConfig = {
+            selectItems: false,
+            multiSelect: false,
+            dblClick: false,
+            selectionMatchProp: 'name',
+            selectedItems: [],
+            checkDisabled: checkDisabledItem,
+            showSelectBox: true,
+            onSelect: handleSelect,
+            onSelectionChange: handleSelectionChange,
+            onCheckBoxChange: handleCheckBoxChange,
+            onClick: handleClick,
+            onDblClick: handleDblClick
+        };
+        // endregion
+
+        // region --- Data (Items) -------------------------------------------------------------------------------------
 
         $scope.allItems = [
             {
-                name: "Fred Flintstone",
-                age: 57,
+                name: "Active Directory",
+                key: 1,
                 address: "20 Dinosaur Way, Bedrock, Washingstone",
                 birthMonth: 'February'
             },
             {
-                name: "John Smith",
-                age: 23,
+                name: "Analizer",
+                key: 2,
                 address: "415 East Main Street, Norfolk, Virginia",
                 birthMonth: 'October'
             },
             {
-                name: "Frank Livingston",
-                age: 71,
+                name: "BRIO",
+                key: 3,
                 address: "234 Elm Street, Pittsburgh, Pennsylvania",
                 birthMonth: 'March'
             },
             {
-                name: "Judy Green",
-                age: 21,
+                name: "Citrix",
+                key: 4,
                 address: "2 Apple Boulevard, Cincinatti, Ohio",
                 birthMonth: 'December'
             },
             {
-                name: "Pat Thomas",
-                age: 19,
+                name: "CMS",
+                key: 5,
                 address: "50 Second Street, New York, New York",
                 birthMonth: 'February'
             }
         ];
         $scope.items = $scope.allItems;
+        // endregion
+
+        // region --- Filters ------------------------------------------------------------------------------------------
+        $scope.filtersText = '';
 
         var matchesFilter = function (item, filter) {
             var match = true;
@@ -136,19 +212,23 @@
             onFilterChange: filterChange
         };
 
+        // endregion
+
+        // region --- Toolbar config -----------------------------------------------------------------------------------
         var viewSelected = function(viewId) {
             $scope.viewType = viewId
         };
 
         $scope.viewsConfig = {
-            views: [pfViewUtils.getListView(), pfViewUtils.getCardView()],
+            views: [pfViewUtils.getTableView(), pfViewUtils.getListView(), pfViewUtils.getCardView()],
             onViewSelect: viewSelected
         };
-        $scope.viewsConfig.currentView = $scope.viewsConfig.views[0].id;
+        $scope.viewsConfig.currentView = $scope.viewsConfig.views[1].id;
         $scope.viewType = $scope.viewsConfig.currentView;
 
         var sortChange = function (sortId, isAscending) {
             //$scope.items.sort(compareFn);
+            self.loadEntities();
             console.debug("sortChange: " + sortId + " ASC?:" + isAscending)
         };
 
@@ -181,18 +261,14 @@
         $scope.actionsText = "";
         var performAction = function (action) {
             $scope.actionsText = action.name + "\n" + $scope.actionsText;
+            console.debug("Action: " + action);
         };
 
         $scope.actionsConfig = {
             primaryActions: [
                 {
-                    name: 'Action 1',
-                    title: 'Do the first thing',
-                    actionFn: performAction
-                },
-                {
-                    name: 'Action 2',
-                    title: 'Do something else',
+                    name: 'Add',
+                    title: 'Add system',
                     actionFn: performAction
                 }
             ],
@@ -240,6 +316,17 @@
             filterConfig: $scope.filterConfig,
             sortConfig: $scope.sortConfig,
             actionsConfig: $scope.actionsConfig
+        };
+
+        // endregion
+
+        self.loadEntities = function () {
+            systemsManager.getAll().then(function (result) {
+                $scope.allItems = result;
+                $scope.items = $scope.allItems;
+                console.debug("Load suceess");
+                console.debug($scope.items);
+            })
         };
         return self;
     }

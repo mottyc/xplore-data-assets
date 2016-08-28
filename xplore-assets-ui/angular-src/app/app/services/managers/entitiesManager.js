@@ -1,19 +1,20 @@
 'use strict';
 
 /**
- * @ngdoc Systems data manager
- * @name mypp.systemsManager
- * @description Systems data manager
+ * @ngdoc Entities data manager
+ * @name mypp.entitiesManager
+ * @description Entities data manager
  */
 angular.module('myApp')
-    .factory('systemsManager', [
-        '$q', 'ApiRequest', 'MdaSystemModel',
-        function ($q, ApiRequest, MdaSystemModel) {
+    .factory('entitiesManager', [
+        '$q', 'ApiRequest', 'MdaBusinessEntityModel',
+        function ($q, ApiRequest, MdaBusinessEntityModel) {
 
-            var resourceName = "systems";
-            
+            var resourceName = "entities";
+
             return {
 
+            
                 //region Private methods & properties
 
                 _collection: {},
@@ -23,7 +24,7 @@ angular.module('myApp')
                     if (instance) {
                         instance.setData(data);
                     } else {
-                        instance = new MdaSystemModel(data);
+                        instance = new MdaBusinessEntityModel(data);
                         this._collection[key] = instance;
                     }
 
@@ -34,7 +35,7 @@ angular.module('myApp')
 
                 //region Public methods
 
-                // Get MdaSystemModel by ID
+                // Get item by ID
                 get: function (key) {
                     var deferred = $q.defer();
 
@@ -48,7 +49,7 @@ angular.module('myApp')
 
                     return deferred.promise;
                 },
-                
+
                 // Load all items
                 getAll: function () {
                     var deferred = $q.defer();
@@ -61,7 +62,7 @@ angular.module('myApp')
                                 var list = [];
 
                                 response.data.list.forEach(function (data) {
-                                    var item = scope._retrieveInstance(data.systemKey, data);
+                                    var item = scope._retrieveInstance(data.businessEntityKey, data);
                                     list.push(item);
                                 });
 
@@ -98,7 +99,7 @@ angular.module('myApp')
                                 var list = [];
 
                                 response.data.list.forEach(function (data) {
-                                    var item = scope._retrieveInstance(data.systemKey, data);
+                                    var item = scope._retrieveInstance(data.businessEntityKey, data);
                                     list.push(item);
                                 });
 
@@ -118,7 +119,7 @@ angular.module('myApp')
                 // Save/Update item and get an its instance in return
                 set: function (data) {
                     var scope = this;
-                    var item = this._search(data.systemKey);
+                    var item = this._search(data.businessEntityKey);
                     if (item) {
                         item.setData(data);
                     } else {

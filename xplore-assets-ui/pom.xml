@@ -118,7 +118,6 @@
                 <item>buildNumber\d*</item>
                 <item>timestamp</item>
               </items>
-
           </configuration>
         </plugin>
     -->

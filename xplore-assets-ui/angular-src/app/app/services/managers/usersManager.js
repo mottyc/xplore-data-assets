@@ -1,16 +1,16 @@
 'use strict';
 
 /**
- * @ngdoc Systems data manager
- * @name mypp.systemsManager
- * @description Systems data manager
+ * @ngdoc Tables data manager
+ * @name mypp.tablesManager
+ * @description Tables data manager
  */
 angular.module('myApp')
-    .factory('systemsManager', [
-        '$q', 'ApiRequest', 'MdaSystemModel',
-        function ($q, ApiRequest, MdaSystemModel) {
+    .factory('usersManager', [
+        '$q', 'ApiRequest', 'MdaUserModel',
+        function ($q, ApiRequest, MdaUserModel) {
 
-            var resourceName = "systems";
+            var resourceName = "users";
             
             return {
 
@@ -23,7 +23,7 @@ angular.module('myApp')
                     if (instance) {
                         instance.setData(data);
                     } else {
-                        instance = new MdaSystemModel(data);
+                        instance = new MdaUserModel(data);
                         this._collection[key] = instance;
                     }
 
@@ -61,7 +61,7 @@ angular.module('myApp')
                                 var list = [];
 
                                 response.data.list.forEach(function (data) {
-                                    var item = scope._retrieveInstance(data.systemKey, data);
+                                    var item = scope._retrieveInstance(data.usernameKey, data);
                                     list.push(item);
                                 });
 
@@ -98,7 +98,7 @@ angular.module('myApp')
                                 var list = [];
 
                                 response.data.list.forEach(function (data) {
-                                    var item = scope._retrieveInstance(data.systemKey, data);
+                                    var item = scope._retrieveInstance(data.usernameKey, data);
                                     list.push(item);
                                 });
 
@@ -118,7 +118,7 @@ angular.module('myApp')
                 // Save/Update item and get an its instance in return
                 set: function (data) {
                     var scope = this;
-                    var item = this._search(data.systemKey);
+                    var item = this._search(data.usernameKey);
                     if (item) {
                         item.setData(data);
                     } else {

@@ -1,37 +1,48 @@
 
-<!--<div class="container-fluid container-cards-pf container-pf-nav-pf-vertical container-pf-nav-pf-vertical-with-sub-menus   ">-->
 <div class="container-fluid container-cards-pf container-pf-nav-pf-vertical">
     <div ng-controller="systemsController" class="row">
 
         <div class="col-md-12">
-            <div pf-toolbar id="exampleToolbar" config="toolbarConfig"></div>
+            <div pf-toolbar id="listToolbar" config="toolbarConfig"></div>
         </div>
     </div>
 
-    <hr class="col-md-12">
+    <!--<hr class="col-md-12">-->
 
-    <h3>{{ctrlSystems.Heading}}</h3>
-    <h4>{{ctrlSystems.Description}}</h4>
-
-    <hr class="col-md-12">
 
     <!-- The listview -->
     <div class="col-md-12 list-view-container" ng-if="viewType == 'listView'">
-        <div pf-list-view config="listConfig" items="items">
-            <div class="list-view-pf-description">
-                <div class="list-group-item-heading">
-                    {{item.name}}
+        <div pf-list-view config="listConfig"
+             items="items">
+
+            <div class="list-view-pf-main-info">
+
+                <div class="list-view-pf-left">
+                    <span class="fa fa-plane list-view-pf-icon-sm"></span>
                 </div>
-                <div class="list-group-item-text">
-                    {{item.address}}
-                </div>
-            </div>
-            <div class="list-view-pf-additional-info">
-                <div class="list-view-pf-additional-info-item">
-                    {{item.age}}
-                </div>
-                <div class="list-view-pf-additional-info-item">
-                    {{item.birthMonth}}
+
+                <div class="list-view-pf-body">
+                    <div class="list-view-pf-description">
+                        <div class="list-group-item-heading">
+                            {{item.systemName}}
+                        </div>
+                        <div class="list-group-item-text">
+                            {{item.displayName}}
+                        </div>
+                    </div>
+
+                    <div class="list-view-pf-additional-info">
+                        <div class="list-view-pf-additional-info-item">
+                            {{item.appName}}
+                        </div>
+                        <div class="list-view-pf-additional-info-item">
+                            {{item.description}}
+                        </div>
+                        <div class="list-view-pf-additional-info-item">
+                            <span class="pficon pficon-cluster"></span>
+                            {{item.systemDepartment}}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
