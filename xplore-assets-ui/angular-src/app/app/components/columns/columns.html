@@ -31,7 +31,7 @@
     <!--<div class="col-md-12 list-view-container" ng-if="viewType == 'tableView'">-->
     <div ng-if="viewType == 'tableView'">
 
-        <table class="datatable table table-striped table-bordered">
+        <table datatable="ng" class="datatable table table-striped table-bordered">
             <thead>
                 <tr>
                     <th>Column</th>
@@ -43,31 +43,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>column 1</td>
-                    <td>table 1</td>
-                    <td>schema 1</td>
-                    <td>display 1</td>
-                    <td>type 1</td>
-                    <td>pk 1</td>
-                </tr>
-
-                <tr>
-                    <td>column 2</td>
-                    <td>table 2</td>
-                    <td>schema 2</td>
-                    <td>display 2</td>
-                    <td>type 2</td>
-                    <td>pk 2</td>
-                </tr>
-
-                <tr>
-                    <td>column 3</td>
-                    <td>table 3</td>
-                    <td>schema 3</td>
-                    <td>display 3</td>
-                    <td>type 3</td>
-                    <td>pk 3</td>
+                <tr ng-repeat="column in columnsController.items">
+                    <td>{{ column.columnName }}</td>
+                    <td>{{ column.tableName }}</td>
+                    <td>{{ column.schemaName }}</td>
+                    <td>{{ column.displayName }}</td>
+                    <td>{{ column.columnDataType }}</td>
+                    <td>{{ column.isPk }}</td>
                 </tr>
             </tbody>
         </table>

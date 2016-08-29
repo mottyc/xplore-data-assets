@@ -9,7 +9,9 @@ angular.module('myApp', [
     'ui.bootstrap',
     'underscore',
     'patternfly',
-    'patternfly.charts'
+    'patternfly.charts',
+    'datatables',
+    'angular-loading-bar'
 ])
     .constant('CONFIG', {
         DebugMode: true,
