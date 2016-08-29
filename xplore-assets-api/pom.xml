@@ -96,6 +96,7 @@
         </plugin>
 
         <!-- Build number plugin -->
+		  <!--
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>buildnumber-maven-plugin</artifactId>
@@ -112,40 +113,13 @@
             <doCheck>false</doCheck>
             <doUpdate>false</doUpdate>
             <revisionOnScmFailure/>
-              <!--
-                            Generate sequence build number based on:
-                            build number and timestamp
-                           -->
               <format>Build: #{0} ({1,date})</format>
               <items>
                 <item>buildNumber\d*</item>
                 <item>timestamp</item>
               </items>
-
           </configuration>
-        </plugin>
-
-        <!-- Use only to find run-time properties (mvn validate) -->
-        <!--
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-antrun-plugin</artifactId>
-          <version>1.7</version>
-          <executions>
-            <execution>
-              <phase>validate</phase>
-              <goals>
-                <goal>run</goal>
-              </goals>
-              <configuration>
-                <tasks>
-                  <echoproperties />
-                </tasks>
-              </configuration>
-            </execution>
-          </executions>
-            </plugin>
-        -->
+        </plugin>-->
 
       </plugins>
   	</build>

@@ -22,7 +22,6 @@ public class MdaUsernameEntity {
     private String updateBy;
 
     @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY )
     @Column(name = "username_key")
     public String getUsernameKey() {
         return usernameKey;
