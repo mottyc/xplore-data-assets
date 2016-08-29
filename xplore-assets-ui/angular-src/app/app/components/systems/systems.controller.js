@@ -9,14 +9,31 @@
     angular.module('myApp')
         .controller('systemsController', systemsController);
 
-    systemsController.$inject = ["$scope", "$q", 'pfViewUtils', 'systemsManager'];
+    systemsController.$inject = ["$scope", 'pfViewUtils', 'systemsManager'];
 
-    function systemsController($scope, $q, pfViewUtils, systemsManager) {
+    function systemsController($scope, pfViewUtils, systemsManager) {
 
         var self = this;
-        self.Heading = "Systems Page";
-        self.Description = "This is a systems list page.";
-        $scope.systems = null;
+        
+        $scope.totalItems = 0;
+        $scope.allItems = [];
+        $scope.items = [];
+
+        // region --- Data Handlers ------------------------------------------------------------------------------------
+
+        $scope.loadEntities = function () {
+            systemsManager.getAll().then(function (result) {
+                $scope.allItems = result;
+                $scope.items = $scope.allItems;
+                $scope.totalItems = $scope.items.length;
+                $scope.filterConfig.resultsCount = $scope.totalItems;
+
+                console.debug("Load suceess with " + $scope.totalItems + " Items");
+            })
+        };
+
+        // endregion
+
 
         // region --- Event handlers -----------------------------------------------------------------------------------
 
@@ -60,15 +77,18 @@
         $scope.selectType = 'none'; //'checkbox';
         $scope.updateSelectionType = function() {
             if ($scope.selectType === 'checkbox') {
-                $scope.config.selectItems = false;
-                $scope.config.showSelectBox = true;
+                $scope.listConfig.selectItems = false;
+                $scope.listConfig.showSelectBox = true;
             } else if ($scope.selectType === 'row') {
-                $scope.config.selectItems = true;
-                $scope.config.showSelectBox = false;
+                $scope.listConfig.selectItems = true;
+                $scope.listConfig.showSelectBox = false;
             } else {
-                $scope.config.selectItems = false
-                $scope.config.showSelectBox = false;
+                $scope.listConfig.selectItems = false
+                $scope.listConfig.showSelectBox = false;
             }
+
+            console.debug("Selection changed: " + $scope.selectType);
+
         };
 
         $scope.showDisabled = false;
@@ -87,43 +107,6 @@
             onClick: handleClick,
             onDblClick: handleDblClick
         };
-        // endregion
-
-        // region --- Data (Items) -------------------------------------------------------------------------------------
-
-        $scope.allItems = [
-            {
-                name: "Active Directory",
-                key: 1,
-                address: "20 Dinosaur Way, Bedrock, Washingstone",
-                birthMonth: 'February'
-            },
-            {
-                name: "Analizer",
-                key: 2,
-                address: "415 East Main Street, Norfolk, Virginia",
-                birthMonth: 'October'
-            },
-            {
-                name: "BRIO",
-                key: 3,
-                address: "234 Elm Street, Pittsburgh, Pennsylvania",
-                birthMonth: 'March'
-            },
-            {
-                name: "Citrix",
-                key: 4,
-                address: "2 Apple Boulevard, Cincinatti, Ohio",
-                birthMonth: 'December'
-            },
-            {
-                name: "CMS",
-                key: 5,
-                address: "50 Second Street, New York, New York",
-                birthMonth: 'February'
-            }
-        ];
-        $scope.items = $scope.allItems;
         // endregion
 
         // region --- Filters ------------------------------------------------------------------------------------------
@@ -228,7 +211,7 @@
 
         var sortChange = function (sortId, isAscending) {
             //$scope.items.sort(compareFn);
-            self.loadEntities();
+            $scope.loadEntities();
             console.debug("sortChange: " + sortId + " ASC?:" + isAscending)
         };
 
@@ -272,42 +255,6 @@
                     actionFn: performAction
                 }
             ],
-            moreActions: [
-                {
-                    name: 'Action',
-                    title: 'Perform an action',
-                    actionFn: performAction
-                },
-                {
-                    name: 'Another Action',
-                    title: 'Do something else',
-                    actionFn: performAction
-                },
-                {
-                    name: 'Disabled Action',
-                    title: 'Unavailable action',
-                    actionFn: performAction,
-                    isDisabled: true
-                },
-                {
-                    name: 'Something Else',
-                    title: '',
-                    actionFn: performAction
-                },
-                {
-                    isSeparator: true
-                },
-                {
-                    name: 'Grouped Action 1',
-                    title: 'Do something',
-                    actionFn: performAction
-                },
-                {
-                    name: 'Grouped Action 2',
-                    title: 'Do something similar',
-                    actionFn: performAction
-                }
-            ],
             actionsInclude: true
         };
 
@@ -320,14 +267,7 @@
 
         // endregion
 
-        self.loadEntities = function () {
-            systemsManager.getAll().then(function (result) {
-                $scope.allItems = result;
-                $scope.items = $scope.allItems;
-                console.debug("Load suceess");
-                console.debug($scope.items);
-            })
-        };
+
         return self;
     }
 })();
