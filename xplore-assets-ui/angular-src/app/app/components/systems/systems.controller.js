@@ -19,17 +19,32 @@
         self.items = [];
         self.totalItems = 0;
 
+        self.currentPage = 1;
+        self.totalPages = 1;
+
+        self.querySort = "";
+        self.queryFilter = "";
+
         // region --- Data Handlers ------------------------------------------------------------------------------------
 
-        self.loadEntities = function () {
-            systemsManager.getAll().then(function (result) {
+        self.loadEntities = function (page) {
+            systemsManager.getAll(page).then(function (result) {
                 self.allItems = result.list;
                 self.items = self.allItems;
-                self.totalItems = self.items.length;
+
+                self.totalItems = result.count;
+                self.currentPage = result.page;
+                self.totalPages = result.pages;
+                
                 self.filterConfig.resultsCount = self.totalItems;
             })
         };
 
+        // Navigation
+        self.navStart = function () { self.loadEntities(1); }
+        self.navPrev = function () { self.loadEntities(self.currentPage - 1); }
+        self.navNext = function () { self.loadEntities(self.currentPage + 1); }
+        self.navEnd = function () { self.loadEntities(self.totalPages); }
         // endregion
 
         // region --- Filters ------------------------------------------------------------------------------------------
@@ -135,11 +150,10 @@
 
         self.actionsConfig = {
             primaryActions: [
-                {
-                    name: 'Add',
-                    title: 'Add entity',
-                    actionFn: performAction
-                }
+                { name: '|<<', title: 'Start', actionFn: self.navStart },
+                { name: '<', title: 'Prev', actionFn: self.navPrev },
+                { name: '>', title: 'Next', actionFn: self.navNext },
+                { name: '>>|', title: 'End', actionFn: self.navEnd }
             ],
             actionsInclude: true
         };

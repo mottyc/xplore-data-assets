@@ -1,0 +1,14 @@
+// TODO: Add pagination to all controllers
+// TODO: Add sorting and filtering to the REST services
+// TODO: sorting and filtering to all controllers
+// TODO: Add edit dialogs (display name, description)
+// TODO: Add relations management to: Business Entities <-> Systems
+// TODO: Add relations management to: Business Entities <-> Tables
+// TODO: Add relations management to: Servers <-> Systems
+// TODO: Add relations management to: Tables <-> Systems
+
+// TODO: Add list views to all components
+// TODO: Add card views to all components
+// TODO: Add icons
+// TODO: Add drill down navigation (with links)
+
