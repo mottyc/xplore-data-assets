@@ -15,27 +15,25 @@
 
         var self = this;
 
-        $scope.allItems = [];
-        $scope.items = [];
-        $scope.totalItems = 0;
+        self.allItems = [];
+        self.items = [];
+        self.totalItems = 0;
 
         // region --- Data Handlers ------------------------------------------------------------------------------------
 
-        $scope.loadEntities = function () {
+        self.loadEntities = function () {
             columnsManager.getAll().then(function (result) {
-                $scope.allItems = result;
-                $scope.items = $scope.allItems;
-                $scope.totalItems = $scope.items.length;
-                $scope.filterConfig.resultsCount = $scope.totalItems;
-
-                console.debug("Load success with " + $scope.totalItems + " Items");
+                self.allItems = result;
+                self.items = self.allItems;
+                self.totalItems = self.items.length;
+                self.filterConfig.resultsCount = self.totalItems;
             })
         };
 
         // endregion
 
         // region --- Filters ------------------------------------------------------------------------------------------
-        $scope.filtersText = '';
+        self.filtersText = '';
 
         var matchesFilter = function (item, filter) {
             var match = true;
@@ -65,57 +63,38 @@
         };
 
         var applyFilters = function (filters) {
-            $scope.items = [];
+            self.items = [];
             if (filters && filters.length > 0) {
-                $scope.allItems.forEach(function (item) {
+                self.allItems.forEach(function (item) {
                     if (matchesFilters(item, filters)) {
-                        $scope.items.push(item);
+                        self.items.push(item);
                     }
                 });
             } else {
-                $scope.items = $scope.allItems;
+                self.items = self.allItems;
             }
         };
 
         var filterChange = function (filters) {
-            $scope.filtersText = "";
+            self.filtersText = "";
             filters.forEach(function (filter) {
-                $scope.filtersText += filter.title + " : " + filter.value + "\n";
+                self.filtersText += filter.title + " : " + filter.value + "\n";
             });
             applyFilters(filters);
-            $scope.toolbarConfig.filterConfig.resultsCount = $scope.items.length;
+            self.toolbarConfig.filterConfig.resultsCount = self.items.length;
         };
 
 
-        $scope.filterConfig = {
+        self.filterConfig = {
             fields: [
                 {
                     id: 'name',
                     title:  'Name',
                     placeholder: 'Filter by Name...',
                     filterType: 'text'
-                },
-                {
-                    id: 'age',
-                    title:  'Age',
-                    placeholder: 'Filter by Age...',
-                    filterType: 'text'
-                },
-                {
-                    id: 'address',
-                    title:  'Address',
-                    placeholder: 'Filter by Address...',
-                    filterType: 'text'
-                },
-                {
-                    id: 'birthMonth',
-                    title:  'Birth Month',
-                    placeholder: 'Filter by Birth Month...',
-                    filterType: 'select',
-                    filterValues: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
                 }
             ],
-            resultsCount: $scope.items.length,
+            resultsCount: self.items.length,
             appliedFilters: [],
             onFilterChange: filterChange
         };
@@ -124,23 +103,22 @@
 
         // region --- Toolbar config -----------------------------------------------------------------------------------
         var viewSelected = function(viewId) {
-            $scope.viewType = viewId
-            console.debug("viewType: " + viewId);
+            self.viewType = viewId
         };
 
-        $scope.viewsConfig = {
+        self.viewsConfig = {
             views: [pfViewUtils.getTableView(), pfViewUtils.getListView()],
             onViewSelect: viewSelected
         };
-        $scope.viewsConfig.currentView = $scope.viewsConfig.views[0].id;
-        $scope.viewType = $scope.viewsConfig.currentView;
+        self.viewsConfig.currentView = self.viewsConfig.views[0].id;
+        self.viewType = self.viewsConfig.currentView;
 
         var sortChange = function (sortId, isAscending) {
             //$scope.items.sort(compareFn);
-            $scope.loadEntities();
+            self.loadEntities();
         };
 
-        $scope.sortConfig = {
+        self.sortConfig = {
             fields: [
                 {
                     id: 'name',
@@ -166,13 +144,13 @@
             onSortChange: sortChange
         };
 
-        $scope.actionsText = "";
+        self.actionsText = "";
         var performAction = function (action) {
-            $scope.actionsText = action.name + "\n" + $scope.actionsText;
+            self.actionsText = action.name + "\n" + self.actionsText;
             console.debug("Action: " + action);
         };
 
-        $scope.actionsConfig = {
+        self.actionsConfig = {
             primaryActions: [
                 {
                     name: 'Add',
@@ -183,11 +161,11 @@
             actionsInclude: true
         };
 
-        $scope.toolbarConfig = {
-            viewsConfig: $scope.viewsConfig,
-            filterConfig: $scope.filterConfig,
-            sortConfig: $scope.sortConfig,
-            actionsConfig: $scope.actionsConfig
+        self.toolbarConfig = {
+            viewsConfig: self.viewsConfig,
+            filterConfig: self.filterConfig,
+            sortConfig: self.sortConfig,
+            actionsConfig: self.actionsConfig
         };
 
         // endregion

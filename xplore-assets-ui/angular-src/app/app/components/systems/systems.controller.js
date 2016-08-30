@@ -14,103 +14,26 @@
     function systemsController($scope, pfViewUtils, systemsManager) {
 
         var self = this;
-        
-        $scope.totalItems = 0;
-        $scope.allItems = [];
-        $scope.items = [];
+
+        self.allItems = [];
+        self.items = [];
+        self.totalItems = 0;
 
         // region --- Data Handlers ------------------------------------------------------------------------------------
 
-        $scope.loadEntities = function () {
+        self.loadEntities = function () {
             systemsManager.getAll().then(function (result) {
-                $scope.allItems = result;
-                $scope.items = $scope.allItems;
-                $scope.totalItems = $scope.items.length;
-                $scope.filterConfig.resultsCount = $scope.totalItems;
-
-                console.debug("Load suceess with " + $scope.totalItems + " Items");
+                self.allItems = result;
+                self.items = self.allItems;
+                self.totalItems = self.items.length;
+                self.filterConfig.resultsCount = self.totalItems;
             })
         };
 
         // endregion
 
-
-        // region --- Event handlers -----------------------------------------------------------------------------------
-
-        $scope.eventText = '';
-        var handleSelect = function (item, e) {
-            $scope.eventText = item.name + ' selected\r\n' + $scope.eventText;
-        };
-
-        var handleSelectionChange = function (selectedItems, e) {
-            $scope.eventText = selectedItems.length + ' items selected\r\n' + $scope.eventText;
-        };
-
-        var handleClick = function (item, e) {
-            $scope.eventText = item.name + ' clicked\r\n' + $scope.eventText;
-        };
-
-        var handleDblClick = function (item, e) {
-            $scope.eventText = item.name + ' double clicked\r\n' + $scope.eventText;
-        };
-
-        var handleCheckBoxChange = function (item, selected, e) {
-            $scope.eventText = item.name + ' checked: ' + item.selected + '\r\n' + $scope.eventText;
-        };
-
-        var checkDisabledItem = function(item) {
-            return $scope.showDisabled && (item.name === "John Smith");
-        };
-
-        $scope.enableButtonForItemFn = function(action, item) {
-            return (action.name !=='Action 2') || (item.name !== "Frank Livingston");
-        };
-
-        $scope.updateMenuActionForItemFn = function(action, item) {
-            if (action.name === 'Another Action') {
-                action.isVisible = (item.name !== "John Smith");
-            }
-        };
-        // endregion
-
-        // region --- List View config ---------------------------------------------------------------------------------
-        $scope.selectType = 'none'; //'checkbox';
-        $scope.updateSelectionType = function() {
-            if ($scope.selectType === 'checkbox') {
-                $scope.listConfig.selectItems = false;
-                $scope.listConfig.showSelectBox = true;
-            } else if ($scope.selectType === 'row') {
-                $scope.listConfig.selectItems = true;
-                $scope.listConfig.showSelectBox = false;
-            } else {
-                $scope.listConfig.selectItems = false
-                $scope.listConfig.showSelectBox = false;
-            }
-
-            console.debug("Selection changed: " + $scope.selectType);
-
-        };
-
-        $scope.showDisabled = false;
-
-        $scope.listConfig = {
-            selectItems: false,
-            multiSelect: false,
-            dblClick: false,
-            selectionMatchProp: 'name',
-            selectedItems: [],
-            checkDisabled: checkDisabledItem,
-            showSelectBox: true,
-            onSelect: handleSelect,
-            onSelectionChange: handleSelectionChange,
-            onCheckBoxChange: handleCheckBoxChange,
-            onClick: handleClick,
-            onDblClick: handleDblClick
-        };
-        // endregion
-
         // region --- Filters ------------------------------------------------------------------------------------------
-        $scope.filtersText = '';
+        self.filtersText = '';
 
         var matchesFilter = function (item, filter) {
             var match = true;
@@ -140,57 +63,38 @@
         };
 
         var applyFilters = function (filters) {
-            $scope.items = [];
+            self.items = [];
             if (filters && filters.length > 0) {
-                $scope.allItems.forEach(function (item) {
+                self.allItems.forEach(function (item) {
                     if (matchesFilters(item, filters)) {
-                        $scope.items.push(item);
+                        self.items.push(item);
                     }
                 });
             } else {
-                $scope.items = $scope.allItems;
+                self.items = self.allItems;
             }
         };
 
         var filterChange = function (filters) {
-            $scope.filtersText = "";
+            self.filtersText = "";
             filters.forEach(function (filter) {
-                $scope.filtersText += filter.title + " : " + filter.value + "\n";
+                self.filtersText += filter.title + " : " + filter.value + "\n";
             });
             applyFilters(filters);
-            $scope.toolbarConfig.filterConfig.resultsCount = $scope.items.length;
+            self.toolbarConfig.filterConfig.resultsCount = self.items.length;
         };
 
 
-        $scope.filterConfig = {
+        self.filterConfig = {
             fields: [
                 {
                     id: 'name',
                     title:  'Name',
                     placeholder: 'Filter by Name...',
                     filterType: 'text'
-                },
-                {
-                    id: 'age',
-                    title:  'Age',
-                    placeholder: 'Filter by Age...',
-                    filterType: 'text'
-                },
-                {
-                    id: 'address',
-                    title:  'Address',
-                    placeholder: 'Filter by Address...',
-                    filterType: 'text'
-                },
-                {
-                    id: 'birthMonth',
-                    title:  'Birth Month',
-                    placeholder: 'Filter by Birth Month...',
-                    filterType: 'select',
-                    filterValues: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
                 }
             ],
-            resultsCount: $scope.items.length,
+            resultsCount: self.items.length,
             appliedFilters: [],
             onFilterChange: filterChange
         };
@@ -199,74 +103,55 @@
 
         // region --- Toolbar config -----------------------------------------------------------------------------------
         var viewSelected = function(viewId) {
-            $scope.viewType = viewId
+            self.viewType = viewId
         };
 
-        $scope.viewsConfig = {
-            views: [pfViewUtils.getTableView(), pfViewUtils.getListView(), pfViewUtils.getCardView()],
+        self.viewsConfig = {
+            views: [pfViewUtils.getTableView(), pfViewUtils.getListView()],
             onViewSelect: viewSelected
         };
-        $scope.viewsConfig.currentView = $scope.viewsConfig.views[1].id;
-        $scope.viewType = $scope.viewsConfig.currentView;
+        self.viewsConfig.currentView = self.viewsConfig.views[0].id;
+        self.viewType = self.viewsConfig.currentView;
 
         var sortChange = function (sortId, isAscending) {
-            //$scope.items.sort(compareFn);
-            $scope.loadEntities();
-            console.debug("sortChange: " + sortId + " ASC?:" + isAscending)
+            self.loadEntities();
         };
 
-        $scope.sortConfig = {
+        self.sortConfig = {
             fields: [
                 {
                     id: 'name',
                     title:  'Name',
-                    sortType: 'alpha'
-                },
-                {
-                    id: 'age',
-                    title:  'Age',
-                    sortType: 'numeric'
-                },
-                {
-                    id: 'address',
-                    title:  'Address',
-                    sortType: 'alpha'
-                },
-                {
-                    id: 'birthMonth',
-                    title:  'Birth Month',
                     sortType: 'alpha'
                 }
             ],
             onSortChange: sortChange
         };
 
-        $scope.actionsText = "";
+        self.actionsText = "";
         var performAction = function (action) {
-            $scope.actionsText = action.name + "\n" + $scope.actionsText;
-            console.debug("Action: " + action);
+            self.actionsText = action.name + "\n" + self.actionsText;
         };
 
-        $scope.actionsConfig = {
+        self.actionsConfig = {
             primaryActions: [
                 {
                     name: 'Add',
-                    title: 'Add system',
+                    title: 'Add entity',
                     actionFn: performAction
                 }
             ],
             actionsInclude: true
         };
 
-        $scope.toolbarConfig = {
-            viewsConfig: $scope.viewsConfig,
-            filterConfig: $scope.filterConfig,
-            sortConfig: $scope.sortConfig,
-            actionsConfig: $scope.actionsConfig
+        self.toolbarConfig = {
+            viewsConfig: self.viewsConfig,
+            filterConfig: self.filterConfig,
+            sortConfig: self.sortConfig,
+            actionsConfig: self.actionsConfig
         };
 
         // endregion
-
 
         return self;
     }

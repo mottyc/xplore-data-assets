@@ -2,16 +2,15 @@
 <div class="container-fluid container-cards-pf container-pf-nav-pf-vertical" ng-controller="systemsController">
     <div class="row">
         <div class="col-md-12">
-            <div pf-toolbar id="listToolbar" config="toolbarConfig"></div>
+            <div pf-toolbar id="listToolbar" config="ctrl.toolbarConfig"></div>
         </div>
     </div>
 
-    <!--<hr class="col-md-12">-->
 
     <!-- The listview -->
-    <div class="col-md-12 list-view-container" ng-if="viewType == 'listView'">
-        <div pf-list-view config="listConfig"
-             items="items">
+    <div class="col-md-12 list-view-container" ng-if="ctrl.viewType == 'listView'">
+        <div pf-list-view config="ctrl.listConfig"
+             items="ctrl.items">
 
             <div class="list-view-pf-main-info">
 
@@ -45,5 +44,45 @@
             </div>
         </div>
     </div>
+
+    <!-- The data table view -->
+    <div class="col-md-12" ng-if="ctrl.viewType == 'tableView'">
+
+        <!--<table datatable="ng" class="datatable table table-striped table-bordered">-->
+        <table class="datatable table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>System Name</th>
+                <th>Application</th>
+                <th>Display Name</th>
+                <th>Department</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in ctrl.items">
+                <td>{{ item.systemName }}</td>
+                <td>{{ item.appName }}</td>
+                <td>{{ item.displayName }}</td>
+                <td>{{ item.systemDepartment }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
+<!--
+ * # MdaSystemModel
+ * {
+ *    systemKey: int,
+ *    systemName: string,
+ *    appName: string,
+ *    displayName: string,
+ *    description: string,
+ *    systemDepartment: string,
+ *
+ *    createDate: string (ISO8601 date),
+ *    updateDate: string (ISO8601 date),
+ *    updateBy: string
+ *
+ * }
+-->

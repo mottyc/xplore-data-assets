@@ -1,5 +1,71 @@
-<div class="container-fluid container-cards-pf container-pf-nav-pf-vertical container-pf-nav-pf-vertical-with-sub-menus   ">
 
-    <p>Relations View</p>
+<div class="container-fluid container-cards-pf container-pf-nav-pf-vertical" ng-controller="relationsController">
+    <div class="row">
+        <div class="col-md-12">
+            <div pf-toolbar id="toolbar" config="ctrl.toolbarConfig"></div>
+        </div>
+    </div>
 
+    <!--  # MdaRelationModel
+ * {
+ *    relationKey: int,
+ *    fullRelationName: string,
+ *    columnKeyPar: int,
+ *    columnKeyRef: int,
+ *    dbName: string,
+ *    schemaNamePar: string,
+ *    tableNamePar: string,
+ *    columnNamePar: string,
+ *    schemaNameRef: string
+ *    tableNameRef: string,
+ *    columnNameRef: string,
+ *    displayName: string,
+ *    description: string,
+ *    relationTypeCd: string,
+ *    relationSource: string,
+ *    relationScore: double,
+ *    dxpColumnGkPar: int,
+ *    tableId: string,
+ *    dxpColumnGk: int,
+ *    dxpTableGk: int,
+ *    dxpColumnGkRef: int,
+ *
+ *    createDate: string (ISO8601 date),
+ *    updateDate: string (ISO8601 date),
+ *    updateBy: string
+ *
+ * }
+    -->
+
+    <!-- The data table view -->
+    <div class="col-md-12" ng-if="ctrl.viewType == 'tableView'">
+
+        <!--<table datatable="ng" class="datatable table table-striped table-bordered">-->
+        <table class="datatable table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Display Name</th>
+                    <th>Database</th>
+                    <th>Parent</th>
+                    <th>Referenced</th>
+                    <th>Type</th>
+                    <th>Score</th>
+                    <th>Source</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in ctrl.items">
+                <td>{{ item.fullRelationName }}</td>
+                <td>{{ item.displayName }}</td>
+                <td>{{ item.dbName }}</td>
+                <td>{{ item.schemaNamePar }}.{{ item.tableNamePar }}.{{ item.columnNamePar }}</td>
+                <td>{{ item.schemaNameRef }}.{{ item.tableNameRef }}.{{ item.columnNameRef }}</td>
+                <td>{{ item.relationTypeCd }}</td>
+                <td>{{ item.relationScore }}</td>
+                <td>{{ item.relationSource }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

@@ -9,14 +9,149 @@
     angular.module('myApp')
         .controller('serversController', serversController);
 
-    serversController.$inject = ["$scope", "$q"];
+    serversController.$inject = ["$scope", "pfViewUtils", "serversManager"];
 
-    function serversController($scope, $q) {
+    function serversController($scope, pfViewUtils, serversManager) {
 
         var self = this;
 
-        self.Heading = "Servers Page";
-        self.Text = "This is a servers list page.";
+        self.allItems = [];
+        self.items = [];
+        self.totalItems = 0;
+
+        // region --- Data Handlers ------------------------------------------------------------------------------------
+
+        self.loadEntities = function () {
+            serversManager.getAll().then(function (result) {
+                self.allItems = result;
+                self.items = self.allItems;
+                self.totalItems = self.items.length;
+                self.filterConfig.resultsCount = self.totalItems;
+            })
+        };
+
+        // endregion
+
+        // region --- Filters ------------------------------------------------------------------------------------------
+        self.filtersText = '';
+
+        var matchesFilter = function (item, filter) {
+            var match = true;
+
+            if (filter.id === 'name') {
+                match = item.name.match(filter.value) !== null;
+            } else if (filter.id === 'age') {
+                match = item.age === parseInt(filter.value);
+            } else if (filter.id === 'address') {
+                match = item.address.match(filter.value) !== null;
+            } else if (filter.id === 'birthMonth') {
+                match = item.birthMonth === filter.value;
+            }
+            return match;
+        };
+
+        var matchesFilters = function (item, filters) {
+            var matches = true;
+
+            filters.forEach(function(filter) {
+                if (!matchesFilter(item, filter)) {
+                    matches = false;
+                    return false;
+                }
+            });
+            return matches;
+        };
+
+        var applyFilters = function (filters) {
+            self.items = [];
+            if (filters && filters.length > 0) {
+                self.allItems.forEach(function (item) {
+                    if (matchesFilters(item, filters)) {
+                        self.items.push(item);
+                    }
+                });
+            } else {
+                self.items = self.allItems;
+            }
+        };
+
+        var filterChange = function (filters) {
+            self.filtersText = "";
+            filters.forEach(function (filter) {
+                self.filtersText += filter.title + " : " + filter.value + "\n";
+            });
+            applyFilters(filters);
+            self.toolbarConfig.filterConfig.resultsCount = self.items.length;
+        };
+
+
+        self.filterConfig = {
+            fields: [
+                {
+                    id: 'name',
+                    title:  'Name',
+                    placeholder: 'Filter by Name...',
+                    filterType: 'text'
+                }
+            ],
+            resultsCount: self.items.length,
+            appliedFilters: [],
+            onFilterChange: filterChange
+        };
+
+        // endregion
+
+        // region --- Toolbar config -----------------------------------------------------------------------------------
+        var viewSelected = function(viewId) {
+            self.viewType = viewId
+        };
+
+        self.viewsConfig = {
+            views: [pfViewUtils.getTableView(), pfViewUtils.getListView()],
+            onViewSelect: viewSelected
+        };
+        self.viewsConfig.currentView = self.viewsConfig.views[0].id;
+        self.viewType = self.viewsConfig.currentView;
+
+        var sortChange = function (sortId, isAscending) {
+            self.loadEntities();
+        };
+
+        self.sortConfig = {
+            fields: [
+                {
+                    id: 'name',
+                    title:  'Name',
+                    sortType: 'alpha'
+                }
+            ],
+            onSortChange: sortChange
+        };
+
+        self.actionsText = "";
+        var performAction = function (action) {
+            self.actionsText = action.name + "\n" + self.actionsText;
+        };
+
+        self.actionsConfig = {
+            primaryActions: [
+                {
+                    name: 'Add',
+                    title: 'Add entity',
+                    actionFn: performAction
+                }
+            ],
+            actionsInclude: true
+        };
+
+        self.toolbarConfig = {
+            viewsConfig: self.viewsConfig,
+            filterConfig: self.filterConfig,
+            sortConfig: self.sortConfig,
+            actionsConfig: self.actionsConfig
+        };
+
+        // endregion
 
         return self;
     }

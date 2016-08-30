@@ -1,5 +1,53 @@
-<div class="container-fluid container-cards-pf container-pf-nav-pf-vertical container-pf-nav-pf-vertical-with-sub-menus   ">
 
-    <p>Schema View</p>
+<div class="container-fluid container-cards-pf container-pf-nav-pf-vertical" ng-controller="schemasController">
+    <div class="row">
+        <div class="col-md-12">
+            <div pf-toolbar id="toolbar" config="ctrl.toolbarConfig"></div>
+        </div>
+    </div>
 
+    <!--
+ * # MdaSchemaModel
+ * {
+ *    schemaKey: int,
+ *    fullSchemaName: string,
+ *    domainKey: int,
+ *    dbName: string,
+ *    schemaName: string,
+ *    displayName: string,
+ *    description: string,
+ *    tables: [...MdaTableModel],
+ *
+ *    createDate: string (ISO8601 date),
+ *    updateDate: string (ISO8601 date),
+ *    updateBy: string
+ *
+ * }
+    -->
+
+    <!-- The data table view -->
+    <div class="col-md-12" ng-if="ctrl.viewType == 'tableView'">
+
+        <!--<table datatable="ng" class="datatable table table-striped table-bordered">-->
+        <table class="datatable table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Database</th>
+                <th>Full Name</th>
+                <th>Display Name</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in ctrl.items">
+                <td>{{ item.schemaName }}</td>
+                <td>{{ item.dbName }}</td>
+                <td>{{ item.fullSchemaName }}</td>
+                <td>{{ item.displayName }}</td>
+                <td>{{ item.description }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

@@ -2,36 +2,16 @@
 <div class="container-fluid container-cards-pf container-pf-nav-pf-vertical" ng-controller="columnsController">
     <div class="row">
         <div class="col-md-12">
-            <div pf-toolbar id="toolbar" config="toolbarConfig"></div>
+            <div pf-toolbar id="toolbar" config="ctrl.toolbarConfig"></div>
         </div>
     </div>
 
-    <!--<hr class="col-md-12">-->
-
-    <!--
-    *    columnKey: int,
-    *    fullColumnName: string,
-    *    tableKey: int,
-    *    dbName: string,
-    *    schemaName: string,
-    *    tableName: string,
-    *    columnName: string,
-    *    displayName: string,
-    *    description: string,
-    *    columnDataType: string,
-    *    isPk: boolean,
-    *    columnPkSource: string,
-    *    columnId: string,
-    *    tableId: string,
-    *    dxpColumnGk: int,
-    *    dxpTableGk: int,
-    -->
 
     <!-- The data table view -->
-    <!--<div class="col-md-12 list-view-container" ng-if="viewType == 'tableView'">-->
-    <div ng-if="viewType == 'tableView'">
+    <div class="col-md-12" ng-if="ctrl.viewType == 'tableView'">
 
-        <table datatable="ng" class="datatable table table-striped table-bordered">
+        <!--<table datatable="ng" class="datatable table table-striped table-bordered">-->
+        <table class="datatable table table-striped table-bordered">
             <thead>
                 <tr>
                     <th>Column</th>
@@ -43,7 +23,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="column in columnsController.items">
+                <tr ng-repeat="column in ctrl.items">
                     <td>{{ column.columnName }}</td>
                     <td>{{ column.tableName }}</td>
                     <td>{{ column.schemaName }}</td>
@@ -57,3 +37,21 @@
 
 </div>
 
+<!--
+*    columnKey: int,
+*    fullColumnName: string,
+*    tableKey: int,
+*    dbName: string,
+*    schemaName: string,
+*    tableName: string,
+*    columnName: string,
+*    displayName: string,
+*    description: string,
+*    columnDataType: string,
+*    isPk: boolean,
+*    columnPkSource: string,
+*    columnId: string,
+*    tableId: string,
+*    dxpColumnGk: int,
+*    dxpTableGk: int,
+-->

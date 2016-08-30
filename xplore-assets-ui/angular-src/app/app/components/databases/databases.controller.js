@@ -9,51 +9,30 @@
     angular.module('myApp')
         .controller('databasesController', databasesController);
 
-    databasesController.$inject = ["$scope", "$q"];
+    databasesController.$inject = ["$scope", "pfViewUtils", "databasesManager"];
 
-    function databasesController($scope, $q) {
+    function databasesController($scope, pfViewUtils, databasesManager) {
 
         var self = this;
 
-        // region --- Data (Items) -------------------------------------------------------------------------------------
+        self.allItems = [];
+        self.items = [];
+        self.totalItems = 0;
 
-        $scope.allItems = [
-            {
-                name: "Active Directory",
-                key: 1,
-                address: "20 Dinosaur Way, Bedrock, Washingstone",
-                birthMonth: 'February'
-            },
-            {
-                name: "Analizer",
-                key: 2,
-                address: "415 East Main Street, Norfolk, Virginia",
-                birthMonth: 'October'
-            },
-            {
-                name: "BRIO",
-                key: 3,
-                address: "234 Elm Street, Pittsburgh, Pennsylvania",
-                birthMonth: 'March'
-            },
-            {
-                name: "Citrix",
-                key: 4,
-                address: "2 Apple Boulevard, Cincinatti, Ohio",
-                birthMonth: 'December'
-            },
-            {
-                name: "CMS",
-                key: 5,
-                address: "50 Second Street, New York, New York",
-                birthMonth: 'February'
-            }
-        ];
-        $scope.items = $scope.allItems;
+        // region --- Data Handlers ------------------------------------------------------------------------------------
+
+        self.loadEntities = function () {
+            databasesManager.getAll().then(function (result) {
+                self.allItems = result;
+                self.items = self.allItems;
+                self.totalItems = self.items.length;
+                self.filterConfig.resultsCount = self.totalItems;
+            })
+        };
         // endregion
 
         // region --- Filters ------------------------------------------------------------------------------------------
-        $scope.filtersText = '';
+        self.filtersText = '';
 
         var matchesFilter = function (item, filter) {
             var match = true;
@@ -83,57 +62,38 @@
         };
 
         var applyFilters = function (filters) {
-            $scope.items = [];
+            self.items = [];
             if (filters && filters.length > 0) {
-                $scope.allItems.forEach(function (item) {
+                self.allItems.forEach(function (item) {
                     if (matchesFilters(item, filters)) {
-                        $scope.items.push(item);
+                        self.items.push(item);
                     }
                 });
             } else {
-                $scope.items = $scope.allItems;
+                self.items = self.allItems;
             }
         };
 
         var filterChange = function (filters) {
-            $scope.filtersText = "";
+            self.filtersText = "";
             filters.forEach(function (filter) {
-                $scope.filtersText += filter.title + " : " + filter.value + "\n";
+                self.filtersText += filter.title + " : " + filter.value + "\n";
             });
             applyFilters(filters);
-            $scope.toolbarConfig.filterConfig.resultsCount = $scope.items.length;
+            self.toolbarConfig.filterConfig.resultsCount = self.items.length;
         };
 
 
-        $scope.filterConfig = {
+        self.filterConfig = {
             fields: [
                 {
                     id: 'name',
                     title:  'Name',
                     placeholder: 'Filter by Name...',
-                    filterType: 'text'
-                },
-                {
-                    id: 'age',
-                    title:  'Age',
-                    placeholder: 'Filter by Age...',
-                    filterType: 'text'
-                },
-                {
-                    id: 'address',
-                    title:  'Address',
-                    placeholder: 'Filter by Address...',
-                    filterType: 'text'
-                },
-                {
-                    id: 'birthMonth',
-                    title:  'Birth Month',
-                    placeholder: 'Filter by Birth Month...',
-                    filterType: 'select',
-                    filterValues: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+                    filterType: 'Filter'
                 }
             ],
-            resultsCount: $scope.items.length,
+            resultsCount: self.items.length,
             appliedFilters: [],
             onFilterChange: filterChange
         };
@@ -142,118 +102,57 @@
 
         // region --- Toolbar config -----------------------------------------------------------------------------------
         var viewSelected = function(viewId) {
-            $scope.viewType = viewId
+            self.viewType = viewId
         };
 
-        $scope.viewsConfig = {
-            views: [pfViewUtils.getTableView(), pfViewUtils.getListView(), pfViewUtils.getCardView()],
+        self.viewsConfig = {
+            views: [pfViewUtils.getTableView(), pfViewUtils.getListView()],
             onViewSelect: viewSelected
         };
-        $scope.viewsConfig.currentView = $scope.viewsConfig.views[1].id;
-        $scope.viewType = $scope.viewsConfig.currentView;
+        self.viewsConfig.currentView = self.viewsConfig.views[0].id;
+        self.viewType = self.viewsConfig.currentView;
 
         var sortChange = function (sortId, isAscending) {
-            //$scope.items.sort(compareFn);
             self.loadEntities();
-            console.debug("sortChange: " + sortId + " ASC?:" + isAscending)
         };
 
-        $scope.sortConfig = {
+        self.sortConfig = {
             fields: [
                 {
                     id: 'name',
                     title:  'Name',
-                    sortType: 'alpha'
-                },
-                {
-                    id: 'age',
-                    title:  'Age',
-                    sortType: 'numeric'
-                },
-                {
-                    id: 'address',
-                    title:  'Address',
-                    sortType: 'alpha'
-                },
-                {
-                    id: 'birthMonth',
-                    title:  'Birth Month',
                     sortType: 'alpha'
                 }
             ],
             onSortChange: sortChange
         };
 
-        $scope.actionsText = "";
+        self.actionsText = "";
         var performAction = function (action) {
-            $scope.actionsText = action.name + "\n" + $scope.actionsText;
+            self.actionsText = action.name + "\n" + self.actionsText;
             console.debug("Action: " + action);
         };
 
-        $scope.actionsConfig = {
+        self.actionsConfig = {
             primaryActions: [
                 {
                     name: 'Add',
-                    title: 'Add system',
-                    actionFn: performAction
-                }
-            ],
-            moreActions: [
-                {
-                    name: 'Action',
-                    title: 'Perform an action',
-                    actionFn: performAction
-                },
-                {
-                    name: 'Another Action',
-                    title: 'Do something else',
-                    actionFn: performAction
-                },
-                {
-                    name: 'Disabled Action',
-                    title: 'Unavailable action',
-                    actionFn: performAction,
-                    isDisabled: true
-                },
-                {
-                    name: 'Something Else',
-                    title: '',
-                    actionFn: performAction
-                },
-                {
-                    isSeparator: true
-                },
-                {
-                    name: 'Grouped Action 1',
-                    title: 'Do something',
-                    actionFn: performAction
-                },
-                {
-                    name: 'Grouped Action 2',
-                    title: 'Do something similar',
+                    title: 'Add entity',
                     actionFn: performAction
                 }
             ],
             actionsInclude: true
         };
 
-        $scope.toolbarConfig = {
-            viewsConfig: $scope.viewsConfig,
-            filterConfig: $scope.filterConfig,
-            sortConfig: $scope.sortConfig,
-            actionsConfig: $scope.actionsConfig
+        self.toolbarConfig = {
+            viewsConfig: self.viewsConfig,
+            filterConfig: self.filterConfig,
+            sortConfig: self.sortConfig,
+            actionsConfig: self.actionsConfig
         };
 
         // endregion
 
-        self.loadEntities = function () {
-            systemsManager.getAll().then(function (result) {
-                $scope.allItems = result;
-                $scope.items = $scope.allItems;
-                console.debug("Load success");
-                console.debug($scope.items);
-            })
-        };
 
         return self;
     }

@@ -1,5 +1,49 @@
-<div class="container-fluid container-cards-pf container-pf-nav-pf-vertical container-pf-nav-pf-vertical-with-sub-menus   ">
 
-    <p>Users View</p>
+<div class="container-fluid container-cards-pf container-pf-nav-pf-vertical" ng-controller="usersController">
+    <div class="row">
+        <div class="col-md-12">
+            <div pf-toolbar id="ctrl.toolbar" config="ctrl.toolbarConfig"></div>
+        </div>
+    </div>
+
+
+    <!-- The data table view -->
+    <div lass="col-md-12" ng-if="ctrl.viewType == 'tableView'">
+
+        <!--<table datatable="ng" class="datatable table table-striped table-bordered">-->
+        <table class="datatable table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>User Key</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Display Name</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in ctrl.items">
+                <td>{{ item.usernameKey }}</td>
+                <td>{{ item.firstName }}</td>
+                <td>{{ item.lastName }}</td>
+                <td>{{ item.displayName }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
 </div>
+
+<!--
+ * # MdaUserModel
+ * {
+ *    usernameKey: string,
+ *    firstName: string,
+ *    lastName: string,
+ *    displayName: string,
+ *
+ *    createDate: string (ISO8601 date),
+ *    updateDate: string (ISO8601 date),
+ *    updateBy: string
+ *
+ * }
+-->
