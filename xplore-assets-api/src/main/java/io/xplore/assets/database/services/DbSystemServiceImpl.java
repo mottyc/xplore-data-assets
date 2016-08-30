@@ -11,6 +11,8 @@ import io.xplore.assets.database.model.MdaSystemEntity;
 import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
 import io.xplore.assets.model.MdaSystem;
+import io.xplore.assets.model.QueryFilter;
+import io.xplore.assets.model.QuerySort;
 import io.xplore.assets.service.SystemService;
 
 import javax.ejb.Stateless;
@@ -85,6 +87,45 @@ public class DbSystemServiceImpl implements SystemService {
             return new QueryResponse<MdaSystem>(err);
         }
     }
+
+    /**
+     * Get list of systems with filter and sort
+     * @param pageNumber Page number for pagination
+     * @param pageSize   Number of items per page
+     * @param filter Query filter
+     * @param sorting Query sort
+     * @return QueryResponse<MdaSystem>
+     */
+    @Override
+    public QueryResponse<MdaSystem> find(int pageNumber, int pageSize, QueryFilter filter, QuerySort sorting) {
+        try {
+            QueryResponse<MdaSystem> response = new QueryResponse<MdaSystem>();
+
+            TypedQuery<MdaSystemEntity> query = em.createNamedQuery("MdaSystemEntity.findAll", MdaSystemEntity.class);
+
+            // Set pages
+            int count = query.getResultList().size();
+            response.setCount(count);
+            response.setPage(pageNumber);
+            response.setPages((count / pageSize) + ((count % pageSize) == 0 ? 0 : 1));
+
+            // Pagination
+            //query.setFirstResult((pageNumber - 1) * pageSize);
+            //query.setMaxResults(pageSize);
+            //query.getResultList().forEach(entity -> {response.getList().add(MdaSystemEntityConverter.get(entity));});
+
+            // Pagination workaround
+            this.processPagination(query, response, pageNumber, pageSize);
+
+            return response;
+        } catch (Exception ex) {
+            String err = String.format("Action failed: %s", ex.getMessage());
+            log.severe(err);
+            return new QueryResponse<MdaSystem>(err);
+        }
+    }
+
+    // ------ Private Section ------------------------------------------------------------------------------------------
 
     /**
      * Implement pagination

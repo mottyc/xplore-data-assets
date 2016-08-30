@@ -11,6 +11,8 @@ import io.xplore.assets.database.model.MdaRelationEntity;
 import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
 import io.xplore.assets.model.MdaRelation;
+import io.xplore.assets.model.QueryFilter;
+import io.xplore.assets.model.QuerySort;
 import io.xplore.assets.service.RelationService;
 
 import javax.ejb.Stateless;
@@ -88,6 +90,48 @@ public class DbRelationServiceImpl implements RelationService {
             return new QueryResponse<MdaRelation>(err);
         }
     }
+
+    /**
+     * Get list of relations with filter and sort
+     * @param parentKey Filter by parent column key (-1 for no filter)
+     * @param pageNumber Page number for pagination
+     * @param pageSize   Number of items per page
+     * @param filter Query filter
+     * @param sorting Query sort
+     * @return QueryResponse<MdaRelation>
+     */
+    @Override
+    public QueryResponse<MdaRelation> find(int parentKey, int pageNumber, int pageSize, QueryFilter filter, QuerySort sorting) {
+        try {
+            QueryResponse<MdaRelation> response = new QueryResponse<MdaRelation>();
+
+            TypedQuery<MdaRelationEntity> query = (parentKey > 0) ?
+                    em.createNamedQuery("MdaRelationEntity.findByParent", MdaRelationEntity.class).setParameter("columnKeyPar", parentKey) :
+                    em.createNamedQuery("MdaRelationEntity.findAll", MdaRelationEntity.class);
+
+            // Set pages
+            int count = query.getResultList().size();
+            response.setCount(count);
+            response.setPage(pageNumber);
+            response.setPages((count / pageSize) + ((count % pageSize) == 0 ? 0 : 1));
+
+            // Pagination
+            //query.setFirstResult((pageNumber - 1) * pageSize);
+            //query.setMaxResults(pageSize);
+            //query.getResultList().forEach(entity -> {response.getList().add(MdaRelationEntityConverter.get(entity));});
+
+            // Pagination workaround
+            this.processPagination(query, response, pageNumber, pageSize);
+
+            return response;
+        } catch (Exception ex) {
+            String err = String.format("Action failed: %s", ex.getMessage());
+            log.severe(err);
+            return new QueryResponse<MdaRelation>(err);
+        }
+    }
+
+    // ------ Private Section ------------------------------------------------------------------------------------------
 
     /**
      * Implement pagination

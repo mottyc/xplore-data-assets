@@ -11,6 +11,8 @@ import io.xplore.assets.database.model.MdaBusinessEntityEntity;
 import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
 import io.xplore.assets.model.MdaBusinessEntity;
+import io.xplore.assets.model.QueryFilter;
+import io.xplore.assets.model.QuerySort;
 import io.xplore.assets.service.BusinessEntityService;
 
 import javax.ejb.Stateless;
@@ -87,6 +89,45 @@ public class DbBusinessEntityServiceImpl implements BusinessEntityService {
     }
 
     /**
+     * Get list of business entities with filter and sort
+     * @param pageNumber Page number for pagination
+     * @param pageSize   Number of items per page
+     * @param filter Query filter
+     * @param sorting Query sort
+     * @return QueryResponse<MdaBusinessEntity>
+     */
+    @Override
+    public QueryResponse<MdaBusinessEntity> find(int pageNumber, int pageSize, QueryFilter filter, QuerySort sorting) {
+        try {
+            QueryResponse<MdaBusinessEntity> response = new QueryResponse<MdaBusinessEntity>();
+
+            TypedQuery<MdaBusinessEntityEntity> query = em.createNamedQuery("MdaBusinessEntityEntity.findAll", MdaBusinessEntityEntity.class);
+
+            // Set pages
+            int count = query.getResultList().size();
+            response.setCount(count);
+            response.setPage(pageNumber);
+            response.setPages((count / pageSize) + ((count % pageSize) == 0 ? 0 : 1));
+
+            // Pagination (currently, SQL do not support pagination)
+            //query.setFirstResult((pageNumber - 1) * pageSize);
+            //query.setMaxResults(pageSize);
+            //query.getResultList().forEach(entity -> {response.getList().add(MdaBusinessEntityConverter.get(entity));});
+
+            // Pagination workaround
+            this.processPagination(query, response, pageNumber, pageSize);
+
+            return response;
+        } catch (Exception ex) {
+            String err = String.format("Action failed: %s", ex.getMessage());
+            log.severe(err);
+            return new QueryResponse<MdaBusinessEntity>(err);
+        }
+    }
+
+    // ------ Private Section ------------------------------------------------------------------------------------------
+
+    /**
      * Implement pagination
      * This is workaround implementation since hybernate does not support MS SQL 2014 syntax yet.
      * @param query The query object
@@ -116,4 +157,6 @@ public class DbBusinessEntityServiceImpl implements BusinessEntityService {
             response.setError(err);
         }
     }
+
+
 }

@@ -11,6 +11,8 @@ import io.xplore.assets.database.model.MdaTableEntity;
 import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
 import io.xplore.assets.model.MdaTable;
+import io.xplore.assets.model.QueryFilter;
+import io.xplore.assets.model.QuerySort;
 import io.xplore.assets.service.TableService;
 
 import javax.ejb.Stateless;
@@ -88,6 +90,48 @@ public class DbTableServiceImpl implements TableService {
             return new QueryResponse<MdaTable>(err);
         }
     }
+
+    /**
+     * Get list of tables with filter and sort
+     * @param schemaKey Filter by schema key (-1 for no filter)
+     * @param pageNumber Page number for pagination
+     * @param pageSize   Number of items per page
+     * @param filter Query filter
+     * @param sorting Query sort
+     * @return QueryResponse<MdaTable>
+     */
+    @Override
+    public QueryResponse<MdaTable> find(int schemaKey, int pageNumber, int pageSize, QueryFilter filter, QuerySort sorting) {
+        try {
+            QueryResponse<MdaTable> response = new QueryResponse<MdaTable>();
+
+            TypedQuery<MdaTableEntity> query = (schemaKey > 0) ?
+                    em.createNamedQuery("MdaTableEntity.findBySchema", MdaTableEntity.class).setParameter("schemaKey", schemaKey) :
+                    em.createNamedQuery("MdaTableEntity.findAll", MdaTableEntity.class);
+
+            // Set pages
+            int count = query.getResultList().size();
+            response.setCount(count);
+            response.setPage(pageNumber);
+            response.setPages((count / pageSize) + ((count % pageSize) == 0 ? 0 : 1));
+
+            // Pagination
+            //query.setFirstResult((pageNumber - 1) * pageSize);
+            //query.setMaxResults(pageSize);
+            //query.getResultList().forEach(entity -> {response.getList().add(MdaTableEntityConverter.get(entity));});
+
+            // Pagination workaround
+            this.processPagination(query, response, pageNumber, pageSize);
+
+            return response;
+        } catch (Exception ex) {
+            String err = String.format("Action failed: %s", ex.getMessage());
+            log.severe(err);
+            return new QueryResponse<MdaTable>(err);
+        }
+    }
+
+    // ------ Private Section ------------------------------------------------------------------------------------------
 
     /**
      * Implement pagination

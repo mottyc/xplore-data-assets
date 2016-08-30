@@ -11,6 +11,8 @@ import io.xplore.assets.database.model.MdaColumnEntity;
 import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
 import io.xplore.assets.model.MdaColumn;
+import io.xplore.assets.model.QueryFilter;
+import io.xplore.assets.model.QuerySort;
 import io.xplore.assets.service.ColumnService;
 
 import javax.ejb.Stateless;
@@ -88,6 +90,47 @@ public class DbColumnServiceImpl implements ColumnService {
             return new QueryResponse<MdaColumn>(err);
         }
     }
+
+    /**
+     * Get list of columns with filter and sort
+     * @param pageNumber Page number for pagination
+     * @param pageSize   Number of items per page
+     * @param filter Query filter
+     * @param sorting Query sort
+     * @return QueryResponse<MdaColumn>
+     */
+    @Override
+    public QueryResponse<MdaColumn> find(int tableKey, int pageNumber, int pageSize, QueryFilter filter, QuerySort sorting) {
+        try {
+            QueryResponse<MdaColumn> response = new QueryResponse<MdaColumn>();
+
+            TypedQuery<MdaColumnEntity> query = (tableKey > 0) ?
+                    em.createNamedQuery("MdaColumnEntity.findByTable", MdaColumnEntity.class).setParameter("tableKey", tableKey):
+                    em.createNamedQuery("MdaColumnEntity.findAll", MdaColumnEntity.class);
+
+            // Set pages
+            int count = query.getResultList().size();
+            response.setCount(count);
+            response.setPage(pageNumber);
+            response.setPages((count / pageSize) + ((count % pageSize) == 0 ? 0 : 1));
+
+            // Pagination
+            //query.setFirstResult((pageNumber - 1) * pageSize);
+            //query.setMaxResults(pageSize);
+            //query.getResultList().forEach(entity -> {response.getList().add(MdaColumnEntityConverter.get(entity));});
+
+            // Pagination workaround
+            this.processPagination(query, response, pageNumber, pageSize);
+
+            return response;
+        } catch (Exception ex) {
+            String err = String.format("Action failed: %s", ex.getMessage());
+            log.severe(err);
+            return new QueryResponse<MdaColumn>(err);
+        }
+    }
+
+    // ------ Private Section ------------------------------------------------------------------------------------------
 
     /**
      * Implement pagination
