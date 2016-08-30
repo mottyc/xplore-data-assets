@@ -50,12 +50,14 @@ angular.module('myApp')
                 },
                 
                 // Load all items
-                getAll: function () {
+                getAll: function (currentPage) {
                     var deferred = $q.defer();
                     var scope = this;
 
                     ApiRequest
-                        .get(resourceName, {})
+                        .get(resourceName, {
+                            page: currentPage
+                        })
                         .then(function (response) {
                             try {
                                 /**
