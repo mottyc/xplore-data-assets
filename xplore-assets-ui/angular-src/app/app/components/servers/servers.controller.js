@@ -35,8 +35,9 @@
                 self.totalItems = result.count;
                 self.currentPage = result.page;
                 self.totalPages = result.pages;
-                
-                self.filterConfig.resultsCount = self.totalItems;
+
+                var str = "Page: " + self.currentPage + " / " + self.totalPages;
+                self.filterConfig.resultsCount = str + ",  Total: " + self.totalItems + "";
             })
         };
 
