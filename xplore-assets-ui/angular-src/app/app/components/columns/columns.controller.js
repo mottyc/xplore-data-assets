@@ -19,17 +19,34 @@
         self.items = [];
         self.totalItems = 0;
 
+        self.currentPage = 1;
+        self.totalPages = 1;
+
+        self.querySort = "";
+        self.queryFilter = "";
+
         // region --- Data Handlers ------------------------------------------------------------------------------------
 
-        self.loadEntities = function () {
-            columnsManager.getAll().then(function (result) {
+        self.loadEntities = function (page) {
+            columnsManager.getAll(page).then(function (result) {
                 self.allItems = result.list;
                 self.items = self.allItems;
-                self.totalItems = self.items.length;
+
+                self.totalItems = result.count;
+                self.currentPage = result.page;
+                self.totalPages = result.pages;
+
                 self.filterConfig.resultsCount = self.totalItems;
+
             })
         };
 
+        // Navigation
+        self.navStart = function () { self.loadEntities(1); }
+        self.navPrev = function () { self.loadEntities(self.currentPage - 1); }
+        self.navNext = function () { self.loadEntities(self.currentPage + 1); }
+        self.navEnd = function () { self.loadEntities(self.totalPages); }
+        
         // endregion
 
         // region --- Filters ------------------------------------------------------------------------------------------
@@ -115,20 +132,21 @@
 
         var sortChange = function (sortId, isAscending) {
             //$scope.items.sort(compareFn);
-            self.loadEntities();
+            console.debug("Sort changed...");
+            self.loadEntities(1);
         };
 
         self.sortConfig = {
             fields: [
                 {
+                    id: 'key',
+                    title:  'Key',
+                    sortType: 'numeric'
+                },
+                {
                     id: 'name',
                     title:  'Name',
                     sortType: 'alpha'
-                },
-                {
-                    id: 'age',
-                    title:  'Age',
-                    sortType: 'numeric'
                 },
                 {
                     id: 'address',
@@ -152,11 +170,10 @@
 
         self.actionsConfig = {
             primaryActions: [
-                {
-                    name: 'Add',
-                    title: 'Add system',
-                    actionFn: performAction
-                }
+                { name: '|<<', title: 'Start', actionFn: self.navStart },
+                { name: '<', title: 'Prev', actionFn: self.navPrev },
+                { name: '>', title: 'Next', actionFn: self.navNext },
+                { name: '>>|', title: 'End', actionFn: self.navEnd }
             ],
             actionsInclude: true
         };
@@ -169,8 +186,7 @@
         };
 
         // endregion
-        
-        
+
         return self;
     }
 })();
