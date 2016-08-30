@@ -23,7 +23,7 @@
 
         self.loadEntities = function () {
             entitiesManager.getAll().then(function (result) {
-                self.allItems = result;
+                self.allItems = result.list;
                 self.items = self.allItems;
                 self.totalItems = self.items.length;
                 self.filterConfig.resultsCount = self.totalItems;

@@ -58,6 +58,7 @@ angular.module('myApp')
                         .get(resourceName, {})
                         .then(function (response) {
                             try {
+                                /**
                                 var list = [];
 
                                 response.data.list.forEach(function (data) {
@@ -65,7 +66,8 @@ angular.module('myApp')
                                     list.push(item);
                                 });
 
-                                deferred.resolve(list);
+                                deferred.resolve(list);**/
+                                deferred.resolve(response.data);
 
                             } catch (e) {
                                 deferred.reject(e);
@@ -93,17 +95,8 @@ angular.module('myApp')
                             search: currentSearch
                         })
                         .then(function (response) {
-
                             try {
-                                var list = [];
-
-                                response.data.list.forEach(function (data) {
-                                    var item = scope._retrieveInstance(data.systemKey, data);
-                                    list.push(item);
-                                });
-
-                                deferred.resolve(list);
-
+                                deferred.resolve(response.data);
                             } catch (e) {
                                 deferred.reject(e);
                             }
