@@ -76,13 +76,47 @@ public class DbSchemaServiceImpl implements SchemaService {
             // Pagination
             //query.setFirstResult((pageNumber - 1) * pageSize);
             //query.setMaxResults(pageSize);
+            //query.getResultList().forEach(entity -> {response.getList().add(MdaSchemaEntityConverter.get(entity));});
 
-            query.getResultList().forEach(entity -> {response.getList().add(MdaSchemaEntityConverter.get(entity));});
+            // Pagination workaround
+            this.processPagination(query, response, pageNumber, pageSize);
+
             return response;
         } catch (Exception ex) {
             String err = String.format("Action failed: %s", ex.getMessage());
             log.severe(err);
             return new QueryResponse<MdaSchema>(err);
+        }
+    }
+
+    /**
+     * Implement pagination
+     * This is workaround implementation since hybernate does not support MS SQL 2014 syntax yet.
+     * @param query The query object
+     * @param response The response object
+     * @param pageNumber Page number
+     * @param pageSize Page size
+     * @return
+     */
+    private void processPagination(TypedQuery<MdaSchemaEntity> query, QueryResponse<MdaSchema> response, int pageNumber, int pageSize ) {
+        try {
+            int row = 1;
+            int fromRow = (pageNumber - 1) * pageSize;
+            int toRow = (pageNumber) * pageSize;
+
+            for (MdaSchemaEntity entity : query.getResultList()) {
+                if (row <= toRow) {
+                    if (row > fromRow) {
+                        response.getList().add(MdaSchemaEntityConverter.get(entity));
+                    }
+                    row += 1;
+                } else {
+                    return;
+                }
+            }
+        } catch (Exception ex) {
+            String err = String.format("Action failed: %s", ex.getMessage());
+            response.setError(err);
         }
     }
 }

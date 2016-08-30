@@ -12,9 +12,6 @@ import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
 import io.xplore.assets.model.MdaBusinessEntity;
 import io.xplore.assets.service.BusinessEntityService;
-import org.hibernate.Query;
-import org.hibernate.ScrollMode;
-import org.hibernate.ScrollableResults;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -76,13 +73,47 @@ public class DbBusinessEntityServiceImpl implements BusinessEntityService {
             // Pagination (currently, SQL do not support pagination)
             //query.setFirstResult((pageNumber - 1) * pageSize);
             //query.setMaxResults(pageSize);
+            //query.getResultList().forEach(entity -> {response.getList().add(MdaBusinessEntityConverter.get(entity));});
 
-            query.getResultList().forEach(entity -> {response.getList().add(MdaBusinessEntityConverter.get(entity));});
+            // Pagination workaround
+            this.processPagination(query, response, pageNumber, pageSize);
+
             return response;
         } catch (Exception ex) {
             String err = String.format("Action failed: %s", ex.getMessage());
             log.severe(err);
             return new QueryResponse<MdaBusinessEntity>(err);
+        }
+    }
+
+    /**
+     * Implement pagination
+     * This is workaround implementation since hybernate does not support MS SQL 2014 syntax yet.
+     * @param query The query object
+     * @param response The response object
+     * @param pageNumber Page number
+     * @param pageSize Page size
+     * @return
+     */
+    private void processPagination(TypedQuery<MdaBusinessEntityEntity> query, QueryResponse<MdaBusinessEntity> response, int pageNumber, int pageSize ) {
+        try {
+            int row = 1;
+            int fromRow = (pageNumber - 1) * pageSize;
+            int toRow = (pageNumber) * pageSize;
+
+            for (MdaBusinessEntityEntity entity : query.getResultList()) {
+                if (row <= toRow) {
+                    if (row > fromRow) {
+                        response.getList().add(MdaBusinessEntityConverter.get(entity));
+                    }
+                    row += 1;
+                } else {
+                    return;
+                }
+            }
+        } catch (Exception ex) {
+            String err = String.format("Action failed: %s", ex.getMessage());
+            response.setError(err);
         }
     }
 }

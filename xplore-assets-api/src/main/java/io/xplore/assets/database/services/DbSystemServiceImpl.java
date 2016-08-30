@@ -73,13 +73,47 @@ public class DbSystemServiceImpl implements SystemService {
             // Pagination
             //query.setFirstResult((pageNumber - 1) * pageSize);
             //query.setMaxResults(pageSize);
+            //query.getResultList().forEach(entity -> {response.getList().add(MdaSystemEntityConverter.get(entity));});
 
-            query.getResultList().forEach(entity -> {response.getList().add(MdaSystemEntityConverter.get(entity));});
+            // Pagination workaround
+            this.processPagination(query, response, pageNumber, pageSize);
+
             return response;
         } catch (Exception ex) {
             String err = String.format("Action failed: %s", ex.getMessage());
             log.severe(err);
             return new QueryResponse<MdaSystem>(err);
+        }
+    }
+
+    /**
+     * Implement pagination
+     * This is workaround implementation since hybernate does not support MS SQL 2014 syntax yet.
+     * @param query The query object
+     * @param response The response object
+     * @param pageNumber Page number
+     * @param pageSize Page size
+     * @return
+     */
+    private void processPagination(TypedQuery<MdaSystemEntity> query, QueryResponse<MdaSystem> response, int pageNumber, int pageSize ) {
+        try {
+            int row = 1;
+            int fromRow = (pageNumber - 1) * pageSize;
+            int toRow = (pageNumber) * pageSize;
+
+            for (MdaSystemEntity entity : query.getResultList()) {
+                if (row <= toRow) {
+                    if (row > fromRow) {
+                        response.getList().add(MdaSystemEntityConverter.get(entity));
+                    }
+                    row += 1;
+                } else {
+                    return;
+                }
+            }
+        } catch (Exception ex) {
+            String err = String.format("Action failed: %s", ex.getMessage());
+            response.setError(err);
         }
     }
 }

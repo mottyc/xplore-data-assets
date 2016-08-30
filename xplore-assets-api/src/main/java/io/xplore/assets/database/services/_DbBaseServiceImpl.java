@@ -50,4 +50,5 @@ public class _DbBaseServiceImpl<T, ID>  {
         T entity = em.find(this.persistentClass, id);
         return entity;
     }
+
 }
