@@ -28,6 +28,8 @@
         // region --- Data Handlers ------------------------------------------------------------------------------------
 
         self.loadEntities = function (page) {
+            page = (page > self.totalPages) ? self.totalPages : page;
+            
             relationsManager.getAll(page).then(function (result) {
                 self.allItems = result.list;
                 self.items = self.allItems;
@@ -37,7 +39,7 @@
                 self.totalPages = result.pages;
 
                 var str = "Page: " + self.currentPage + " / " + self.totalPages;
-                self.filterConfig.resultsCount = str + ",  Total: " + self.totalItems + "";
+                self.filterConfig.resultsCount = str + ",      Total: " + self.totalItems + "";
             })
         };
 
