@@ -19,13 +19,15 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import java.util.logging.Logger;
 
 /**
  * Schema DB service
  */
 @Stateless
-public class DbSchemaServiceImpl implements SchemaService {
+public class DbSchemaServiceImpl extends _DbBaseServiceImpl<MdaSchemaEntity> implements SchemaService {
 
     @Inject
     private Logger log;
@@ -103,22 +105,27 @@ public class DbSchemaServiceImpl implements SchemaService {
     @Override
     public QueryResponse<MdaSchema> find(int databaseKey, int pageNumber, int pageSize, QueryFilter filter, QuerySort sorting) {
         try {
-            QueryResponse<MdaSchema> response = new QueryResponse<MdaSchema>();
+            QueryResponse<MdaSchema> response = new QueryResponse<>();
 
-            TypedQuery<MdaSchemaEntity> query = (databaseKey > 0) ?
-                    em.createNamedQuery("MdaSchemaEntity.findByDatabase", MdaSchemaEntity.class).setParameter("domainKey", databaseKey) :
-                    em.createNamedQuery("MdaSchemaEntity.findAll", MdaSchemaEntity.class);
+            // Set query source
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+
+            // Set filter by table
+            if (databaseKey > -1) {
+                if (filter == null) {
+                    filter = new QueryFilter();
+                }
+                filter.getFilters().put("domainKey", String.valueOf(databaseKey));
+            }
+
+            CriteriaQuery cq = this.buildCriteriaQuery(MdaSchemaEntity.class, cb, filter, sorting);
+            TypedQuery<MdaSchemaEntity> query = em.createQuery(cq);
 
             // Set pages
             int count = query.getResultList().size();
             response.setCount(count);
             response.setPage(pageNumber);
             response.setPages((count / pageSize) + ((count % pageSize) == 0 ? 0 : 1));
-
-            // Pagination
-            //query.setFirstResult((pageNumber - 1) * pageSize);
-            //query.setMaxResults(pageSize);
-            //query.getResultList().forEach(entity -> {response.getList().add(MdaSchemaEntityConverter.get(entity));});
 
             // Pagination workaround
             this.processPagination(query, response, pageNumber, pageSize);

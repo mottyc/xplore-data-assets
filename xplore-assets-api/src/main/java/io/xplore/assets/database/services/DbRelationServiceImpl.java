@@ -19,13 +19,15 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import java.util.logging.Logger;
 
 /**
  * Relation DB service
  */
 @Stateless
-public class DbRelationServiceImpl implements RelationService {
+public class DbRelationServiceImpl extends _DbBaseServiceImpl<MdaRelationEntity> implements RelationService {
 
     @Inject
     private Logger log;
@@ -103,22 +105,27 @@ public class DbRelationServiceImpl implements RelationService {
     @Override
     public QueryResponse<MdaRelation> find(int parentKey, int pageNumber, int pageSize, QueryFilter filter, QuerySort sorting) {
         try {
-            QueryResponse<MdaRelation> response = new QueryResponse<MdaRelation>();
+            QueryResponse<MdaRelation> response = new QueryResponse<>();
 
-            TypedQuery<MdaRelationEntity> query = (parentKey > 0) ?
-                    em.createNamedQuery("MdaRelationEntity.findByParent", MdaRelationEntity.class).setParameter("columnKeyPar", parentKey) :
-                    em.createNamedQuery("MdaRelationEntity.findAll", MdaRelationEntity.class);
+            // Set query source
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+
+            // Set filter by table
+            if (parentKey > -1) {
+                if (filter == null) {
+                    filter = new QueryFilter();
+                }
+                filter.getFilters().put("columnKeyPar", String.valueOf(parentKey));
+            }
+
+            CriteriaQuery cq = this.buildCriteriaQuery(MdaRelationEntity.class, cb, filter, sorting);
+            TypedQuery<MdaRelationEntity> query = em.createQuery(cq);
 
             // Set pages
             int count = query.getResultList().size();
             response.setCount(count);
             response.setPage(pageNumber);
             response.setPages((count / pageSize) + ((count % pageSize) == 0 ? 0 : 1));
-
-            // Pagination
-            //query.setFirstResult((pageNumber - 1) * pageSize);
-            //query.setMaxResults(pageSize);
-            //query.getResultList().forEach(entity -> {response.getList().add(MdaRelationEntityConverter.get(entity));});
 
             // Pagination workaround
             this.processPagination(query, response, pageNumber, pageSize);
@@ -127,7 +134,7 @@ public class DbRelationServiceImpl implements RelationService {
         } catch (Exception ex) {
             String err = String.format("Action failed: %s", ex.getMessage());
             log.severe(err);
-            return new QueryResponse<MdaRelation>(err);
+            return new QueryResponse<>(err);
         }
     }
 

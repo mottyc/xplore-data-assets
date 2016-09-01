@@ -19,13 +19,15 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import java.util.logging.Logger;
 
 /**
  * System DB service
  */
 @Stateless
-public class DbSystemServiceImpl implements SystemService {
+public class DbSystemServiceImpl extends _DbBaseServiceImpl<MdaSystemEntity> implements SystemService {
 
     @Inject
     private Logger log;
@@ -99,20 +101,18 @@ public class DbSystemServiceImpl implements SystemService {
     @Override
     public QueryResponse<MdaSystem> find(int pageNumber, int pageSize, QueryFilter filter, QuerySort sorting) {
         try {
-            QueryResponse<MdaSystem> response = new QueryResponse<MdaSystem>();
+            QueryResponse<MdaSystem> response = new QueryResponse<>();
 
-            TypedQuery<MdaSystemEntity> query = em.createNamedQuery("MdaSystemEntity.findAll", MdaSystemEntity.class);
+            // Set query source
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery cq = this.buildCriteriaQuery(MdaSystemEntity.class, cb, filter, sorting);
+            TypedQuery<MdaSystemEntity> query = em.createQuery(cq);
 
             // Set pages
             int count = query.getResultList().size();
             response.setCount(count);
             response.setPage(pageNumber);
             response.setPages((count / pageSize) + ((count % pageSize) == 0 ? 0 : 1));
-
-            // Pagination
-            //query.setFirstResult((pageNumber - 1) * pageSize);
-            //query.setMaxResults(pageSize);
-            //query.getResultList().forEach(entity -> {response.getList().add(MdaSystemEntityConverter.get(entity));});
 
             // Pagination workaround
             this.processPagination(query, response, pageNumber, pageSize);
@@ -121,7 +121,7 @@ public class DbSystemServiceImpl implements SystemService {
         } catch (Exception ex) {
             String err = String.format("Action failed: %s", ex.getMessage());
             log.severe(err);
-            return new QueryResponse<MdaSystem>(err);
+            return new QueryResponse<>(err);
         }
     }
 

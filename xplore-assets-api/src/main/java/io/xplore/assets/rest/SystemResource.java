@@ -12,6 +12,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -32,7 +33,7 @@ public class SystemResource extends BaseResource {
     /**
      * Get list of systems
      * @param accessToken Access token
-     * @param filter Filter by name
+     * @param filter Filter by field in the format of field:value (multiple values)
      * @param sort Sort by field in the format of field:{asc|desc}
      * @param page Page number (for pagination)
      * @param pageSize Number of results per page (default size: 50 items)
@@ -43,7 +44,7 @@ public class SystemResource extends BaseResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/")
     public QueryResponse<MdaSystem> find(@HeaderParam("X-Access-Token") String accessToken,
-                                         @QueryParam("filter") @DefaultValue("") String filter,
+                                         @QueryParam("filter") @DefaultValue("") List<String> filter,
                                          @QueryParam("sort") @DefaultValue("") String sort,
                                          @QueryParam("page") @DefaultValue("1") int page,
                                          @QueryParam("pageSize") @DefaultValue("0") int pageSize) {

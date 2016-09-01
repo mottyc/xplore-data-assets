@@ -19,13 +19,15 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import java.util.logging.Logger;
 
 /**
  * Table DB service
  */
 @Stateless
-public class DbTableServiceImpl implements TableService {
+public class DbTableServiceImpl extends _DbBaseServiceImpl<MdaTableEntity> implements TableService {
 
     @Inject
     private Logger log;
@@ -103,22 +105,27 @@ public class DbTableServiceImpl implements TableService {
     @Override
     public QueryResponse<MdaTable> find(int schemaKey, int pageNumber, int pageSize, QueryFilter filter, QuerySort sorting) {
         try {
-            QueryResponse<MdaTable> response = new QueryResponse<MdaTable>();
+            QueryResponse<MdaTable> response = new QueryResponse<>();
 
-            TypedQuery<MdaTableEntity> query = (schemaKey > 0) ?
-                    em.createNamedQuery("MdaTableEntity.findBySchema", MdaTableEntity.class).setParameter("schemaKey", schemaKey) :
-                    em.createNamedQuery("MdaTableEntity.findAll", MdaTableEntity.class);
+            // Set query source
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+
+            // Set filter by table
+            if (schemaKey > -1) {
+                if (filter == null) {
+                    filter = new QueryFilter();
+                }
+                filter.getFilters().put("schemaKey", String.valueOf(schemaKey));
+            }
+
+            CriteriaQuery cq = this.buildCriteriaQuery(MdaTableEntity.class, cb, filter, sorting);
+            TypedQuery<MdaTableEntity> query = em.createQuery(cq);
 
             // Set pages
             int count = query.getResultList().size();
             response.setCount(count);
             response.setPage(pageNumber);
             response.setPages((count / pageSize) + ((count % pageSize) == 0 ? 0 : 1));
-
-            // Pagination
-            //query.setFirstResult((pageNumber - 1) * pageSize);
-            //query.setMaxResults(pageSize);
-            //query.getResultList().forEach(entity -> {response.getList().add(MdaTableEntityConverter.get(entity));});
 
             // Pagination workaround
             this.processPagination(query, response, pageNumber, pageSize);
@@ -127,7 +134,7 @@ public class DbTableServiceImpl implements TableService {
         } catch (Exception ex) {
             String err = String.format("Action failed: %s", ex.getMessage());
             log.severe(err);
-            return new QueryResponse<MdaTable>(err);
+            return new QueryResponse<>(err);
         }
     }
 

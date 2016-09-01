@@ -15,17 +15,20 @@ import io.xplore.assets.model.QueryFilter;
 import io.xplore.assets.model.QuerySort;
 import io.xplore.assets.service.ColumnService;
 
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import java.util.logging.Logger;
 
 /**
  * Column DB service
  */
 @Stateless
-public class DbColumnServiceImpl implements ColumnService {
+public class DbColumnServiceImpl extends _DbBaseServiceImpl<MdaColumnEntity> implements ColumnService  {
 
     @Inject
     private Logger log;
@@ -104,20 +107,25 @@ public class DbColumnServiceImpl implements ColumnService {
         try {
             QueryResponse<MdaColumn> response = new QueryResponse<MdaColumn>();
 
-            TypedQuery<MdaColumnEntity> query = (tableKey > 0) ?
-                    em.createNamedQuery("MdaColumnEntity.findByTable", MdaColumnEntity.class).setParameter("tableKey", tableKey):
-                    em.createNamedQuery("MdaColumnEntity.findAll", MdaColumnEntity.class);
+            // Set query source
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+
+            // Set filter by table
+            if (tableKey > -1) {
+                if (filter == null) {
+                    filter = new QueryFilter();
+                }
+                filter.getFilters().put("tableKey", String.valueOf(tableKey));
+            }
+
+            CriteriaQuery cq = this.buildCriteriaQuery(MdaColumnEntity.class, cb, filter, sorting);
+            TypedQuery<MdaColumnEntity> query = em.createQuery(cq);
 
             // Set pages
             int count = query.getResultList().size();
             response.setCount(count);
             response.setPage(pageNumber);
             response.setPages((count / pageSize) + ((count % pageSize) == 0 ? 0 : 1));
-
-            // Pagination
-            //query.setFirstResult((pageNumber - 1) * pageSize);
-            //query.setMaxResults(pageSize);
-            //query.getResultList().forEach(entity -> {response.getList().add(MdaColumnEntityConverter.get(entity));});
 
             // Pagination workaround
             this.processPagination(query, response, pageNumber, pageSize);
@@ -131,6 +139,7 @@ public class DbColumnServiceImpl implements ColumnService {
     }
 
     // ------ Private Section ------------------------------------------------------------------------------------------
+
 
     /**
      * Implement pagination

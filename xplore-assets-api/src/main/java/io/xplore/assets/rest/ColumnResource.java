@@ -5,6 +5,8 @@ import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
 import io.xplore.assets.messages.TokenData;
 import io.xplore.assets.model.MdaColumn;
+import io.xplore.assets.model.QueryFilter;
+import io.xplore.assets.model.QuerySort;
 import io.xplore.assets.service.ColumnService;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
@@ -12,6 +14,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -33,6 +36,7 @@ public class ColumnResource extends BaseResource {
      * Get list of columns
      * @param accessToken Access token
      * @param tableKey Filter by table key
+     * @param filter Filter by field in the format of field:value (multiple values)
      * @param sort Sort by field in the format of field:{asc|desc}
      * @param page Page number (for pagination)
      * @param pageSize Number of results per page (default size: 50 items)
@@ -44,6 +48,7 @@ public class ColumnResource extends BaseResource {
     @Path("/")
     public QueryResponse<MdaColumn> find(@HeaderParam("X-Access-Token") String accessToken,
                                          @QueryParam("table") @DefaultValue("-1") int tableKey,
+                                         @QueryParam("filter") @DefaultValue("") List<String> filter,
                                          @QueryParam("sort") @DefaultValue("") String sort,
                                          @QueryParam("page") @DefaultValue("1") int page,
                                          @QueryParam("pageSize") @DefaultValue("0") int pageSize) {
@@ -55,7 +60,11 @@ public class ColumnResource extends BaseResource {
             page = (page > 0) ? page : 1;
             pageSize = (pageSize > 0) ? pageSize : Consts.DB_PAGE_SIZE;
 
-            return this.service.find(tableKey, page, pageSize);
+            QuerySort sorting = QuerySort.create(sort);
+            QueryFilter filtering = QueryFilter.create(filter);
+
+            //return this.service.find(tableKey, page, pageSize);
+            return this.service.find(tableKey, page, pageSize, filtering, sorting);
         } catch (Exception e) {
             return new QueryResponse<MdaColumn>(e.getMessage());
         }

@@ -19,13 +19,15 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import java.util.logging.Logger;
 
 /**
  * Business entity DB service
  */
 @Stateless
-public class DbBusinessEntityServiceImpl implements BusinessEntityService {
+public class DbBusinessEntityServiceImpl extends _DbBaseServiceImpl<MdaBusinessEntityEntity> implements BusinessEntityService {
 
     @Inject
     private Logger log;
@@ -99,20 +101,18 @@ public class DbBusinessEntityServiceImpl implements BusinessEntityService {
     @Override
     public QueryResponse<MdaBusinessEntity> find(int pageNumber, int pageSize, QueryFilter filter, QuerySort sorting) {
         try {
-            QueryResponse<MdaBusinessEntity> response = new QueryResponse<MdaBusinessEntity>();
+            QueryResponse<MdaBusinessEntity> response = new QueryResponse<>();
 
-            TypedQuery<MdaBusinessEntityEntity> query = em.createNamedQuery("MdaBusinessEntityEntity.findAll", MdaBusinessEntityEntity.class);
+            // Set query source
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery cq = this.buildCriteriaQuery(MdaBusinessEntityEntity.class, cb, filter, sorting);
+            TypedQuery<MdaBusinessEntityEntity> query = em.createQuery(cq);
 
             // Set pages
             int count = query.getResultList().size();
             response.setCount(count);
             response.setPage(pageNumber);
             response.setPages((count / pageSize) + ((count % pageSize) == 0 ? 0 : 1));
-
-            // Pagination (currently, SQL do not support pagination)
-            //query.setFirstResult((pageNumber - 1) * pageSize);
-            //query.setMaxResults(pageSize);
-            //query.getResultList().forEach(entity -> {response.getList().add(MdaBusinessEntityConverter.get(entity));});
 
             // Pagination workaround
             this.processPagination(query, response, pageNumber, pageSize);

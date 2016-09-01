@@ -19,13 +19,15 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import java.util.logging.Logger;
 
 /**
  * Database DB service
  */
 @Stateless
-public class DbDatabaseServiceImpl implements DatabaseService {
+public class DbDatabaseServiceImpl extends _DbBaseServiceImpl<MdaDbEntity> implements DatabaseService {
 
     @Inject
     private Logger log;
@@ -102,11 +104,21 @@ public class DbDatabaseServiceImpl implements DatabaseService {
     @Override
     public QueryResponse<MdaDatabase> find(int serverKey, int pageNumber, int pageSize, QueryFilter filter, QuerySort sorting) {
         try {
-            QueryResponse<MdaDatabase> response = new QueryResponse<MdaDatabase>();
+            QueryResponse<MdaDatabase> response = new QueryResponse<>();
 
-            TypedQuery<MdaDbEntity> query = (serverKey > 0) ?
-                    em.createNamedQuery("MdaDbEntity.findByServer", MdaDbEntity.class).setParameter("serverKey", serverKey) :
-                    em.createNamedQuery("MdaDbEntity.findAll", MdaDbEntity.class);
+            // Set query source
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+
+            // Set filter by table
+            if (serverKey > -1) {
+                if (filter == null) {
+                    filter = new QueryFilter();
+                }
+                filter.getFilters().put("serverKey", String.valueOf(serverKey));
+            }
+
+            CriteriaQuery cq = this.buildCriteriaQuery(MdaDbEntity.class, cb, filter, sorting);
+            TypedQuery<MdaDbEntity> query = em.createQuery(cq);
 
             // Set pages
             int count = query.getResultList().size();
@@ -114,18 +126,14 @@ public class DbDatabaseServiceImpl implements DatabaseService {
             response.setPage(pageNumber);
             response.setPages((count / pageSize) + ((count % pageSize) == 0 ? 0 : 1));
 
-            // Pagination
-            //query.setFirstResult((pageNumber - 1) * pageSize);
-            //query.setMaxResults(pageSize);
-            //query.getResultList().forEach(entity -> {response.getList().add(MdaDbEntityConverter.get(entity));});
-
             // Pagination workaround
             this.processPagination(query, response, pageNumber, pageSize);
+
             return response;
         } catch (Exception ex) {
             String err = String.format("Action failed: %s", ex.getMessage());
             log.severe(err);
-            return new QueryResponse<MdaDatabase>(err);
+            return new QueryResponse<>(err);
         }
     }
 

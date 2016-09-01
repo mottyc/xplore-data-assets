@@ -12,6 +12,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -33,6 +34,7 @@ public class DatabaseResource extends BaseResource {
      * Get list of databases
      * @param accessToken Access token
      * @param serverKey Filter by server key
+     * @param filter Filter by field in the format of field:value (multiple values)
      * @param sort Sort by field in the format of field:{asc|desc}
      * @param page Page number (for pagination)
      * @param pageSize Number of results per page (default size: 50 items)
@@ -44,6 +46,7 @@ public class DatabaseResource extends BaseResource {
     @Path("/")
     public QueryResponse<MdaDatabase> find(@HeaderParam("X-Access-Token") String accessToken,
                                            @QueryParam("server") @DefaultValue("-1") int serverKey,
+                                           @QueryParam("filter") @DefaultValue("") List<String> filter,
                                            @QueryParam("sort") @DefaultValue("") String sort,
                                            @QueryParam("page") @DefaultValue("1") int page,
                                            @QueryParam("pageSize") @DefaultValue("0") int pageSize) {

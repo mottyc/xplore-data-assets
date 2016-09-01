@@ -1,0 +1,25 @@
+# Output Files #
+/target
+/.classpath
+/.project
+/.settings
+/.DS_Store
+
+*.class
+
+# Package Files #
+
+*.war
+*.ear
+
+# IDE Files #
+
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# Ignore auto-generated documentation #
+/src/main/webapp/apidocs
+
+# Ignore version numbering
+buildNumber.properties
