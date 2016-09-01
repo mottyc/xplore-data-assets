@@ -63,7 +63,6 @@ public class ColumnResource extends BaseResource {
             QuerySort sorting = QuerySort.create(sort);
             QueryFilter filtering = QueryFilter.create(filter);
 
-            //return this.service.find(tableKey, page, pageSize);
             return this.service.find(tableKey, page, pageSize, filtering, sorting);
         } catch (Exception e) {
             return new QueryResponse<MdaColumn>(e.getMessage());

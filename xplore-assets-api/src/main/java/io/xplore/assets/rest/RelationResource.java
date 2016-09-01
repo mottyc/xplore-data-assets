@@ -5,6 +5,8 @@ import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
 import io.xplore.assets.messages.TokenData;
 import io.xplore.assets.model.MdaRelation;
+import io.xplore.assets.model.QueryFilter;
+import io.xplore.assets.model.QuerySort;
 import io.xplore.assets.service.RelationService;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
@@ -58,7 +60,10 @@ public class RelationResource extends BaseResource {
             page = (page > 0) ? page : 1;
             pageSize = (pageSize > 0) ? pageSize : Consts.DB_PAGE_SIZE;
 
-            return this.service.find(parentKey, page, pageSize);
+            QuerySort sorting = QuerySort.create(sort);
+            QueryFilter filtering = QueryFilter.create(filter);
+
+            return this.service.find(parentKey, page, pageSize, filtering, sorting);
         } catch (Exception e) {
             return new QueryResponse<MdaRelation>(e.getMessage());
         }
