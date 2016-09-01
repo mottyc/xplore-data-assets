@@ -9,26 +9,36 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
   <!-- build:css(.) styles/vendor.css -->
-
-  <!-- no_bower:css -->
-  <link rel="stylesheet" href="bower_components/patternfly/dist/css/patternfly.css" />
-  <link rel="stylesheet" href="bower_components/patternfly/dist/css/patternfly-additions.css" />
-  <link rel="stylesheet" href="bower_components/angular-patternfly/dist/styles/angular-patternfly.css" />
+  <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/bootstrap-combobox/css/bootstrap-combobox.css" />
+  <link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" />
+  <link rel="stylesheet" href="bower_components/bootstrap-select/dist/css/bootstrap-select.css" />
+  <link rel="stylesheet" href="bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css" />
+  <link rel="stylesheet" href="bower_components/bootstrap-touchspin/src/jquery.bootstrap-touchspin.css" />
   <link rel="stylesheet" href="bower_components/c3/c3.css" />
   <link rel="stylesheet" href="bower_components/datatables/media/css/jquery.dataTables.css" />
   <link rel="stylesheet" href="bower_components/datatables-colvis/css/dataTables.colVis.css" />
-  <link rel="stylesheet" href="bower_components/angular-datatables/dist/css/angular-datatables.css">
-  <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css">
-  <!-- no_endbower -->
-
+  <link rel="stylesheet" href="bower_components/google-code-prettify/bin/prettify.min.css" />
+  <link rel="stylesheet" href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
+  <link rel="stylesheet" href="bower_components/patternfly/dist/css/patternfly.css" />
+  <link rel="stylesheet" href="bower_components/patternfly/dist/css/patternfly-additions.css" />
+  <link rel="stylesheet" href="bower_components/angular-patternfly/dist/styles/angular-patternfly.css" />
+  <link rel="stylesheet" href="bower_components/angular-busy/dist/angular-busy.css" />
+  <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
+  <!-- endbower -->
   <!-- endbuild -->
 
   <!-- build:css(.tmp) styles/main.css -->
-  <link rel="stylesheet" href="styles/app.css">
+  <link rel="stylesheet" href="styles/main.css">
   <!-- endbuild -->
 
 </head>
+
+<!-- Get injected parameters from config servlet -->
+<!--<script type="text/javascript" src="config"></script>-->
+
 <body>
 
 <!-- toolbar -->
@@ -41,21 +51,13 @@
 <div ui-view></div>
 
 <!-- build:js(.) scripts/vendor.js -->
-<!-- no_bower:js -->
+<!-- bower:js -->
 <script src="bower_components/jquery/dist/jquery.js"></script>
-<script src="bower_components/datatables/media/js/jquery.dataTables.js"></script>
-<script src="bower_components/datatables-colreorder/js/dataTables.colReorder.js"></script>
-<script src="bower_components/datatables-colvis/js/dataTables.colVis.js"></script>
-<script src="bower_components/google-code-prettify/bin/prettify.min.js"></script>
-<script src="bower_components/matchHeight/dist/jquery.matchHeight.js"></script>
-
 <script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/angular-animate/angular-animate.js"></script>
-<script src="bower_components/angular-datatables/dist/angular-datatables.js"></script>
 <script src="bower_components/angular-messages/angular-messages.js"></script>
 <script src="bower_components/angular-resource/angular-resource.js"></script>
 <script src="bower_components/angular-loader/angular-loader.js"></script>
-<script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
 <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="bower_components/lodash/lodash.js"></script>
@@ -63,9 +65,14 @@
 <script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 <script src="bower_components/bootstrap-select/dist/js/bootstrap-select.js"></script>
 <script src="bower_components/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
+<script src="bower_components/bootstrap-touchspin/src/jquery.bootstrap-touchspin.js"></script>
 <script src="bower_components/d3/d3.js"></script>
 <script src="bower_components/c3/c3.js"></script>
-
+<script src="bower_components/datatables/media/js/jquery.dataTables.js"></script>
+<script src="bower_components/datatables-colreorder/js/dataTables.colReorder.js"></script>
+<script src="bower_components/datatables-colvis/js/dataTables.colVis.js"></script>
+<script src="bower_components/google-code-prettify/bin/prettify.min.js"></script>
+<script src="bower_components/matchHeight/dist/jquery.matchHeight.js"></script>
 <script src="bower_components/moment/moment.js"></script>
 <script src="bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js"></script>
 <script src="bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
@@ -76,58 +83,71 @@
 <script src="bower_components/angular-busy/dist/angular-busy.js"></script>
 <script src="bower_components/underscore/underscore.js"></script>
 <script src="bower_components/angular-underscore-module/angular-underscore-module.js"></script>
-<!-- no_endbower -->
+<script src="bower_components/angular-datatables/dist/angular-datatables.js"></script>
+<script src="bower_components/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.js"></script>
+<script src="bower_components/angular-datatables/dist/plugins/colreorder/angular-datatables.colreorder.js"></script>
+<script src="bower_components/angular-datatables/dist/plugins/columnfilter/angular-datatables.columnfilter.js"></script>
+<script src="bower_components/angular-datatables/dist/plugins/light-columnfilter/angular-datatables.light-columnfilter.js"></script>
+<script src="bower_components/angular-datatables/dist/plugins/colvis/angular-datatables.colvis.js"></script>
+<script src="bower_components/angular-datatables/dist/plugins/fixedcolumns/angular-datatables.fixedcolumns.js"></script>
+<script src="bower_components/angular-datatables/dist/plugins/fixedheader/angular-datatables.fixedheader.js"></script>
+<script src="bower_components/angular-datatables/dist/plugins/scroller/angular-datatables.scroller.js"></script>
+<script src="bower_components/angular-datatables/dist/plugins/tabletools/angular-datatables.tabletools.js"></script>
+<script src="bower_components/angular-datatables/dist/plugins/buttons/angular-datatables.buttons.js"></script>
+<script src="bower_components/angular-datatables/dist/plugins/select/angular-datatables.select.js"></script>
+<script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
+<!-- endbower -->
 <!-- endbuild -->
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
-<script src="app/app.config.js"></script>
-<script src="app/app.routes.js"></script>
+<script src="scripts/app.config.js"></script>
+<script src="scripts/app.routes.js"></script>
 
 <!-- Directives -->
-<script src="app/directives/mainToolbar/mainToolbar.js"></script>
-<script src="app/directives/mainNavbar/mainNavbar.js"></script>
+<script src="scripts/directives/mainToolbar/mainToolbar.js"></script>
+<script src="scripts/directives/mainNavbar/mainNavbar.js"></script>
 
 <!-- Components -->
-<script src="app/components/columns/columns.controller.js"></script>
-<script src="app/components/dashboard/dashboard.controller.js"></script>
-<script src="app/components/databases/databases.controller.js"></script>
-<script src="app/components/entities/entities.controller.js"></script>
-<script src="app/components/relations/relations.controller.js"></script>
-<script src="app/components/schemas/schemas.controller.js"></script>
-<script src="app/components/servers/servers.controller.js"></script>
-<script src="app/components/systems/systems.controller.js"></script>
-<script src="app/components/tables/tables.controller.js"></script>
-<script src="app/components/users/users.controller.js"></script>
+<script src="scripts/components/columns/columns.controller.js"></script>
+<script src="scripts/components/dashboard/dashboard.controller.js"></script>
+<script src="scripts/components/databases/databases.controller.js"></script>
+<script src="scripts/components/entities/entities.controller.js"></script>
+<script src="scripts/components/relations/relations.controller.js"></script>
+<script src="scripts/components/schemas/schemas.controller.js"></script>
+<script src="scripts/components/servers/servers.controller.js"></script>
+<script src="scripts/components/systems/systems.controller.js"></script>
+<script src="scripts/components/tables/tables.controller.js"></script>
+<script src="scripts/components/users/users.controller.js"></script>
 
 <!-- Services -->
-<script src="app/services/settings.js"></script>
-<script src="app/services/apiRequest.js"></script>
-<script src="app/services/arrayService.js"></script>
-<script src="app/services/units.js"></script>
+<script src="scripts/services/settings.js"></script>
+<script src="scripts/services/apiRequest.js"></script>
+<script src="scripts/services/arrayService.js"></script>
+<script src="scripts/services/units.js"></script>
 
 
 <!-- Models -->
-<script src="app/services/models/MdaBusinessEntityModel.js"></script>
-<script src="app/services/models/MdaColumnModel.js"></script>
-<script src="app/services/models/MdaDatabaseModel.js"></script>
-<script src="app/services/models/MdaRelationModel.js"></script>
-<script src="app/services/models/MdaSchemaModel.js"></script>
-<script src="app/services/models/MdaServerModel.js"></script>
-<script src="app/services/models/MdaSystemModel.js"></script>
-<script src="app/services/models/MdaTableModel.js"></script>
-<script src="app/services/models/MdaUserModel.js"></script>
+<script src="scripts/services/models/MdaBusinessEntityModel.js"></script>
+<script src="scripts/services/models/MdaColumnModel.js"></script>
+<script src="scripts/services/models/MdaDatabaseModel.js"></script>
+<script src="scripts/services/models/MdaRelationModel.js"></script>
+<script src="scripts/services/models/MdaSchemaModel.js"></script>
+<script src="scripts/services/models/MdaServerModel.js"></script>
+<script src="scripts/services/models/MdaSystemModel.js"></script>
+<script src="scripts/services/models/MdaTableModel.js"></script>
+<script src="scripts/services/models/MdaUserModel.js"></script>
 
 
 <!-- Managers -->
-<script src="app/services/managers/columnsManager.js"></script>
-<script src="app/services/managers/databasesManager.js"></script>
-<script src="app/services/managers/entitiesManager.js"></script>
-<script src="app/services/managers/relationsManager.js"></script>
-<script src="app/services/managers/schemasManager.js"></script>
-<script src="app/services/managers/serversManager.js"></script>
-<script src="app/services/managers/systemsManager.js"></script>
-<script src="app/services/managers/tablesManager.js"></script>
-<script src="app/services/managers/usersManager.js"></script>
+<script src="scripts/services/managers/columnsManager.js"></script>
+<script src="scripts/services/managers/databasesManager.js"></script>
+<script src="scripts/services/managers/entitiesManager.js"></script>
+<script src="scripts/services/managers/relationsManager.js"></script>
+<script src="scripts/services/managers/schemasManager.js"></script>
+<script src="scripts/services/managers/serversManager.js"></script>
+<script src="scripts/services/managers/systemsManager.js"></script>
+<script src="scripts/services/managers/tablesManager.js"></script>
+<script src="scripts/services/managers/usersManager.js"></script>
 
 <!-- endbuild -->
 

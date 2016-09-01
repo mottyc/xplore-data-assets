@@ -119,12 +119,12 @@ module.exports = function (grunt) {
             return [
               connect.static('.tmp'),
               connect().use(
-                '/app/bower_components',
-                connect.static('./app/bower_components')
+                  '/bower_components',
+                  connect.static('./bower_components')
               ),
               connect().use(
-                '/app/styles',
-                connect.static('./app/styles')
+                  '/app/styles',
+                  connect.static('./app/styles')
               ),
               connect.static(appConfig.app)
             ];
@@ -139,8 +139,8 @@ module.exports = function (grunt) {
               connect.static('.tmp'),
               connect.static('test'),
               connect().use(
-                '/app/bower_components',
-                connect.static('./app/bower_components')
+                  '/bower_components',
+                  connect.static('./bower_components')
               ),
               connect.static(appConfig.app)
             ];
@@ -272,7 +272,7 @@ module.exports = function (grunt) {
         imagesDir: '<%= yeoman.app %>/images',
         javascriptsDir: '<%= yeoman.app %>/scripts',
         fontsDir: '<%= yeoman.app %>/styles/fonts',
-        importPath: '<%= yeoman.app %>/bower_components',
+        importPath: './bower_components',
         httpImagesPath: '/images',
         httpGeneratedImagesPath: '/images/generated',
         httpFontsPath: '/styles/fonts',
@@ -411,7 +411,7 @@ module.exports = function (grunt) {
     ngtemplates: {
       dist: {
         options: {
-          module: 'arApp',
+          module: 'myApp',
           htmlmin: '<%= htmlmin.dist.options %>',
           usemin: 'scripts/scripts.js'
         },
@@ -472,7 +472,7 @@ module.exports = function (grunt) {
           {
             expand: true,
             cwd: '.',
-            src: '<%= yeoman.app %>/bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
+            src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
             dest: '<%= yeoman.dist %>'
           }
         ]
