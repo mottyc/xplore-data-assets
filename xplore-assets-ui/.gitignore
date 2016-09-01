@@ -22,8 +22,12 @@ hs_err_pid*
 buildNumber.properties
 
 # Ignore auto-copied files #
+/src/main/webapp/fonts
 /src/main/webapp/images
 /src/main/webapp/scripts
 /src/main/webapp/styles
 /src/main/webapp/*.html
+/src/main/webapp/*.txt
+/src/main/webapp/*.ico
+
 

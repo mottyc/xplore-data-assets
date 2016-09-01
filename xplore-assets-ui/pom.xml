@@ -216,7 +216,6 @@
                                     <excludes>
                                         <exclude>**/WEB-INF/**</exclude>
                                         <exclude>**/crossdomain.xml</exclude>
-                                        <exclude>**/favicon.ico</exclude>
                                     </excludes>
   								</fileset>
   							</filesets>
@@ -239,7 +238,7 @@
                         <groupId>org.codehaus.mojo</groupId>
                         <version>1.4.0</version>
                         <executions>
-                            <execution><!-- Run our version calculation script -->
+                            <execution>
                                 <id>buildFrontend</id>
                                 <phase>generate-sources</phase>
                                 <goals>
