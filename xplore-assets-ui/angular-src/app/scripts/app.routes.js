@@ -15,49 +15,49 @@ angular.module('myApp')
             $stateProvider
                 .state('dashboard', {
                     url: '/dashboard',
-                    templateUrl: 'app/components/dashboard/dashboard.html',
+                    templateUrl: 'views/components/dashboard/dashboard.html',
                     controller: 'dashboardController',
                     controllerAs: 'ctrl'
                 })
                 .state('columns', {
                     url: '/columns',
-                    templateUrl: 'app/components/columns/columns.html',
+                    templateUrl: 'views/components/columns/columns.html',
                     controller: 'columnsController',
                     controllerAs: 'ctrl'
                 })
                 .state('databases', {
                     url: '/databases',
-                    templateUrl: 'app/components/databases/databases.html',
+                    templateUrl: 'views/components/databases/databases.html',
                     controller: 'databasesController',
                     controllerAs: 'ctrl'
                 })
                 .state('entities', {
                     url: '/entities',
-                    templateUrl: 'app/components/entities/entities.html',
+                    templateUrl: 'views/components/entities/entities.html',
                     controller: 'entitiesController',
                     controllerAs: 'ctrl'
                 })
                 .state('relations', {
                     url: '/relations',
-                    templateUrl: 'app/components/relations/relations.html',
+                    templateUrl: 'views/components/relations/relations.html',
                     controller: 'relationsController',
                     controllerAs: 'ctrl'
                 })
                 .state('schemas', {
                     url: '/schemas',
-                    templateUrl: 'app/components/schemas/schemas.html',
+                    templateUrl: 'views/components/schemas/schemas.html',
                     controller: 'schemasController',
                     controllerAs: 'ctrl'
                 })
                 .state('servers', {
                     url: '/servers',
-                    templateUrl: 'app/components/servers/servers.html',
+                    templateUrl: 'views/components/servers/servers.html',
                     controller: 'serversController',
                     controllerAs: 'ctrl'
                 })
                 .state('systems', {
                     url: '/systems',
-                    templateUrl: 'app/components/systems/systems.html',
+                    templateUrl: 'views/components/systems/systems.html',
                     controller: 'systemsController',
                     controllerAs: 'ctrl'
                     // resolve: {
@@ -68,13 +68,13 @@ angular.module('myApp')
                 })
                 .state('tables', {
                     url: '/tables',
-                    templateUrl: 'app/components/tables/tables.html',
+                    templateUrl: 'views/components/tables/tables.html',
                     controller: 'tablesController',
                     controllerAs: 'ctrl'
                 })
                 .state('users', {
                     url: '/users',
-                    templateUrl: 'app/components/users/users.html',
+                    templateUrl: 'views/components/users/users.html',
                     controller: 'usersController',
                     controllerAs: 'ctrl'
                 })

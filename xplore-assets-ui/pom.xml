@@ -187,13 +187,13 @@
 
   		<!-- Build -->
   		<profile>
-  			<id>build</id>
+  			<id>build-ui</id>
   			<activation>
   				<activeByDefault>false</activeByDefault>
   			</activation>
   			<build>
   				<plugins>
-  					<!-- clean plugin -->
+  					<!-- clean plugin: delete auto copied static files -->
   					<plugin>
   						<artifactId>maven-clean-plugin</artifactId>
   						<version>3.0.0</version>
@@ -209,10 +209,15 @@
   						<configuration>
   							<filesets>
   								<fileset>
-  									<directory>src/main/webapp/apidocs</directory>
+  									<directory>src/main/webapp</directory>
   									<includes>
-  										<include>**/*.*</include>
+  										<include>**/**</include>
   									</includes>
+                                    <excludes>
+                                        <exclude>**/WEB-INF/**</exclude>
+                                        <exclude>**/crossdomain.xml</exclude>
+                                        <exclude>**/favicon.ico</exclude>
+                                    </excludes>
   								</fileset>
   							</filesets>
   						</configuration>
@@ -227,6 +232,31 @@
   							<skipTests>true</skipTests>
   						</configuration>
   					</plugin>
+
+                    <!-- Script plugin: build ui with grunt -->
+                    <plugin>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <version>1.4.0</version>
+                        <executions>
+                            <execution><!-- Run our version calculation script -->
+                                <id>buildFrontend</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>${basedir}/grunt_tasks.sh</executable>
+                                    <arguments>
+                                        <argument>${basedir}/angular-src</argument>
+                                        <argument>${basedir}/src/main/webapp</argument>
+                                        <argument>build</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
   				</plugins>
   			</build>
   		</profile>
@@ -265,6 +295,7 @@
                                     <executable>${basedir}/grunt_tasks.sh</executable>
                                     <arguments>
                                         <argument>${basedir}/angular-src</argument>
+                                        <argument>${basedir}/src/main/webapp</argument>
                                         <argument>build</argument>
                                     </arguments>
                                 </configuration>

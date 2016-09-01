@@ -2,7 +2,7 @@
 
 /**
  * @ngdoc Tables data manager
- * @name mypp.tablesManager
+ * @name myApp.tablesManager
  * @description Tables data manager
  */
 angular.module('myApp')
@@ -52,7 +52,6 @@ angular.module('myApp')
                 // Load all items
                 getAll: function (currentPage) {
                     var deferred = $q.defer();
-                    var scope = this;
 
                     ApiRequest
                         .get(resourceName, {
@@ -75,7 +74,6 @@ angular.module('myApp')
                 // Search items
                 find: function (search) {
                     var deferred = $q.defer();
-                    var scope = this;
                     var currentSearch = search || null;
 
                     if (currentSearch === null) {
@@ -104,7 +102,7 @@ angular.module('myApp')
                 // Save/Update item and get an its instance in return
                 set: function (data) {
                     var scope = this;
-                    var item = this._search(data.tableKey);
+                    var item = this.get(data.tableKey);
                     if (item) {
                         item.setData(data);
                     } else {

@@ -9,9 +9,9 @@
     angular.module('myApp')
         .controller('entitiesController', entitiesController);
 
-    entitiesController.$inject = ["$scope", "pfViewUtils", "entitiesManager"];
+    entitiesController.$inject = ["pfViewUtils", "entitiesManager"];
 
-    function entitiesController($scope, pfViewUtils, entitiesManager) {
+    function entitiesController(pfViewUtils, entitiesManager) {
 
         var self = this;
 
@@ -44,10 +44,10 @@
         };
 
         // Navigation
-        self.navStart = function () { self.loadEntities(1); }
-        self.navPrev = function () { self.loadEntities(self.currentPage - 1); }
-        self.navNext = function () { self.loadEntities(self.currentPage + 1); }
-        self.navEnd = function () { self.loadEntities(self.totalPages); }
+        self.navStart = function () { self.loadEntities(1); };
+        self.navPrev = function () { self.loadEntities(self.currentPage - 1); };
+        self.navNext = function () { self.loadEntities(self.currentPage + 1); };
+        self.navEnd = function () { self.loadEntities(self.totalPages); };
         // endregion
 
         // region --- Filters ------------------------------------------------------------------------------------------
@@ -58,12 +58,6 @@
 
             if (filter.id === 'name') {
                 match = item.name.match(filter.value) !== null;
-            } else if (filter.id === 'age') {
-                match = item.age === parseInt(filter.value);
-            } else if (filter.id === 'address') {
-                match = item.address.match(filter.value) !== null;
-            } else if (filter.id === 'birthMonth') {
-                match = item.birthMonth === filter.value;
             }
             return match;
         };
@@ -121,7 +115,7 @@
 
         // region --- Toolbar config -----------------------------------------------------------------------------------
         var viewSelected = function(viewId) {
-            self.viewType = viewId
+            self.viewType = viewId;
         };
 
         self.viewsConfig = {
@@ -132,6 +126,7 @@
         self.viewType = self.viewsConfig.currentView;
 
         var sortChange = function (sortId, isAscending) {
+            console.debug("Sort: " + sortId + " - " + isAscending);
             self.loadEntities();
         };
 
@@ -147,10 +142,6 @@
         };
 
         self.actionsText = "";
-        var performAction = function (action) {
-            self.actionsText = action.name + "\n" + self.actionsText;
-            console.debug("Action: " + action);
-        };
 
         self.actionsConfig = {
             primaryActions: [

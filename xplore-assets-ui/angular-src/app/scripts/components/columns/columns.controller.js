@@ -118,7 +118,7 @@
 
         // region --- Toolbar config -----------------------------------------------------------------------------------
         var viewSelected = function(viewId) {
-            self.viewType = viewId
+            self.viewType = viewId;
         };
 
         self.viewsConfig = {

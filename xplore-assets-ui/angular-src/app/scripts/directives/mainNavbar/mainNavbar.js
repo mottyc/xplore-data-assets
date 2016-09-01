@@ -15,7 +15,7 @@ angular.module('myApp')
     .directive('mainNavbar', function () {
         return {
             restrict: 'E',
-            templateUrl: 'app/directives/mainNavbar/mainNavbar.html',
+            templateUrl: 'views/directives/mainNavbar/mainNavbar.html',
             controllerAs: 'mainNavbarCtrl',
             controller: [
                 '$rootScope', '$scope', '$state', 'settings',

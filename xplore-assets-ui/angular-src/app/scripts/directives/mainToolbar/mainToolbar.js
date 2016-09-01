@@ -15,7 +15,7 @@ angular.module('myApp')
     .directive('mainToolbar', function () {
         return {
             restrict: 'E',
-            templateUrl: 'app/directives/mainToolbar/mainToolbar.html',
+            templateUrl: 'views/directives/mainToolbar/mainToolbar.html',
             controllerAs: 'mainToolbarCtrl',
             controller: [
                 '$rootScope', '$scope', '$state', 'settings',

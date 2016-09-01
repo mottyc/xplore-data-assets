@@ -9,15 +9,12 @@
     angular.module('myApp')
         .controller('dashboardController', dashboardController);
 
-    dashboardController.$inject = ["$scope", "$q"];
+    //dashboardController.$inject = ["$scope", "$q"];
 
-    function dashboardController($scope, $q) {
+    function dashboardController() {
 
         var self = this;
-
-        self.Heading = "Dashboard Page";
-        self.Text = "This is a dashboard page.";
-
+        
         return self;
     }
 })();
