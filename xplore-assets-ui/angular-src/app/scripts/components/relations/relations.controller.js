@@ -49,6 +49,9 @@
         self.navNext = function () { self.loadEntities(self.currentPage + 1); };
         self.navEnd = function () { self.loadEntities(self.totalPages); };
 
+        var performAction = function(action, item) {
+            console.debug("Action: " + action + " On: " + item);
+        };
         // endregion
 
         // region --- Filters ------------------------------------------------------------------------------------------
@@ -120,7 +123,7 @@
         };
 
         self.viewsConfig = {
-            views: [pfViewUtils.getTableView(), pfViewUtils.getListView()],
+            views: [pfViewUtils.getTableView(), pfViewUtils.getListView(), pfViewUtils.getCardView()],
             onViewSelect: viewSelected
         };
         self.viewsConfig.currentView = self.viewsConfig.views[0].id;
@@ -161,6 +164,55 @@
             actionsConfig: self.actionsConfig
         };
 
+        // endregion
+        
+        // region --- List Config --------------------------------------------------------------------------------------
+
+        self.listConfig = {
+            selectItems: false,
+            multiSelect: false,
+            dblClick: false,
+            selectionMatchProp: 'columnKey',
+            selectedItems: [],
+            //checkDisabled: checkDisabledItem,
+            showSelectBox: false,
+            //onSelect: handleSelect,
+            //onSelectionChange: handleSelectionChange,
+            //onCheckBoxChange: handleCheckBoxChange,
+            //onClick: handleClick,
+            //onDblClick: handleDblClick
+        };
+
+        self.listActionButtons = [
+            {
+                name: 'Edit',
+                title: 'Edit',
+                actionFn: performAction
+            },
+            {
+                name: 'Link',
+                title: 'Link',
+                actionFn: performAction
+            }
+        ];
+        // endregion
+
+        // region --- Card Config --------------------------------------------------------------------------------------
+
+        self.cardConfig = {
+            selectItems: false,
+            multiSelect: false,
+            dblClick: false,
+            selectionMatchProp: 'columnKey',
+            selectedItems: [],
+            //checkDisabled: checkDisabledItem,
+            showSelectBox: false,
+            //onSelect: handleSelect,
+            //onSelectionChange: handleSelectionChange,
+            //onCheckBoxChange: handleCheckBoxChange,
+            //onClick: handleClick,
+            //onDblClick: handleDblClick
+        };
         // endregion
 
         return self;

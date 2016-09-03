@@ -6,14 +6,23 @@
 (function () {
     'use strict';
 
-    angular.module('myApp')
-        .controller('schemasController', schemasController);
+    angular.module('myApp', ['datatables'])
+        .controller('columnsController2', columnsController2);
 
-    schemasController.$inject = ["pfViewUtils", "schemasManager"];
+    columnsController2.$inject = ['DTOptionsBuilder', 'DTColumnBuilder', 'pfViewUtils', 'columnsManager'];
 
-    function schemasController(pfViewUtils, schemasManager) {
+    function columnsController2(DTOptionsBuilder, DTColumnBuilder, pfViewUtils, columnsManager) {
 
         var self = this;
+
+        self.dtOptions = DTOptionsBuilder.fromSource('data.json')
+            .withPaginationType('full_numbers');
+
+        self.dtColumns = [
+            DTColumnBuilder.newColumn('id').withTitle('ID'),
+            DTColumnBuilder.newColumn('firstName').withTitle('First name'),
+            DTColumnBuilder.newColumn('lastName').withTitle('Last name').notVisible()
+        ];
 
         self.allItems = [];
         self.items = [];
@@ -28,8 +37,10 @@
         // region --- Data Handlers ------------------------------------------------------------------------------------
 
         self.loadEntities = function (page) {
+
             page = (page > self.totalPages) ? self.totalPages : page;
-            schemasManager.getAll(page).then(function (result) {
+
+            columnsManager.getAll(page).then(function (result) {
                 self.allItems = result.list;
                 self.items = self.allItems;
 
@@ -39,6 +50,7 @@
 
                 var str = "Page: " + self.currentPage + " / " + self.totalPages;
                 self.filterConfig.resultsCount = str + ",      Total: " + self.totalItems + "";
+
             })
         };
 
@@ -47,10 +59,7 @@
         self.navPrev = function () { self.loadEntities(self.currentPage - 1); };
         self.navNext = function () { self.loadEntities(self.currentPage + 1); };
         self.navEnd = function () { self.loadEntities(self.totalPages); };
-
-        var performAction = function(action, item) {
-            console.debug("Action: " + action + " On: " + item);
-        };
+        
         // endregion
 
         // region --- Filters ------------------------------------------------------------------------------------------
@@ -122,7 +131,7 @@
         };
 
         self.viewsConfig = {
-            views: [pfViewUtils.getTableView(), pfViewUtils.getListView(), pfViewUtils.getCardView()],
+            views: [pfViewUtils.getTableView(), pfViewUtils.getListView()],
             onViewSelect: viewSelected
         };
         self.viewsConfig.currentView = self.viewsConfig.views[0].id;
@@ -130,11 +139,16 @@
 
         var sortChange = function (sortId, isAscending) {
             console.debug("Sort: " + sortId + " - " + isAscending);
-            self.loadEntities();
+            self.loadEntities(1);
         };
 
         self.sortConfig = {
             fields: [
+                {
+                    id: 'key',
+                    title:  'Key',
+                    sortType: 'numeric'
+                },
                 {
                     id: 'name',
                     title:  'Name',
@@ -163,55 +177,6 @@
             actionsConfig: self.actionsConfig
         };
 
-        // endregion
-
-        // region --- List Config --------------------------------------------------------------------------------------
-
-        self.listConfig = {
-            selectItems: false,
-            multiSelect: false,
-            dblClick: false,
-            selectionMatchProp: 'columnKey',
-            selectedItems: [],
-            //checkDisabled: checkDisabledItem,
-            showSelectBox: false,
-            //onSelect: handleSelect,
-            //onSelectionChange: handleSelectionChange,
-            //onCheckBoxChange: handleCheckBoxChange,
-            //onClick: handleClick,
-            //onDblClick: handleDblClick
-        };
-
-        self.listActionButtons = [
-            {
-                name: 'Edit',
-                title: 'Edit',
-                actionFn: performAction
-            },
-            {
-                name: 'Link',
-                title: 'Link',
-                actionFn: performAction
-            }
-        ];
-        // endregion
-
-        // region --- Card Config --------------------------------------------------------------------------------------
-
-        self.cardConfig = {
-            selectItems: false,
-            multiSelect: false,
-            dblClick: false,
-            selectionMatchProp: 'columnKey',
-            selectedItems: [],
-            //checkDisabled: checkDisabledItem,
-            showSelectBox: false,
-            //onSelect: handleSelect,
-            //onSelectionChange: handleSelectionChange,
-            //onCheckBoxChange: handleCheckBoxChange,
-            //onClick: handleClick,
-            //onDblClick: handleDblClick
-        };
         // endregion
 
         return self;

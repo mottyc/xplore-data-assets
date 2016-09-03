@@ -1,0 +1,32 @@
+
+<div class="container-fluid container-cards-pf container-pf-nav-pf-vertical" ng-controller="columnsController">
+    <div class="row">
+        <div class="col-md-12">
+            <div pf-toolbar id="toolbar" config="ctrl.toolbarConfig"></div>
+        </div>
+    </div>
+
+
+    <!-- The data table view -->
+    <table datatable="" dt-options="ctrl.dtOptions" dt-columns="ctrl.dtColumns" class="row-border hover"></table>
+</div>
+
+
+<!--
+*    columnKey: int,
+*    fullColumnName: string,
+*    tableKey: int,
+*    dbName: string,
+*    schemaName: string,
+*    tableName: string,
+*    columnName: string,
+*    displayName: string,
+*    description: string,
+*    columnDataType: string,
+*    isPk: boolean,
+*    columnPkSource: string,
+*    columnId: string,
+*    tableId: string,
+*    dxpColumnGk: int,
+*    dxpTableGk: int,
+-->

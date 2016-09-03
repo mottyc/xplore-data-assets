@@ -18,7 +18,7 @@
  *    displayName: string,
  *    description: string,
  *    dbTypeCd: string,
- *    technicalOwnerUsernameKey: int,
+ *    technicalOwnerUsernameKey: String,
  *    dxpConnectionId: int,
  *    schemas: [...MdaSchemaModel],
  *

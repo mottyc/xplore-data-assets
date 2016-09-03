@@ -1,3 +1,4 @@
+
 <div class="container-fluid container-cards-pf container-pf-nav-pf-vertical" ng-controller="usersController">
     <div class="row">
         <div class="col-md-12">
@@ -5,6 +6,77 @@
         </div>
     </div>
 
+    <!-- The Card view -->
+    <div class="col-md-12 card-view-container" ng-if="ctrl.viewType == 'cardView'">
+        <div pf-card-view id="databaseCardView" class="card-pf-view"
+             config="ctrl.cardConfig"
+             items="ctrl.items">
+
+            <div class="card-pf-body">
+                <div class="card-pf-top-element">
+                    <span class="fa fa-database card-pf-icon-circle"></span>
+                </div>
+
+                <h3 class="card-pf-title text-center">{{item.displayName}}</h3>
+
+                <div class="card-pf-items text-center">
+                    <div class="card-pf-item"  data-toggle="tooltip" title="Database Type">
+                        <span class="pficon pficon-storage-domain"></span>
+                        <span class="card-pf-item-text">{{item.dbTypeCd}}</span>
+                    </div>
+                    <div class="card-pf-item"  data-toggle="tooltip" title="Database Owner">
+                        <span class="pficon pficon-user"></span>
+                        <span class="card-pf-item-text">{{item.technicalOwnerUsernameKey}}</span>
+                    </div>
+                </div>
+
+                <div class="card-pf-info text-center">
+                    <div class="card-pf-item"  data-toggle="tooltip" title="Database Schemas">
+                        <span class="fa fa-sitemap"></span>
+                        <span class="card-pf-item-text"><a ui-sref="schemas">Schemas</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- The list view -->
+    <div class="col-md-12 list-view-container" ng-if="ctrl.viewType == 'listView'">
+        <div pf-list-view id="databaseListView"
+             config="ctrl.listConfig"
+             items="ctrl.items"
+             action-buttons="ctrl.listActionButtons">
+
+            <div class="list-view-pf-main-info">
+
+                <div class="list-view-pf-left">
+                    <span class="fa fa-database list-view-pf-icon-sm"></span>
+                </div>
+
+                <div class="list-view-pf-body">
+                    <div class="list-view-pf-description">
+                        <div class="list-group-item-heading">
+                            {{item.displayName}}
+                        </div>
+                        <div class="list-group-item-text">
+                            {{item.dbName}}
+                        </div>
+                    </div>
+
+                    <div class="list-view-pf-additional-info">
+                        <div class="list-view-pf-additional-info-item">
+                            <span class="pficon pficon-storage-domain"></span>
+                            <strong>Type</strong> {{item.dbTypeCd}}
+                        </div>
+                        <div class="list-view-pf-additional-info-item">
+                            <span class="pficon pficon-user"></span>
+                            <strong>Owner</strong> {{item.technicalOwnerUsernameKey}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- The data table view -->
     <div lass="col-md-12" ng-if="ctrl.viewType == 'tableView'">
@@ -33,3 +105,25 @@
     </div>
 
 </div>
+
+<!--
+ * # MdaDatabaseModel
+ * {
+ *    domainKey: int,
+ *    fullDbName: string,
+ *    serverKey: int,
+ *    dbName: string,
+ *    displayName: string,
+ *    description: string,
+ *    dbTypeCd: string,
+ *    technicalOwnerUsernameKey: String,
+ *    dxpConnectionId: int,
+ *    schemas: [...MdaSchemaModel],
+ *
+ *    createDate: string (ISO8601 date),
+ *    updateDate: string (ISO8601 date),
+ *    updateBy: string
+ *
+ * }
+
+-->
