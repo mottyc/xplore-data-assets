@@ -7,14 +7,59 @@
     </div>
 
 
-    <!-- The listview -->
+    <!-- The Card view -->
+    <div class="col-md-12 card-view-container" ng-if="ctrl.viewType == 'cardView'">
+        <div pf-card-view id="systemsCardView" class="card-pf-view"
+             config="ctrl.cardConfig"
+             items="ctrl.items">
+
+            <div class="card-pf-body">
+                <div class="card-pf-top-element">
+                    <span class="fa fa-database card-pf-icon-circle"></span>
+                </div>
+
+                <h3 class="card-pf-title text-center">{{item.displayName}}</h3>
+
+                <div class="card-pf-items text-center">
+                    <div class="card-pf-item"  data-toggle="tooltip" title="System">
+                        <span class="pficon pficon-storage-domain"></span>
+                        <span class="card-pf-item-text">{{item.systemName}}</span>
+                    </div>
+                    <div class="card-pf-item"  data-toggle="tooltip" title="Application">
+                        <span class="pficon pficon-user"></span>
+                        <span class="card-pf-item-text">{{item.appName}}</span>
+                    </div>
+                    <div class="card-pf-item"  data-toggle="tooltip" title="Department">
+                        <span class="pficon pficon-user"></span>
+                        <span class="card-pf-item-text">{{item.systemDepartment}}</span>
+                    </div>
+                </div>
+
+                <div class="card-pf-info text-center">
+                    <div class="card-pf-item"  data-toggle="tooltip" title="Related Servers">
+                        <span class="pficon pficon-cluster"></span>
+                        <span class="card-pf-item-text"><a ui-sref="servers">Servers</a></span>
+                    </div>
+                    <div class="card-pf-item"  data-toggle="tooltip" title="Related Tables">
+                        <span class="fa fa-table"></span>
+                        <span class="card-pf-item-text"><a ui-sref="tables">Tables</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- The list view -->
     <div class="col-md-12 list-view-container" ng-if="ctrl.viewType == 'listView'">
-        <div pf-list-view config="ctrl.listConfig" items="ctrl.items">
+        <div pf-list-view id="systemsListView"
+             config="ctrl.listConfig"
+             items="ctrl.items"
+             action-buttons="ctrl.listActionButtons">
 
             <div class="list-view-pf-main-info">
 
                 <div class="list-view-pf-left">
-                    <span class="fa pficon-cluster list-view-pf-icon-sm"></span>
+                    <span class="fa fa-database list-view-pf-icon-sm"></span>
                 </div>
 
                 <div class="list-view-pf-body">
@@ -23,20 +68,18 @@
                             {{item.displayName}}
                         </div>
                         <div class="list-group-item-text">
-                            {{item.displayName}}
+                            {{item.dbName}}
                         </div>
                     </div>
 
                     <div class="list-view-pf-additional-info">
                         <div class="list-view-pf-additional-info-item">
-                            {{item.appName}}
+                            <span class="pficon pficon-storage-domain"></span>
+                            <span class="list-group-item-text">{{item.dbTypeCd}}</span>
                         </div>
                         <div class="list-view-pf-additional-info-item">
-                            {{item.description}}
-                        </div>
-                        <div class="list-view-pf-additional-info-item">
-                            <span class="pficon pficon-cluster"></span>
-                            {{item.systemDepartment}}
+                            <span class="pficon pficon-user"></span>
+                            <span class="list-group-item-text">{{item.technicalOwnerUsernameKey}}</span>
                         </div>
                     </div>
                 </div>

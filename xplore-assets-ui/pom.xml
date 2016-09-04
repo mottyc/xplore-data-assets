@@ -336,7 +336,7 @@
                                     <goal>exec</goal>
                                 </goals>
                                 <configuration>
-                                    <executable>${basedir}/grunt_tasks.sh</executable>
+                                    <executable>${basedir}/grunt_serve.sh</executable>
                                     <arguments>
                                         <argument>${basedir}/angular-src</argument>
                                         <argument>serve</argument>

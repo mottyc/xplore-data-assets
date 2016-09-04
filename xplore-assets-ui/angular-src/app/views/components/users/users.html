@@ -6,6 +6,83 @@
         </div>
     </div>
 
+    <!-- The Card view -->
+    <div class="col-md-12 card-view-container" ng-if="ctrl.viewType == 'cardView'">
+        <div pf-card-view id="usersCardView" class="card-pf-view"
+             config="ctrl.cardConfig"
+             items="ctrl.items">
+
+            <div class="card-pf-body">
+                <div class="card-pf-top-element">
+                    <span class="fa fa-user card-pf-icon-circle"></span>
+                </div>
+
+                <h3 class="card-pf-title text-center">{{item.displayName}}</h3>
+
+                <div class="card-pf-items text-center">
+                    <div class="card-pf-item" data-toggle="tooltip" title="First Name">
+                        <span class="card-pf-item-text">{{item.firstName}}</span>
+                    </div>
+                    <div class="card-pf-item" data-toggle="tooltip" title="Last Name">
+                        <span class="card-pf-item-text">{{item.lastName}}</span>
+                    </div>
+                </div>
+
+                <div class="card-pf-info text-center">
+                    <div class="card-pf-item"  data-toggle="tooltip" title="Related Databases">
+                        <a ui-sref="columns">
+                            <span class="fa fa-database"></span>
+                            <span class="card-pf-item-text"><a ui-sref="databases">Databases</a></span>
+                        </a>
+                    </div>
+                    <div class="card-pf-item"  data-toggle="tooltip" title="Related Systems">
+                        <a ui-sref="columns">
+                            <span class="fa fa-columns"></span>
+                            <span class="card-pf-item-text"><a ui-sref="systems">Systems</a></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- The list view -->
+    <div class="col-md-12 list-view-container" ng-if="ctrl.viewType == 'listView'">
+        <div pf-list-view id="usersListView"
+             config="ctrl.listConfig"
+             items="ctrl.items"
+             action-buttons="ctrl.listActionButtons">
+
+            <div class="list-view-pf-main-info">
+
+                <div class="list-view-pf-left">
+                    <span class="fa fa-user list-view-pf-icon-sm"></span>
+                </div>
+
+                <div class="list-view-pf-body">
+                    <div class="list-view-pf-description">
+                        <div class="list-group-item-heading">
+                            {{item.displayName}}
+                        </div>
+                        <div class="list-group-item-text">
+                            {{item.dbName}}
+                        </div>
+                    </div>
+
+                    <div class="list-view-pf-additional-info">
+                        <div class="list-view-pf-additional-info-item">
+                            <span class="pficon pficon-storage-domain"></span>
+                            <span class="list-group-item-text">{{item.dbTypeCd}}</span>
+                        </div>
+                        <div class="list-view-pf-additional-info-item">
+                            <span class="pficon pficon-user"></span>
+                            <span class="list-group-item-text">{{item.technicalOwnerUsernameKey}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- The data table view -->
     <div lass="col-md-12" ng-if="ctrl.viewType == 'tableView'">

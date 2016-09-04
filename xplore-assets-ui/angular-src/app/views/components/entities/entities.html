@@ -6,11 +6,69 @@
         </div>
     </div>
 
+    <!-- The Card view -->
+    <div class="col-md-12 card-view-container" ng-if="ctrl.viewType == 'cardView'">
+        <div pf-card-view id="entitiesCardView" class="card-pf-view"
+             config="ctrl.cardConfig"
+             items="ctrl.items">
+
+            <div class="card-pf-body">
+                <div class="card-pf-top-element">
+                    <span class="fa fa-cube card-pf-icon-circle"></span>
+                </div>
+
+                <h3 class="card-pf-title text-center">{{item.businessEntityName}}</h3>
+
+                <div class="card-pf-items text-center">
+                    <div class="card-pf-item">
+                        <span class="card-pf-item-text">{{item.displayName}}</span>
+                    </div>
+                </div>
+
+                <div class="card-pf-info text-center">
+                    <div class="card-pf-item"  data-toggle="tooltip" title="Related Systems">
+                        <span class="pficon pficon-image"></span>
+                        <span class="card-pf-item-text"><a ui-sref="systems">Systems</a></span>
+                    </div>
+                    <div class="card-pf-item"  data-toggle="tooltip" title="Related Tables">
+                        <span class="fa fa-table"></span>
+                        <span class="card-pf-item-text"><a ui-sref="tables">Tables</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- The list view -->
+    <div class="col-md-12 list-view-container" ng-if="ctrl.viewType == 'listView'">
+        <div pf-list-view id="entitiesListView"
+             config="ctrl.listConfig"
+             items="ctrl.items"
+             action-buttons="ctrl.listActionButtons">
+
+            <div class="list-view-pf-main-info">
+
+                <div class="list-view-pf-left">
+                    <span class="fa fa-cube list-view-pf-icon-sm"></span>
+                </div>
+
+                <div class="list-view-pf-body">
+                    <div class="list-view-pf-description">
+                        <div class="list-group-item-heading">
+                            {{item.businessEntityName}}
+                        </div>
+                        <div class="list-group-item-text">
+                            {{item.displayName}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- The data table view -->
     <div class="col-md-12" ng-if="ctrl.viewType == 'tableView'">
 
-        <!--<table datatable="ng" class="datatable table table-striped table-bordered">-->
         <table class="datatable table table-striped table-bordered">
             <thead>
                 <tr>
@@ -31,3 +89,16 @@
 
 </div>
 
+<!--
+ * # MdaBusinessEntity
+ * {
+ *    businessEntityKey: int,
+ *    businessEntityName: string,
+ *    displayName: string,
+ *    description: string,
+ *
+ *    createDate: string (ISO8601 date),
+ *    updateDate: string (ISO8601 date),
+ *    updateBy: string
+ * }
+-->

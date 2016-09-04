@@ -6,36 +6,71 @@
         </div>
     </div>
 
-    <!--  # MdaRelationModel
- * {
- *    relationKey: int,
- *    fullRelationName: string,
- *    columnKeyPar: int,
- *    columnKeyRef: int,
- *    dbName: string,
- *    schemaNamePar: string,
- *    tableNamePar: string,
- *    columnNamePar: string,
- *    schemaNameRef: string
- *    tableNameRef: string,
- *    columnNameRef: string,
- *    displayName: string,
- *    description: string,
- *    relationTypeCd: string,
- *    relationSource: string,
- *    relationScore: double,
- *    dxpColumnGkPar: int,
- *    tableId: string,
- *    dxpColumnGk: int,
- *    dxpTableGk: int,
- *    dxpColumnGkRef: int,
- *
- *    createDate: string (ISO8601 date),
- *    updateDate: string (ISO8601 date),
- *    updateBy: string
- *
- * }
-    -->
+
+    <!-- The Card view -->
+    <div class="col-md-12 card-view-container" ng-if="ctrl.viewType == 'cardView'">
+        <div pf-card-view id="relationsCardView" class="card-pf-view"
+             config="ctrl.cardConfig"
+             items="ctrl.items">
+
+            <div class="card-pf-body">
+                <div class="card-pf-top-element">
+                    <span class="fa fa-link card-pf-icon-circle"></span>
+                </div>
+
+                <h3 class="card-pf-title text-center">{{item.displayName}}</h3>
+
+                <div class="card-pf-items text-left">
+                    <div class="card-pf-item"  data-toggle="tooltip" title="Database Type">
+                        <span class="fa fa-columns"></span>
+                        <span class="card-pf-item-text">{{item.columnNamePar}}</span>
+                    </div>
+                </div>
+
+                <div class="card-pf-items text-left">
+                    <div class="card-pf-item"  data-toggle="tooltip" title="Database Owner">
+                        <span class="fa fa-columns"></span>
+                        <span class="card-pf-item-text">{{item.columnNameRef}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- The list view -->
+    <div class="col-md-12 list-view-container" ng-if="ctrl.viewType == 'listView'">
+        <div pf-list-view id="relationsListView"
+             config="ctrl.listConfig"
+             items="ctrl.items"
+             action-buttons="ctrl.listActionButtons">
+
+            <div class="list-view-pf-main-info">
+
+                <div class="list-view-pf-left">
+                    <span class="fa fa-link list-view-pf-icon-sm"></span>
+                </div>
+
+                <div class="list-view-pf-body">
+                    <div class="list-view-pf-description">
+                        <div class="list-group-item-heading">{{item.displayName}}</div>
+                        <div class="list-group-item-text">{{item.relationTypeCd}}</div>
+                    </div>
+
+                    <div class="list-view-pf-additional-info">
+                        <div class="list-view-pf-additional-info-item">
+                            <span class="fa fa-flag"></span>
+                            <span class="list-group-item-text">{{item.relationScore}}</span>
+                        </div>
+                        <div class="list-view-pf-additional-info-item">
+                            <span class="fa fa-sign-in"></span>
+                            <span class="list-group-item-text">{{item.relationSource}}</span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- The data table view -->
     <div class="col-md-12" ng-if="ctrl.viewType == 'tableView'">
@@ -69,3 +104,34 @@
         </table>
     </div>
 </div>
+
+<!--  # MdaRelationModel
+* {
+*    relationKey: int,
+*    fullRelationName: string,
+*    columnKeyPar: int,
+*    columnKeyRef: int,
+*    dbName: string,
+*    schemaNamePar: string,
+*    tableNamePar: string,
+*    columnNamePar: string,
+*    schemaNameRef: string
+*    tableNameRef: string,
+*    columnNameRef: string,
+*    displayName: string,
+*    description: string,
+*    relationTypeCd: string,
+*    relationSource: string,
+*    relationScore: double,
+*    dxpColumnGkPar: int,
+*    tableId: string,
+*    dxpColumnGk: int,
+*    dxpTableGk: int,
+*    dxpColumnGkRef: int,
+*
+*    createDate: string (ISO8601 date),
+*    updateDate: string (ISO8601 date),
+*    updateBy: string
+*
+* }
+-->

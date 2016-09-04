@@ -6,6 +6,89 @@
         </div>
     </div>
 
+    <!-- The Card view -->
+    <div class="col-md-12 card-view-container" ng-if="ctrl.viewType == 'cardView'">
+        <div pf-card-view id="tablesCardView" class="card-pf-view"
+             config="ctrl.cardConfig"
+             items="ctrl.items">
+
+            <div class="card-pf-body">
+                <div class="card-pf-top-element">
+                    <span class="fa fa-table card-pf-icon-circle"></span>
+                </div>
+
+                <h3 class="card-pf-title text-center">{{item.displayName}}</h3>
+
+                <div class="card-pf-items text-center">
+                    <div class="card-pf-item" data-toggle="tooltip" title="Table and Schema">
+                        <span class="fa fa-sitemap"></span>
+                        <span class="card-pf-item-text">{{item.dbName}}:{{item.schemaName}}</span>
+                    </div>
+                    <div class="card-pf-item" data-toggle="tooltip" title="Object type">
+                        <span class="fa fa-square-o"></span>
+                        <span class="card-pf-item-text">{{item.objectType}}</span>
+                    </div>
+                    <div class="card-pf-item" data-toggle="tooltip" title="Primary Key">
+                        <span class="fa fa-key"></span>
+                        <span class="card-pf-item-text">{{item.tablePk}}</span>
+                    </div>
+                </div>
+
+                <div class="card-pf-info text-center">
+                    <div class="card-pf-item"  data-toggle="tooltip" title="Rows Count">
+                        <a ui-sref="columns">
+                            <span class="fa fa-columns"></span>
+                            <span class="card-pf-item-text"><strong>Rows:</strong> {{item.tableRowCount}}</span>
+                        </a>
+                    </div>
+                    <div class="card-pf-item"  data-toggle="tooltip" title="Columns Count">
+                        <a ui-sref="columns">
+                            <span class="fa fa-columns"></span>
+                            <span class="card-pf-item-text"><strong>Columns:</strong> {{item.tableNumOfCols}}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- The list view -->
+    <div class="col-md-12 list-view-container" ng-if="ctrl.viewType == 'listView'">
+        <div pf-list-view id="tablesListView"
+             config="ctrl.listConfig"
+             items="ctrl.items"
+             action-buttons="ctrl.listActionButtons">
+
+            <div class="list-view-pf-main-info">
+
+                <div class="list-view-pf-left">
+                    <span class="fa fa-table list-view-pf-icon-sm"></span>
+                </div>
+
+                <div class="list-view-pf-body">
+                    <div class="list-view-pf-description">
+                        <div class="list-group-item-heading">
+                            {{item.displayName}}
+                        </div>
+                        <div class="list-group-item-text">
+                            {{item.dbName}}
+                        </div>
+                    </div>
+
+                    <div class="list-view-pf-additional-info">
+                        <div class="list-view-pf-additional-info-item">
+                            <span class="pficon pficon-storage-domain"></span>
+                            <span class="list-group-item-text">{{item.dbTypeCd}}</span>
+                        </div>
+                        <div class="list-view-pf-additional-info-item">
+                            <span class="pficon pficon-user"></span>
+                            <span class="list-group-item-text">{{item.technicalOwnerUsernameKey}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- The data table view -->
     <div class="col-md-12" ng-if="ctrl.viewType == 'tableView'">
