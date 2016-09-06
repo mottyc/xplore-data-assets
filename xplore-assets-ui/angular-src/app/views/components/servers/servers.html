@@ -76,20 +76,20 @@
         <!--<table datatable="ng" class="datatable table table-striped table-bordered">-->
         <table class="datatable table table-striped table-bordered">
             <thead>
-            <tr>
-                <th>Name</th>
-                <th>Display Name</th>
-                <th>Description</th>
-                <th>Type</th>
-            </tr>
+                <tr>
+                    <th>Name</th>
+                    <th>Display Name</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="item in ctrl.items">
-                <td>{{ item.serverName }}</td>
-                <td>{{ item.displayName }}</td>
-                <td>{{ item.description }}</td>
-                <td>{{ item.serverTypeCd }}</td>
-            </tr>
+                <tr ng-repeat="item in ctrl.items">
+                    <td>{{ item.serverName }}</td>
+                    <td>{{ item.displayName }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>{{ item.serverTypeCd }}</td>
+                </tr>
             </tbody>
         </table>
     </div>

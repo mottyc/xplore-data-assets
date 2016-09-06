@@ -1,0 +1,162 @@
+
+<div class="container-fluid container-cards-pf container-pf-nav-pf-vertical">
+    <div class="row">
+        <div class="col-md-8">
+            <ul class="nav navbar-nav navbar-primary nav-tabs col-md-12">
+                <li ng-class="(ctrl.tabId == 'info') ? 'active' : ''">
+                    <a class="pointer" ng-click="ctrl.tabSelected('info')">Info</a>
+                </li>
+                <li ng-class="(ctrl.tabId == 'servers') ? 'active' : ''">
+                    <a class="pointer" ng-click="ctrl.tabSelected('servers')">Related Servers</a>
+                </li>
+                <li ng-class="(ctrl.tabId == 'entities') ? 'active' : ''">
+                    <a class="pointer" ng-click="ctrl.tabSelected('entities')">Related Entities</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-2">
+            <a ui-sref="systems" class="pointer pull-right">Back to list</a>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-default pull-right" type="button" ng-click="ctrl.save()">Save Changes</button>
+        </div>
+    </div>
+
+    <!-- General Info -->
+    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
+        <div class="panel-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-systemKey">System Key</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-systemKey" class="form-control" value="{{ctrl.system.systemKey}}" disabled>
+                    </div>
+                    <label class="col-sm-2 control-label" for="text-systemName">System Name</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-systemName" class="form-control" value="{{ctrl.system.systemName}}" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-appName">Application</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-appName" class="form-control" value="{{ctrl.system.appName}}" disabled>
+                    </div>
+                    <label class="col-sm-2 control-label" for="text-systemDepartment">Department</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-systemDepartment" class="form-control" value="{{ctrl.system.systemDepartment}}" disabled>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Editable section -->
+    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
+        <div class="panel-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-displayName">Display Name</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-displayName" class="form-control" value="{{ctrl.system.displayName}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-description">Description</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="text-description" class="form-control" value="{{ctrl.system.description}}">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Audit info -->
+    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
+        <div class="panel-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-createDate">Created On</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-createDate" class="form-control" value="{{ctrl.system.createDate}}" disabled>
+                    </div>
+
+                    <label class="col-sm-2 control-label" for="text-updateDate">Updated On</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-updateDate" class="form-control" value="{{ctrl.system.updateDate}}" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-updateBy">Updated By</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-updateBy" class="form-control" value="{{ctrl.system.updateBy}}" disabled>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- List of Related Servers -->
+    <div class="panel panel-default" ng-show="ctrl.tabId == 'servers'">
+        <div class="panel-body">
+            <table class="datatable table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Display Name</th>
+                        <th>Description</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="server in ctrl.relatedServers">
+                        <td><a ui-sref="server({key: {{server.serverKey}}})" class="pointer">{{ server.serverName }}</a></td>
+                        <td>{{ server.displayName }}</td>
+                        <td>{{ server.description }}</td>
+                        <td>{{ server.serverTypeCd }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- List of Related Entities -->
+    <div class="panel panel-default" ng-show="ctrl.tabId == 'entities'">
+        <div class="panel-body">
+            <table class="datatable table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Display Name</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="entity in ctrl.relatedEntities">
+                        <td><a ui-sref="entity({key: {{entity.businessEntityKey}}})" class="pointer">{{ entity.businessEntityName }}</a></td>
+                        <td>{{ entity.displayName }}</td>
+                        <td>{{ entity.description }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<!--
+ * # MdaSystemModel
+ * {
+ *    systemKey: int,
+ *    systemName: string,
+ *    appName: string,
+ *    displayName: string,
+ *    description: string,
+ *    systemDepartment: string,
+ *
+ *    createDate: string (ISO8601 date),
+ *    updateDate: string (ISO8601 date),
+ *    updateBy: string
+ *
+ * }

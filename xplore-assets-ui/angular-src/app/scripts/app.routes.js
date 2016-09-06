@@ -26,7 +26,7 @@ angular.module('myApp')
                     controllerAs: 'ctrl'
                 })
                 .state('column', {
-                    url: '/column/{key}',
+                    url: '/columns/{key}',
                     templateUrl: 'views/components/columns/column.html',
                     controller: 'columnController',
                     controllerAs: 'ctrl'
@@ -38,7 +38,7 @@ angular.module('myApp')
                     controllerAs: 'ctrl'
                 })
                 .state('database', {
-                    url: '/database/{key}',
+                    url: '/databases/{key}',
                     templateUrl: 'views/components/databases/database.html',
                     controller: 'databaseController',
                     controllerAs: 'ctrl'
@@ -49,10 +49,22 @@ angular.module('myApp')
                     controller: 'entitiesController',
                     controllerAs: 'ctrl'
                 })
+                .state('entity', {
+                    url: '/entities/{key}',
+                    templateUrl: 'views/components/entities/entity.html',
+                    controller: 'entityController',
+                    controllerAs: 'ctrl'
+                })
                 .state('relations', {
                     url: '/relations',
                     templateUrl: 'views/components/relations/relations.html',
                     controller: 'relationsController',
+                    controllerAs: 'ctrl'
+                })
+                .state('relation', {
+                    url: '/relations/{key}',
+                    templateUrl: 'views/components/relations/relation.html',
+                    controller: 'relationController',
                     controllerAs: 'ctrl'
                 })
                 .state('schemas', {
@@ -61,10 +73,22 @@ angular.module('myApp')
                     controller: 'schemasController',
                     controllerAs: 'ctrl'
                 })
+                .state('schema', {
+                    url: '/schemas/{key}',
+                    templateUrl: 'views/components/schemas/schema.html',
+                    controller: 'schemaController',
+                    controllerAs: 'ctrl'
+                })
                 .state('servers', {
                     url: '/servers',
                     templateUrl: 'views/components/servers/servers.html',
                     controller: 'serversController',
+                    controllerAs: 'ctrl'
+                })
+                .state('server', {
+                    url: '/servers/{key}',
+                    templateUrl: 'views/components/servers/server.html',
+                    controller: 'serverController',
                     controllerAs: 'ctrl'
                 })
                 .state('systems', {
@@ -72,11 +96,12 @@ angular.module('myApp')
                     templateUrl: 'views/components/systems/systems.html',
                     controller: 'systemsController',
                     controllerAs: 'ctrl'
-                    // resolve: {
-                    //     items: function (systemsManager) {
-                    //         return systemsManager.getAll();
-                    //     }
-                    // }
+                })
+                .state('system', {
+                    url: '/systems/{key}',
+                    templateUrl: 'views/components/systems/system.html',
+                    controller: 'systemController',
+                    controllerAs: 'ctrl'
                 })
                 .state('tables', {
                     url: '/tables',
@@ -84,10 +109,22 @@ angular.module('myApp')
                     controller: 'tablesController',
                     controllerAs: 'ctrl'
                 })
+                .state('table', {
+                    url: '/tables/{key}',
+                    templateUrl: 'views/components/tables/table.html',
+                    controller: 'tableController',
+                    controllerAs: 'ctrl'
+                })
                 .state('users', {
                     url: '/users',
                     templateUrl: 'views/components/users/users.html',
                     controller: 'usersController',
+                    controllerAs: 'ctrl'
+                })
+                .state('user', {
+                    url: '/users/{key}',
+                    templateUrl: 'views/components/users/user.html',
+                    controller: 'userController',
                     controllerAs: 'ctrl'
                 })
             ;

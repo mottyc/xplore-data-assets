@@ -1,0 +1,152 @@
+
+<div class="container-fluid container-cards-pf container-pf-nav-pf-vertical">
+    <div class="row">
+        <div class="col-md-8">
+            <ul class="nav navbar-nav navbar-primary nav-tabs col-md-12">
+                <li ng-class="(ctrl.tabId == 'info') ? 'active' : ''">
+                    <a class="pointer" ng-click="ctrl.tabSelected('info')">Info</a>
+                </li>
+                <li ng-class="(ctrl.tabId == 'systems') ? 'active' : ''">
+                    <a class="pointer" ng-click="ctrl.tabSelected('systems')">Schemas</a>
+                </li>
+                <li ng-class="(ctrl.tabId == 'tables') ? 'active' : ''">
+                    <a class="pointer" ng-click="ctrl.tabSelected('tables')">Schemas</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-2">
+            <a ui-sref="entities" class="pointer pull-right">Back to list</a>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-default pull-right" type="button" ng-click="ctrl.save()">Save Changes</button>
+        </div>
+    </div>
+
+    <!-- General Info -->
+    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
+        <div class="panel-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-businessEntityKey">Entity Key</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-businessEntityKey" class="form-control" value="{{ctrl.entity.businessEntityKey}}" disabled>
+                    </div>
+                    <label class="col-sm-2 control-label" for="text-businessEntityName">Entity Name</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-businessEntityName" class="form-control" value="{{ctrl.entity.businessEntityName}}" disabled>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Editable section -->
+    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
+        <div class="panel-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-displayName">Display Name</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-displayName" class="form-control" value="{{ctrl.entity.displayName}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-description">Description</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="text-description" class="form-control" value="{{ctrl.entity.description}}">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Audit info -->
+    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
+        <div class="panel-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-createDate">Created On</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-createDate" class="form-control" value="{{ctrl.entity.createDate}}" disabled>
+                    </div>
+
+                    <label class="col-sm-2 control-label" for="text-updateDate">Updated On</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-updateDate" class="form-control" value="{{ctrl.entity.updateDate}}" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-updateBy">Updated By</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-updateBy" class="form-control" value="{{ctrl.entity.updateBy}}" disabled>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- List of Related Systems -->
+    <div class="panel panel-default" ng-show="ctrl.tabId == 'systems'">
+        <div class="panel-body">
+            <table class="datatable table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>System Name</th>
+                        <th>Application</th>
+                        <th>Display Name</th>
+                        <th>Department</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="system in ctrl.relatedSystems">
+                        <td><a ui-sref="system({key: {{system.systemKey}}})" class="pointer">{{ system.systemName }}</a></td>
+                        <td>{{ system.appName }}</td>
+                        <td>{{ system.displayName }}</td>
+                        <td>{{ system.systemDepartment }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- List of Related Tables -->
+    <div class="panel panel-default" ng-show="ctrl.tabId == 'tables'">
+        <div class="panel-body">
+            <table class="datatable table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th>Table Name</th>
+                    <th>Display Name</th>
+                    <th># Rows</th>
+                    <th># Columns</th>
+                    <th>Object Type</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="table in ctrl.relatedTables">
+                    <td><a ui-sref="table({key: {{table.tableKey}}})" class="pointer">{{ table.tableName }}</a></td>
+                    <td>{{ table.displayName }}</td>
+                    <td>{{ table.tableRowCount }}</td>
+                    <td>{{ table.tableNumOfCols }}</td>
+                    <td>{{ table.objectType }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--
+ * # MdaBusinessEntity
+ * {
+ *    businessEntityKey: int,
+ *    businessEntityName: string,
+ *    displayName: string,
+ *    description: string,
+ *
+ *    createDate: string (ISO8601 date),
+ *    updateDate: string (ISO8601 date),
+ *    updateBy: string
+ * }
+-->

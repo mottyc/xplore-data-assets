@@ -1,0 +1,100 @@
+
+<div class="container-fluid container-cards-pf container-pf-nav-pf-vertical">
+    <div class="row">
+        <div class="col-md-8">
+            <ul class="nav navbar-nav navbar-primary nav-tabs col-md-12">
+                <li ng-class="(ctrl.tabId == 'info') ? 'active' : ''">
+                    <a class="pointer" ng-click="ctrl.tabSelected('info')">Info</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-2">
+            <a ui-sref="users" class="pointer pull-right">Back to list</a>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-default pull-right" type="button" ng-click="ctrl.save()">Save Changes</button>
+        </div>
+    </div>
+
+    <!-- General Info -->
+    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
+        <div class="panel-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-usernameKey">User Key</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-usernameKey" class="form-control" value="{{ctrl.user.usernameKey}}" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-firstName">First Name</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-firstName" class="form-control" value="{{ctrl.user.firstName}}" disabled>
+                    </div>
+                    <label class="col-sm-2 control-label" for="text-lastName">Last Name</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-lastName" class="form-control" value="{{ctrl.user.lastName}}" disabled>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Editable section -->
+    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
+        <div class="panel-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-displayName">Display Name</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-displayName" class="form-control" value="{{ctrl.user.displayName}}">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Audit info -->
+    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
+        <div class="panel-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-createDate">Created On</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-createDate" class="form-control" value="{{ctrl.user.createDate}}" disabled>
+                    </div>
+
+                    <label class="col-sm-2 control-label" for="text-updateDate">Updated On</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-updateDate" class="form-control" value="{{ctrl.user.updateDate}}" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-updateBy">Updated By</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-updateBy" class="form-control" value="{{ctrl.user.updateBy}}" disabled>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<!--
+ * # MdaUserModel
+ * {
+ *    usernameKey: string,
+ *    firstName: string,
+ *    lastName: string,
+ *    displayName: string,
+ *
+ *    createDate: string (ISO8601 date),
+ *    updateDate: string (ISO8601 date),
+ *    updateBy: string
+ *
+ * }
+-->

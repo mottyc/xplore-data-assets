@@ -1,0 +1,243 @@
+
+<div class="container-fluid container-cards-pf container-pf-nav-pf-vertical">
+    <div class="row">
+        <div class="col-md-8">
+            <ul class="nav navbar-nav navbar-primary nav-tabs col-md-12">
+                <li ng-class="(ctrl.tabId == 'info') ? 'active' : ''">
+                    <a class="pointer" ng-click="ctrl.tabSelected('info')">Info</a>
+                </li>
+                <li ng-class="(ctrl.tabId == 'columns') ? 'active' : ''">
+                    <a class="pointer" ng-click="ctrl.tabSelected('columns')">Columns</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-2">
+            <a ui-sref="relations" class="pointer pull-right">Back to list</a>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-default pull-right" type="button" ng-click="ctrl.save()">Save Changes</button>
+        </div>
+    </div>
+
+    <!-- General Info -->
+    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
+        <div class="panel-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-relationKey">Relation Key</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-relationKey" class="form-control" value="{{ctrl.relation.relationKey}}" disabled>
+                    </div>
+                    <label class="col-sm-2 control-label" for="text-fullRelationName">Relation Name</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-fullRelationName" class="form-control" value="{{ctrl.relation.fullRelationName}}" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-dbName">Database</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-dbName" class="form-control" value="{{ctrl.relation.dbName}}" disabled>
+                    </div>
+                    <label class="col-sm-2 control-label" for="text-relationSource">Source</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-relationSource" class="form-control" value="{{ctrl.relation.relationSource}}" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-relationTypeCd">Type</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-relationTypeCd" class="form-control" value="{{ctrl.relation.relationTypeCd}}" disabled>
+                    </div>
+                    <label class="col-sm-2 control-label" for="text-relationScore">Score</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-relationScore" class="form-control" value="{{ctrl.relation.relationScore}}" disabled>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Editable section -->
+    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
+        <div class="panel-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-displayName">Display Name</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-displayName" class="form-control" value="{{ctrl.relation.displayName}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-description">Description</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="text-description" class="form-control" value="{{ctrl.relation.description}}">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Audit info -->
+    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
+        <div class="panel-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-createDate">Created On</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-createDate" class="form-control" value="{{ctrl.entity.createDate}}" disabled>
+                    </div>
+
+                    <label class="col-sm-2 control-label" for="text-updateDate">Updated On</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-updateDate" class="form-control" value="{{ctrl.entity.updateDate}}" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-updateBy">Updated By</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-updateBy" class="form-control" value="{{ctrl.entity.updateBy}}" disabled>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Parent Column Info -->
+    <div class="panel panel-default" ng-show="ctrl.tabId == 'columns'">
+        <div class="panel-heading">
+            <h3 class="panel-title">Parent Column</h3>
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-columnKeyPar">Column Key</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-columnKeyPar" class="form-control" value="{{ctrl.relation.columnKeyPar}}" disabled>
+                    </div>
+                    <label class="col-sm-2 control-label" for="text-columnNamePar">Column Name</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-columnNamePar" class="form-control" value="{{ctrl.relation.columnNamePar}}" disabled>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-tableNamePar">Table</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-tableNamePar" class="form-control" value="{{ctrl.relation.tableNamePar}}" disabled>
+                    </div>
+                    <label class="col-sm-2 control-label" for="text-schemaNamePar">Schema</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-schemaNamePar" class="form-control" value="{{ctrl.relation.schemaNamePar}}" disabled>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Referenced Column Info -->
+    <div class="panel panel-default" ng-show="ctrl.tabId == 'columns'">
+        <div class="panel-heading">
+            <h3 class="panel-title">Referenced Column</h3>
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-columnKeyPar">Column Key</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-columnKeyRef" class="form-control" value="{{ctrl.relation.columnKeyRef}}" disabled>
+                    </div>
+                    <label class="col-sm-2 control-label" for="text-columnNamePar">Column Name</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-columnNameRef" class="form-control" value="{{ctrl.relation.columnNameRef}}" disabled>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-tableNameRef">Table</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-tableNameRef" class="form-control" value="{{ctrl.relation.tableNameRef}}" disabled>
+                    </div>
+                    <label class="col-sm-2 control-label" for="text-schemaNameRef">Schema</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-schemaNameRef" class="form-control" value="{{ctrl.relation.schemaNameRef}}" disabled>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- DXP Info -->
+    <div class="panel panel-default" ng-show="ctrl.tabId == 'columns'">
+        <div class="panel-heading">
+            <h3 class="panel-title">DXP Reference</h3>
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-dxpColumnGkPar">Parent Column GK</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-dxpColumnGkPar" class="form-control" value="{{ctrl.relation.dxpColumnGkPar}}" disabled>
+                    </div>
+                    <label class="col-sm-2 control-label" for="text-dxpColumnGkRef">Referenced Column GK</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-dxpColumnGkRef" class="form-control" value="{{ctrl.relation.dxpColumnGkRef}}" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-dxpColumnGk">Column GK</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-dxpColumnGk" class="form-control" value="{{ctrl.relation.dxpColumnGk}}" disabled>
+                    </div>
+                    <label class="col-sm-2 control-label" for="text-dxpTableGk">Table GK</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-dxpTableGk" class="form-control" value="{{ctrl.relation.dxpTableGk}}" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-tableId">Table Id</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-tableId" class="form-control" value="{{ctrl.relation.tableId}}" disabled>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!--  # MdaRelationModel
+* {
+*    relationKey: int,
+*    fullRelationName: string,
+*    dbName: string,
+
+*    columnKeyPar: int,
+*    columnKeyRef: int,
+*    schemaNamePar: string,
+*    tableNamePar: string,
+*    columnNamePar: string,
+*    schemaNameRef: string
+*    tableNameRef: string,
+*    columnNameRef: string,
+
+*    displayName: string,
+*    description: string,
+
+*    relationTypeCd: string,
+*    relationSource: string,
+*    relationScore: double,
+*    dxpColumnGkPar: int,
+*    tableId: string,
+*    dxpColumnGk: int,
+*    dxpTableGk: int,
+*    dxpColumnGkRef: int,
+*
+*    createDate: string (ISO8601 date),
+*    updateDate: string (ISO8601 date),
+*    updateBy: string
+*
+* }
+-->
