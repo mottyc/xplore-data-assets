@@ -14,9 +14,11 @@
              items="ctrl.items">
 
             <div class="card-pf-body">
-                <div class="card-pf-top-element">
-                    <span class="fa fa-database card-pf-icon-circle"></span>
-                </div>
+                <a ui-sref="system({key: {{item.systemKey}}})" class="pointer">
+                    <div class="card-pf-top-element">
+                        <span class="fa fa-database card-pf-icon-circle"></span>
+                    </div>
+                </a>
 
                 <h3 class="card-pf-title text-center">{{item.displayName}}</h3>
 
@@ -58,9 +60,11 @@
 
             <div class="list-view-pf-main-info">
 
-                <div class="list-view-pf-left">
-                    <span class="fa fa-database list-view-pf-icon-sm"></span>
-                </div>
+                <a ui-sref="system({key: {{item.systemKey}}})" class="pointer">
+                    <div class="list-view-pf-left">
+                        <span class="fa fa-database list-view-pf-icon-sm"></span>
+                    </div>
+                </a>
 
                 <div class="list-view-pf-body">
                     <div class="list-view-pf-description">
@@ -101,7 +105,7 @@
             </thead>
             <tbody>
             <tr ng-repeat="item in ctrl.items">
-                <td>{{ item.systemName }}</td>
+                <td><a ui-sref="system({key: {{item.systemKey}}})" class="pointer">{{ item.systemName }}</a></td>
                 <td>{{ item.appName }}</td>
                 <td>{{ item.displayName }}</td>
                 <td>{{ item.systemDepartment }}</td>

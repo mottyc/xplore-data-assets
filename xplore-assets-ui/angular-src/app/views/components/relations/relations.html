@@ -14,9 +14,11 @@
              items="ctrl.items">
 
             <div class="card-pf-body">
-                <div class="card-pf-top-element">
-                    <span class="fa fa-link card-pf-icon-circle"></span>
-                </div>
+                <a ui-sref="relation({key: {{item.relationKey}}})" class="pointer">
+                    <div class="card-pf-top-element">
+                        <span class="fa fa-link card-pf-icon-circle"></span>
+                    </div>
+                </a>
 
                 <h3 class="card-pf-title text-center">{{item.displayName}}</h3>
 
@@ -46,9 +48,11 @@
 
             <div class="list-view-pf-main-info">
 
-                <div class="list-view-pf-left">
-                    <span class="fa fa-link list-view-pf-icon-sm"></span>
-                </div>
+                <a ui-sref="relation({key: {{item.relationKey}}})" class="pointer">
+                    <div class="list-view-pf-left">
+                        <span class="fa fa-link list-view-pf-icon-sm"></span>
+                    </div>
+                </a>
 
                 <div class="list-view-pf-body">
                     <div class="list-view-pf-description">
@@ -75,7 +79,6 @@
     <!-- The data table view -->
     <div class="col-md-12" ng-if="ctrl.viewType == 'tableView'">
 
-        <!--<table datatable="ng" class="datatable table table-striped table-bordered">-->
         <table class="datatable table table-striped table-bordered">
             <thead>
                 <tr>
@@ -91,7 +94,7 @@
             </thead>
             <tbody>
             <tr ng-repeat="item in ctrl.items">
-                <td>{{ item.fullRelationName }}</td>
+                <td><a ui-sref="relation({key: {{item.relationKey}}})" class="pointer">{{ item.fullRelationName }}</a></td>
                 <td>{{ item.displayName }}</td>
                 <td>{{ item.dbName }}</td>
                 <td>{{ item.schemaNamePar }}.{{ item.tableNamePar }}.{{ item.columnNamePar }}</td>

@@ -13,9 +13,12 @@
              items="ctrl.items">
 
             <div class="card-pf-body">
-                <div class="card-pf-top-element">
-                    <span class="fa fa-user card-pf-icon-circle"></span>
-                </div>
+
+                <a ui-sref="user({key: {{item.usernameKey}}})" class="pointer">
+                    <div class="card-pf-top-element">
+                        <span class="fa fa-user card-pf-icon-circle"></span>
+                    </div>
+                </a>
 
                 <h3 class="card-pf-title text-center">{{item.displayName}}</h3>
 
@@ -55,9 +58,11 @@
 
             <div class="list-view-pf-main-info">
 
-                <div class="list-view-pf-left">
-                    <span class="fa fa-user list-view-pf-icon-sm"></span>
-                </div>
+                <a ui-sref="user({key: {{item.usernameKey}}})" class="pointer">
+                    <div class="list-view-pf-left">
+                        <span class="fa fa-user list-view-pf-icon-sm"></span>
+                    </div>
+                </a>
 
                 <div class="list-view-pf-body">
                     <div class="list-view-pf-description">
@@ -87,23 +92,22 @@
     <!-- The data table view -->
     <div lass="col-md-12" ng-if="ctrl.viewType == 'tableView'">
 
-        <!--<table datatable="ng" class="datatable table table-striped table-bordered">-->
         <table class="datatable table table-striped table-bordered">
             <thead>
-            <tr>
-                <th>User Key</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Display Name</th>
-            </tr>
+                <tr>
+                    <th>User Key</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Display Name</th>
+                </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="item in ctrl.items">
-                <td>{{ item.usernameKey }}</td>
-                <td>{{ item.firstName }}</td>
-                <td>{{ item.lastName }}</td>
-                <td>{{ item.displayName }}</td>
-            </tr>
+                <tr ng-repeat="item in ctrl.items">
+                    <td><a ui-sref="user({key: {{item.usernameKey}}})" class="pointer">{{ item.usernameKey }}</a></td>
+                    <td>{{ item.firstName }}</td>
+                    <td>{{ item.lastName }}</td>
+                    <td>{{ item.displayName }}</td>
+                </tr>
             </tbody>
         </table>
     </div>
