@@ -13,10 +13,11 @@
              items="ctrl.items">
 
             <div class="card-pf-body">
-                <div class="card-pf-top-element">
+                <a ui-sref="database({key: {{item.domainKey}}})" class="pointer">
+                    <div class="card-pf-top-element">
                     <span class="fa fa-database card-pf-icon-circle"></span>
                 </div>
-
+                </a>
                 <h3 class="card-pf-title text-center">{{item.displayName}}</h3>
 
                 <div class="card-pf-items text-center">
@@ -49,9 +50,11 @@
 
             <div class="list-view-pf-main-info">
 
-                <div class="list-view-pf-left">
-                    <span class="fa fa-database list-view-pf-icon-sm"></span>
-                </div>
+                <a ui-sref="database({key: {{item.domainKey}}})" class="pointer">
+                    <div class="list-view-pf-left">
+                        <span class="fa fa-database list-view-pf-icon-sm"></span>
+                    </div>
+                </a>
 
                 <div class="list-view-pf-body">
                     <div class="list-view-pf-description">
@@ -80,24 +83,20 @@
 
     <!-- The data table view -->
     <div lass="col-md-12" ng-if="ctrl.viewType == 'tableView'">
-
-        <!--<table datatable="ng" class="datatable table table-striped table-bordered">-->
         <table class="datatable table table-striped table-bordered">
             <thead>
                 <tr>
                     <th>Name</th>
                     <th>Full Name</th>
                     <th>Display Name</th>
-                    <th>Description</th>
                     <th>Type Code</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="item in ctrl.items">
-                    <td>{{ item.dbName }}</td>
+                    <td><a ui-sref="database({key: {{item.domainKey}}})" class="pointer">{{ item.dbName }}</a></td>
                     <td>{{ item.fullDbName }}</td>
                     <td>{{ item.displayName }}</td>
-                    <td>{{ item.description }}</td>
                     <td>{{ item.dbTypeCd }}</td>
             </tr>
             </tbody>

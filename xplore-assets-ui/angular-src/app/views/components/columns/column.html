@@ -1,0 +1,179 @@
+
+<div class="container-fluid container-cards-pf container-pf-nav-pf-vertical">
+    <div class="row">
+        <div class="col-md-8">
+            <ul class="nav navbar-nav navbar-primary nav-tabs col-md-12">
+                <li ng-class="(ctrl.tabId == 'info') ? 'active' : ''">
+                    <a class="pointer" ng-click="ctrl.tabSelected('info')">Info</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-2">
+            <a ui-sref="columns" class="pointer pull-right">Back to list</a>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-default pull-right" type="button" ng-click="ctrl.save()">Save Changes</button>
+        </div>
+    </div>
+
+    <!-- General Info -->
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-columnKey">Column Key</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-columnKey" class="form-control" value="{{ctrl.column.columnKey}}" disabled>
+                    </div>
+                    <label class="col-sm-2 control-label" for="text-fullColumnName">Full Name</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-fullColumnName" class="form-control" value="{{ctrl.column.fullColumnName}}" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-dbName">Database</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-dbName" class="form-control" value="{{ctrl.column.dbName}}" disabled>
+                    </div>
+                    <label class="col-sm-2 control-label" for="text-schemaName">Schema</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-schemaName" class="form-control" value="{{ctrl.column.schemaName}}" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-tableName">Table</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-tableName" class="form-control" value="{{ctrl.column.tableName}}" disabled>
+                    </div>
+                    <label class="col-sm-2 control-label" for="text-columnName">Column</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-columnName" class="form-control" value="{{ctrl.column.columnName}}" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-columnDataType">Data Type</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-columnDataType" class="form-control" value="{{ctrl.column.columnDataType}}" disabled>
+                    </div>
+                    <label class="col-sm-2 control-label" for="text-ispk">Primary Key</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-ispk" class="form-control" value="{{ctrl.column.isPk}}" disabled>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Editable section -->
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-displayName">Display Name</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-displayName" class="form-control" value="{{ctrl.column.displayName}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-description">Description</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="text-description" class="form-control" value="{{ctrl.column.description}}">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- DXP Info -->
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-columnPkSource">PK Source</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-columnPkSource" class="form-control" value="columnPkSource" disabled>
+                    </div>
+                    <label class="col-sm-2 control-label" for="text-columnId">Column ID</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-columnId" class="form-control" value="columnId" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-tableId">Table ID</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-tableId" class="form-control" value="tableId" disabled>
+                    </div>
+                    <label class="col-sm-2 control-label" for="text-dxpColumnGk">DXP Column Key</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-dxpColumnGk" class="form-control" value="dxpColumnGk" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-dxpTableGk">DXP Table Key</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-dxpTableGk" class="form-control" value="dxpTableGk" disabled>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Audit info -->
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-createDate">Created On</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-createDate" class="form-control" value="{{ctrl.column.createDate}}" disabled>
+                    </div>
+
+                    <label class="col-sm-2 control-label" for="text-updateDate">Updated On</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-updateDate" class="form-control" value="{{ctrl.column.updateDate}}" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-updateBy">Updated By</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="text-updateBy" class="form-control" value="{{ctrl.column.updateBy}}" disabled>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+
+<!--
+*    columnKey: int,
+*    fullColumnName: string,
+*    tableKey: int,
+*    dbName: string,
+*    schemaName: string,
+*    tableName: string,
+*    columnName: string,
+
+*    displayName: string,
+*    description: string,
+
+*    columnDataType: string,
+*    isPk: boolean,
+
+*    columnPkSource: string,
+*    columnId: string,
+*    tableId: string,
+*    dxpColumnGk: int,
+*    dxpTableGk: int,
+
+*    createDate: string (ISO8601 date),
+*    updateDate: string (ISO8601 date),
+*    updateBy: string
+-->

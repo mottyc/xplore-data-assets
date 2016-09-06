@@ -13,11 +13,12 @@
              items="ctrl.items">
 
             <div class="card-pf-body">
-                <div class="card-pf-top-element">
-                    <span class="fa fa-key card-pf-icon-circle" ng-if="item.isPk"></span>
-                    <span class="fa fa-columns card-pf-icon-circle" ng-if="item.isPk == false"></span>
-                </div>
-
+                <a ui-sref="column({key: {{item.columnKey}}})" class="pointer">
+                    <div class="card-pf-top-element">
+                        <span class="fa fa-key card-pf-icon-circle" ng-if="item.isPk"></span>
+                        <span class="fa fa-columns card-pf-icon-circle" ng-if="item.isPk == false"></span>
+                    </div>
+                </a>
                 <h3 class="card-pf-title text-center">{{item.displayName}}</h3>
 
                 <div class="card-pf-items text-center">
@@ -46,10 +47,12 @@
 
             <div class="list-view-pf-main-info">
 
-                <div class="list-view-pf-left">
-                    <span class="fa fa-key list-view-pf-icon-sm" ng-if="item.isPk"></span>
-                    <span class="fa fa-columns list-view-pf-icon-sm" ng-if="item.isPk == false"></span>
-                </div>
+                <a ui-sref="column({key: {{item.columnKey}}})" class="pointer">
+                    <div class="list-view-pf-left">
+                        <span class="fa fa-key list-view-pf-icon-sm" ng-if="item.isPk"></span>
+                        <span class="fa fa-columns list-view-pf-icon-sm" ng-if="item.isPk == false"></span>
+                    </div>
+                </a>
 
                 <div class="list-view-pf-body">
                     <div class="list-view-pf-description">
@@ -78,7 +81,6 @@
 
     <!-- The data table view -->
     <div class="col-md-12" ng-if="ctrl.viewType == 'tableView'">
-        <!--<table datatable="ng" class="datatable table table-striped table-bordered">-->
         <table class="table table-striped table-bordered row-border column-border hover">
             <thead>
                 <tr>
@@ -91,13 +93,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="column in ctrl.items">
-                    <td>{{ column.columnName }}</td>
-                    <td>{{ column.tableName }}</td>
-                    <td>{{ column.schemaName }}</td>
-                    <td>{{ column.displayName }}</td>
-                    <td>{{ column.columnDataType }}</td>
-                    <td>{{ column.isPk }}</td>
+                <tr ng-repeat="item in ctrl.items">
+                    <td><a ui-sref="column({key: {{item.columnKey}}})" class="pointer">{{ item.columnName }}</a></td>
+                    <td>{{ item.tableName }}</td>
+                    <td>{{ item.schemaName }}</td>
+                    <td>{{ item.displayName }}</td>
+                    <td>{{ item.columnDataType }}</td>
+                    <td>{{ item.isPk }}</td>
                 </tr>
             </tbody>
         </table>

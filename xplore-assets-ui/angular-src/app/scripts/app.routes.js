@@ -25,10 +25,22 @@ angular.module('myApp')
                     controller: 'columnsController',
                     controllerAs: 'ctrl'
                 })
+                .state('column', {
+                    url: '/column/{key}',
+                    templateUrl: 'views/components/columns/column.html',
+                    controller: 'columnController',
+                    controllerAs: 'ctrl'
+                })
                 .state('databases', {
                     url: '/databases',
                     templateUrl: 'views/components/databases/databases.html',
                     controller: 'databasesController',
+                    controllerAs: 'ctrl'
+                })
+                .state('database', {
+                    url: '/database/{key}',
+                    templateUrl: 'views/components/databases/database.html',
+                    controller: 'databaseController',
                     controllerAs: 'ctrl'
                 })
                 .state('entities', {
