@@ -31,7 +31,7 @@
             page = (page > self.totalPages) ? self.totalPages : page;
             
             usersManager.getAll(page).then(function (result) {
-                self.allItems = result;
+                self.allItems = result.list;
                 self.items = self.allItems;
 
                 self.totalItems = result.count;

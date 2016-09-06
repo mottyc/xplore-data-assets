@@ -14,7 +14,7 @@
 
             <div class="card-pf-body">
 
-                <a ui-sref="user({key: {{item.usernameKey}}})" class="pointer">
+                <a ui-sref="user({key: '{{item.usernameKey}}'})" class="pointer">
                     <div class="card-pf-top-element">
                         <span class="fa fa-user card-pf-icon-circle"></span>
                     </div>
@@ -103,7 +103,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="item in ctrl.items">
-                    <td><a ui-sref="user({key: {{item.usernameKey}}})" class="pointer">{{ item.usernameKey }}</a></td>
+                    <td><a ui-sref="user({key: '{{item.usernameKey}}'})" class="pointer">{{ item.usernameKey }}</a></td>
                     <td>{{ item.firstName }}</td>
                     <td>{{ item.lastName }}</td>
                     <td>{{ item.displayName }}</td>
