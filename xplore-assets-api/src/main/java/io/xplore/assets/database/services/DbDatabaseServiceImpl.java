@@ -7,7 +7,9 @@ package io.xplore.assets.database.services;
 
 
 import io.xplore.assets.database.converters.MdaDbEntityConverter;
+import io.xplore.assets.database.converters.MdaSchemaEntityConverter;
 import io.xplore.assets.database.model.MdaDbEntity;
+import io.xplore.assets.database.model.MdaSchemaEntity;
 import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
 import io.xplore.assets.model.MdaDatabase;
@@ -21,6 +23,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -47,7 +50,13 @@ public class DbDatabaseServiceImpl extends _DbBaseServiceImpl<MdaDbEntity> imple
 
         try {
             MdaDbEntity entity = em.find(MdaDbEntity.class, key);
-            return new EntityResponse<MdaDatabase>(MdaDbEntityConverter.get(entity));
+            MdaDatabase database = MdaDbEntityConverter.get(entity);
+
+            // Get the related schemas
+            List<MdaSchemaEntity> schemas = em.createNamedQuery("MdaSchemaEntity.findByDatabase", MdaSchemaEntity.class).setParameter("domainKey", entity.getDomainKey()).getResultList();
+            schemas.forEach(schema -> { database.schemas.add(MdaSchemaEntityConverter.get(schema)); });
+
+            return new EntityResponse<MdaDatabase>(database);
         } catch (Exception ex) {
             String err = String.format("Action failed: %s", ex.getMessage());
             log.severe(err);
