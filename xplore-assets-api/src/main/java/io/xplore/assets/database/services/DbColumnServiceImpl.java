@@ -45,9 +45,31 @@ public class DbColumnServiceImpl extends _DbBaseServiceImpl<MdaColumnEntity> imp
      */
     @Override
     public EntityResponse<MdaColumn> get(int key) {
-
         try {
             MdaColumnEntity entity = em.find(MdaColumnEntity.class, key);
+            return new EntityResponse<MdaColumn>(MdaColumnEntityConverter.get(entity));
+        } catch (Exception ex) {
+            String err = String.format("Action failed: %s", ex.getMessage());
+            log.severe(err);
+            return new EntityResponse<MdaColumn>(err);
+        }
+    }
+
+    /**
+     * Update column
+     *
+     * @param column Column to update
+     * @return EntityResponse<MdaDatabase>
+     */
+    @Override
+    public EntityResponse<MdaColumn> set(MdaColumn column) {
+        try {
+            MdaColumnEntity entity = em.find(MdaColumnEntity.class, column.columnKey);
+
+            // Update w/r fields
+            entity.setColumnNameDisplay(column.displayName);
+            entity.setColumnDesc(column.description);
+
             return new EntityResponse<MdaColumn>(MdaColumnEntityConverter.get(entity));
         } catch (Exception ex) {
             String err = String.format("Action failed: %s", ex.getMessage());

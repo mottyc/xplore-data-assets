@@ -47,7 +47,6 @@ public class DbDatabaseServiceImpl extends _DbBaseServiceImpl<MdaDbEntity> imple
      */
     @Override
     public EntityResponse<MdaDatabase> get(int key) {
-
         try {
             MdaDbEntity entity = em.find(MdaDbEntity.class, key);
             MdaDatabase database = MdaDbEntityConverter.get(entity);
@@ -55,6 +54,29 @@ public class DbDatabaseServiceImpl extends _DbBaseServiceImpl<MdaDbEntity> imple
             // Get the related schemas
             List<MdaSchemaEntity> schemas = em.createNamedQuery("MdaSchemaEntity.findByDatabase", MdaSchemaEntity.class).setParameter("domainKey", entity.getDomainKey()).getResultList();
             schemas.forEach(schema -> { database.schemas.add(MdaSchemaEntityConverter.get(schema)); });
+
+            return new EntityResponse<MdaDatabase>(database);
+        } catch (Exception ex) {
+            String err = String.format("Action failed: %s", ex.getMessage());
+            log.severe(err);
+            return new EntityResponse<MdaDatabase>(err);
+        }
+    }
+
+    /**
+     * Update database
+     *
+     * @param database Database to update
+     * @return EntityResponse<MdaDatabase>
+     */
+    @Override
+    public EntityResponse<MdaDatabase> set(MdaDatabase database) {
+        try {
+            MdaDbEntity entity = em.find(MdaDbEntity.class, database.domainKey);
+
+            // Update w/r fields
+            entity.setDbNameDisplay(database.displayName);
+            entity.setDbDesc(database.description);
 
             return new EntityResponse<MdaDatabase>(database);
         } catch (Exception ex) {

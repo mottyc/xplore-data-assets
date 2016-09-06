@@ -44,9 +44,31 @@ public class DbRelationServiceImpl extends _DbBaseServiceImpl<MdaRelationEntity>
      */
     @Override
     public EntityResponse<MdaRelation> get(int key) {
-
         try {
             MdaRelationEntity entity = em.find(MdaRelationEntity.class, key);
+            return new EntityResponse<MdaRelation>(MdaRelationEntityConverter.get(entity));
+        } catch (Exception ex) {
+            String err = String.format("Action failed: %s", ex.getMessage());
+            log.severe(err);
+            return new EntityResponse<MdaRelation>(err);
+        }
+    }
+
+    /**
+     * Update relation
+     *
+     * @param relation Relation to update
+     * @return EntityResponse<MdaRelation>
+     */
+    @Override
+    public EntityResponse<MdaRelation> set(MdaRelation relation) {
+        try {
+            MdaRelationEntity entity = em.find(MdaRelationEntity.class, relation.relationKey);
+
+            // Update w/r fields
+            entity.setRelationNameDisplay(relation.displayName);
+            entity.setRelationDesc(relation.description);
+
             return new EntityResponse<MdaRelation>(MdaRelationEntityConverter.get(entity));
         } catch (Exception ex) {
             String err = String.format("Action failed: %s", ex.getMessage());

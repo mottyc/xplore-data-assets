@@ -68,6 +68,48 @@ public class UserResource extends BaseResource {
         }
     }
 
+
+    /**
+     * Get specific user data
+     * @param accessToken Access token
+     * @param userKey User key
+     * @return EntityResponse[MdaTable]
+     */
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{userKey}")
+    public EntityResponse<MdaUser> get(@HeaderParam("X-Access-Token") String accessToken, @PathParam("userKey") int userKey) {
+        try {
+            // Validation
+            TokenData token = this.parseJWT(accessToken);
+
+            return this.service.get(userKey);
+        } catch (Exception e) {
+            return new EntityResponse<MdaUser>(e.getMessage());
+        }
+    }
+
+    /**
+     * Update user data (editable fields only)
+     * @param accessToken Access token
+     * @param userKey User key
+     * @param user User object to update
+     * @return EntityResponse[MdaTable]
+     */
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{userKey}")
+    public EntityResponse<MdaUser> set(@HeaderParam("X-Access-Token") String accessToken, @PathParam("userKey") int userKey, MdaUser user) {
+        try {
+            // Validation
+            TokenData token = this.parseJWT(accessToken);
+            return this.service.set(user);
+        } catch (Exception e) {
+            return new EntityResponse<MdaUser>(e.getMessage());
+        }
+    }
     // ------------------ Sub entities actions -------------------------------------------------------------------------
 
 }

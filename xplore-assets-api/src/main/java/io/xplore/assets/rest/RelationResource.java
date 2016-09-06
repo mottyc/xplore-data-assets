@@ -105,7 +105,7 @@ public class RelationResource extends BaseResource {
         try {
             // Validation
             TokenData token = this.parseJWT(accessToken);
-            throw new NotImplementedException();
+            return this.service.set(relation);
         } catch (Exception e) {
             return new EntityResponse<MdaRelation>(e.getMessage());
         }

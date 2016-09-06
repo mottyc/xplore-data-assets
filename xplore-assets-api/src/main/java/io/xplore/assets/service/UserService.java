@@ -20,6 +20,14 @@ public interface UserService {
     EntityResponse<MdaUser> get(int key);
 
     /**
+     * Update user
+     *
+     * @param user User to update
+     * @return EntityResponse<MdaUser>
+     */
+    EntityResponse<MdaUser> set(MdaUser user);
+
+    /**
      * Get list of users
      * @param pageNumber Page number for pagination
      * @param pageSize   Number of items per page

@@ -105,7 +105,7 @@ public class SchemaResource extends BaseResource {
         try {
             // Validation
             TokenData token = this.parseJWT(accessToken);
-            throw new NotImplementedException();
+            return this.service.set(schema);
         } catch (Exception e) {
             return new EntityResponse<MdaSchema>(e.getMessage());
         }

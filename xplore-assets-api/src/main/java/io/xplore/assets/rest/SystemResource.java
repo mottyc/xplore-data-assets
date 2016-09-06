@@ -103,7 +103,7 @@ public class SystemResource extends BaseResource {
         try {
             // Validation
             TokenData token = this.parseJWT(accessToken);
-            throw new NotImplementedException();
+            return this.service.set(system);
         } catch (Exception e) {
             return new EntityResponse<MdaSystem>(e.getMessage());
         }

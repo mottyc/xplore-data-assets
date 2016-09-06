@@ -104,7 +104,7 @@ public class ColumnResource extends BaseResource {
         try {
             // Validation
             TokenData token = this.parseJWT(accessToken);
-            throw new NotImplementedException();
+            return this.service.set(column);
         } catch (Exception e) {
             return new EntityResponse<MdaColumn>(e.getMessage());
         }

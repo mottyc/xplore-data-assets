@@ -44,9 +44,31 @@ public class DbSchemaServiceImpl extends _DbBaseServiceImpl<MdaSchemaEntity> imp
      */
     @Override
     public EntityResponse<MdaSchema> get(int key) {
-
         try {
             MdaSchemaEntity entity = em.find(MdaSchemaEntity.class, key);
+            return new EntityResponse<MdaSchema>(MdaSchemaEntityConverter.get(entity));
+        } catch (Exception ex) {
+            String err = String.format("Action failed: %s", ex.getMessage());
+            log.severe(err);
+            return new EntityResponse<MdaSchema>(err);
+        }
+    }
+
+    /**
+     * Update schema
+     *
+     * @param schema Schema to update
+     * @return EntityResponse<MdaSchema>
+     */
+    @Override
+    public EntityResponse<MdaSchema> set(MdaSchema schema) {
+        try {
+            MdaSchemaEntity entity = em.find(MdaSchemaEntity.class, schema.schemaKey);
+
+            // Update w/r fields
+            entity.setSchemaNameDisplay(schema.displayName);
+            entity.setSchemaDesc(schema.description);
+
             return new EntityResponse<MdaSchema>(MdaSchemaEntityConverter.get(entity));
         } catch (Exception ex) {
             String err = String.format("Action failed: %s", ex.getMessage());

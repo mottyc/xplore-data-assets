@@ -2,6 +2,7 @@ package io.xplore.assets.service;
 
 import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
+import io.xplore.assets.model.MdaColumn;
 import io.xplore.assets.model.MdaRelation;
 import io.xplore.assets.model.QueryFilter;
 import io.xplore.assets.model.QuerySort;
@@ -17,6 +18,14 @@ public interface RelationService {
      * @return EntityResponse<MdaRelation>
      */
     EntityResponse<MdaRelation> get(int key);
+
+    /**
+     * Update relation
+     *
+     * @param relation Relation to update
+     * @return EntityResponse<MdaRelation>
+     */
+    EntityResponse<MdaRelation> set(MdaRelation relation);
 
     /**
      * Get list of relations

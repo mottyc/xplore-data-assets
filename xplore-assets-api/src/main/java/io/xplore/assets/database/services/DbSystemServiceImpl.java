@@ -44,9 +44,31 @@ public class DbSystemServiceImpl extends _DbBaseServiceImpl<MdaSystemEntity> imp
      */
     @Override
     public EntityResponse<MdaSystem> get(int key) {
-
         try {
             MdaSystemEntity entity = em.find(MdaSystemEntity.class, key);
+            return new EntityResponse<MdaSystem>(MdaSystemEntityConverter.get(entity));
+        } catch (Exception ex) {
+            String err = String.format("Action failed: %s", ex.getMessage());
+            log.severe(err);
+            return new EntityResponse<MdaSystem>(err);
+        }
+    }
+
+    /**
+     * Update system
+     *
+     * @param system System to update
+     * @return EntityResponse<MdaSystem>
+     */
+    @Override
+    public EntityResponse<MdaSystem> set(MdaSystem system) {
+        try {
+            MdaSystemEntity entity = em.find(MdaSystemEntity.class, system.systemKey);
+
+            // Update w/r fields
+            entity.setSystemNameDisplay(system.displayName);
+            entity.setSystemDesc(system.description);
+
             return new EntityResponse<MdaSystem>(MdaSystemEntityConverter.get(entity));
         } catch (Exception ex) {
             String err = String.format("Action failed: %s", ex.getMessage());

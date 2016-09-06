@@ -19,6 +19,14 @@ public interface DatabaseService {
     EntityResponse<MdaDatabase> get(int key);
 
     /**
+     * Update database
+     *
+     * @param database Database to update
+     * @return EntityResponse<MdaDatabase>
+     */
+    EntityResponse<MdaDatabase> set(MdaDatabase database);
+
+    /**
      * Get list of databases
      * @param serverKey Filter by server key (-1 for no filter)
      * @param pageNumber Page number for pagination

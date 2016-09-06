@@ -106,7 +106,7 @@ public class ServerResource extends BaseResource {
         try {
             // Validation
             TokenData token = this.parseJWT(accessToken);
-            throw new NotImplementedException();
+            return this.service.set(server);
         } catch (Exception e) {
             return new EntityResponse<MdaServer>(e.getMessage());
         }

@@ -45,9 +45,31 @@ public class DbServerServiceImpl extends _DbBaseServiceImpl<MdaServerEntity> imp
      */
     @Override
     public EntityResponse<MdaServer> get(int key) {
-
         try {
             MdaServerEntity entity = em.find(MdaServerEntity.class, key);
+            return new EntityResponse<MdaServer>(MdaServerEntityConverter.get(entity));
+        } catch (Exception ex) {
+            String err = String.format("Action failed: %s", ex.getMessage());
+            log.severe(err);
+            return new EntityResponse<MdaServer>(err);
+        }
+    }
+
+    /**
+     * Update server
+     *
+     * @param server Server to update
+     * @return EntityResponse<MdaServer>
+     */
+    @Override
+    public EntityResponse<MdaServer> set(MdaServer server) {
+        try {
+            MdaServerEntity entity = em.find(MdaServerEntity.class, server.serverKey);
+
+            // Update w/r fields
+            entity.setServerNameDisplay(server.displayName);
+            entity.setServerDesc(server.description);
+
             return new EntityResponse<MdaServer>(MdaServerEntityConverter.get(entity));
         } catch (Exception ex) {
             String err = String.format("Action failed: %s", ex.getMessage());

@@ -19,6 +19,14 @@ public interface ServerService {
     EntityResponse<MdaServer> get(int key);
 
     /**
+     * Update server
+     *
+     * @param server Server to update
+     * @return EntityResponse<MdaServer>
+     */
+    EntityResponse<MdaServer> set(MdaServer server);
+
+    /**
      * Get list of servers
      * @param typeCode Filter by server type code (empty string for no filter)
      * @param pageNumber Page number for pagination

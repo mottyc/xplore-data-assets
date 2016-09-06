@@ -35,7 +35,6 @@ public class DbBusinessEntityServiceImpl extends _DbBaseServiceImpl<MdaBusinessE
     @Inject
     private EntityManager em;
 
-
     /**
      * Get single business entity by key
      *
@@ -44,10 +43,30 @@ public class DbBusinessEntityServiceImpl extends _DbBaseServiceImpl<MdaBusinessE
      */
     @Override
     public EntityResponse<MdaBusinessEntity> get(int key) {
-
         try {
             MdaBusinessEntityEntity entity = em.find(MdaBusinessEntityEntity.class, key);
             return new EntityResponse<MdaBusinessEntity>(MdaBusinessEntityConverter.get(entity));
+        } catch (Exception ex) {
+            String err = String.format("Action failed: %s", ex.getMessage());
+            log.severe(err);
+            return new EntityResponse<MdaBusinessEntity>(err);
+        }
+    }
+    /**
+     * Update business entity
+     *
+     * @param entity Business entity to update
+     * @return EntityResponse<MdaBusinessEntity>
+     */
+    @Override
+    public EntityResponse<MdaBusinessEntity> set(MdaBusinessEntity entity) {
+        try {
+            MdaBusinessEntityEntity ent = em.find(MdaBusinessEntityEntity.class, entity.businessEntityKey);
+
+            // Update w/r fields
+            ent.setBusinessEntityNameDisplay(entity.displayName);
+
+            return new EntityResponse<MdaBusinessEntity>(MdaBusinessEntityConverter.get(ent));
         } catch (Exception ex) {
             String err = String.format("Action failed: %s", ex.getMessage());
             log.severe(err);

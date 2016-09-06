@@ -44,9 +44,31 @@ public class DbTableServiceImpl extends _DbBaseServiceImpl<MdaTableEntity> imple
      */
     @Override
     public EntityResponse<MdaTable> get(int key) {
-
         try {
             MdaTableEntity entity = em.find(MdaTableEntity.class, key);
+            return new EntityResponse<MdaTable>(MdaTableEntityConverter.get(entity));
+        } catch (Exception ex) {
+            String err = String.format("Action failed: %s", ex.getMessage());
+            log.severe(err);
+            return new EntityResponse<MdaTable>(err);
+        }
+    }
+
+    /**
+     * Update table
+     *
+     * @param table Table to update
+     * @return EntityResponse<MdaTable>
+     */
+    @Override
+    public EntityResponse<MdaTable> set(MdaTable table) {
+        try {
+            MdaTableEntity entity = em.find(MdaTableEntity.class, table.tableKey);
+
+            // Update w/r fields
+            entity.setTableNameDisplay(table.displayName);
+            entity.setTableDesc(table.description);
+
             return new EntityResponse<MdaTable>(MdaTableEntityConverter.get(entity));
         } catch (Exception ex) {
             String err = String.format("Action failed: %s", ex.getMessage());

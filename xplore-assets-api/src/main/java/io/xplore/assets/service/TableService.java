@@ -19,6 +19,14 @@ public interface TableService {
     EntityResponse<MdaTable> get(int key);
 
     /**
+     * Update table
+     *
+     * @param table Table to update
+     * @return EntityResponse<MdaTable>
+     */
+    EntityResponse<MdaTable> set(MdaTable table);
+
+    /**
      * Get list of tables
      * @param schemaKey Filter by schema key (-1 for no filter)
      * @param pageNumber Page number for pagination

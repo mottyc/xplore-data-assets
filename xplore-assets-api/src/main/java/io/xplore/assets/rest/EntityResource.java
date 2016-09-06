@@ -102,7 +102,7 @@ public class EntityResource extends BaseResource {
         try {
             // Validation
             TokenData token = this.parseJWT(accessToken);
-            throw new NotImplementedException();
+            return this.service.set(entity);
         } catch (Exception e) {
             return new EntityResponse<MdaBusinessEntity>(e.getMessage());
         }

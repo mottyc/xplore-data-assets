@@ -19,6 +19,14 @@ public interface SystemService {
     EntityResponse<MdaSystem> get(int key);
 
     /**
+     * Update system
+     *
+     * @param system System to update
+     * @return EntityResponse<MdaSystem>
+     */
+    EntityResponse<MdaSystem> set(MdaSystem system);
+
+    /**
      * Get list of systems
      * @param pageNumber Page number for pagination
      * @param pageSize   Number of items per page

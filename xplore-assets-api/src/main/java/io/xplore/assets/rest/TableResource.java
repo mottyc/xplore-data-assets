@@ -106,7 +106,7 @@ public class TableResource extends BaseResource {
         try {
             // Validation
             TokenData token = this.parseJWT(accessToken);
-            throw new NotImplementedException();
+            return this.service.set(table);
         } catch (Exception e) {
             return new EntityResponse<MdaTable>(e.getMessage());
         }

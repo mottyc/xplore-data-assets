@@ -10,6 +10,7 @@ import io.xplore.assets.model.QuerySort;
  * Created by motty on 26/08/2016.
  */
 public interface ColumnService {
+
     /**
      * Get single column by key
      *
@@ -17,6 +18,14 @@ public interface ColumnService {
      * @return EntityResponse<MdaColumn>
      */
     EntityResponse<MdaColumn> get(int key);
+
+    /**
+     * Update column
+     *
+     * @param column Column to update
+     * @return EntityResponse<MdaDatabase>
+     */
+    EntityResponse<MdaColumn> set(MdaColumn column);
 
     /**
      * Get list of columns

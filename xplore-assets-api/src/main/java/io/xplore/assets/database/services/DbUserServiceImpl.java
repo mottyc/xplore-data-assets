@@ -44,9 +44,30 @@ public class DbUserServiceImpl extends _DbBaseServiceImpl<MdaUsernameEntity> imp
      */
     @Override
     public EntityResponse<MdaUser> get(int key) {
-
         try {
             MdaUsernameEntity entity = em.find(MdaUsernameEntity.class, key);
+            return new EntityResponse<MdaUser>(MdaUserEntityConverter.get(entity));
+        } catch (Exception ex) {
+            String err = String.format("Action failed: %s", ex.getMessage());
+            log.severe(err);
+            return new EntityResponse<MdaUser>(err);
+        }
+    }
+
+    /**
+     * Update user
+     *
+     * @param user User to update
+     * @return EntityResponse<MdaUser>
+     */
+    @Override
+    public EntityResponse<MdaUser> set(MdaUser user) {
+        try {
+            MdaUsernameEntity entity = em.find(MdaUsernameEntity.class, user.usernameKey);
+
+            // Update w/r fields
+            entity.setEmployeeNameDisplay(user.displayName);
+
             return new EntityResponse<MdaUser>(MdaUserEntityConverter.get(entity));
         } catch (Exception ex) {
             String err = String.format("Action failed: %s", ex.getMessage());

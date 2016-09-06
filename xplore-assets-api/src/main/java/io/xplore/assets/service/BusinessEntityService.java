@@ -20,6 +20,14 @@ public interface BusinessEntityService {
     EntityResponse<MdaBusinessEntity> get(int key);
 
     /**
+     * Update business entity
+     *
+     * @param entity Business entity to update
+     * @return EntityResponse<MdaBusinessEntity>
+     */
+    EntityResponse<MdaBusinessEntity> set(MdaBusinessEntity entity);
+
+    /**
      * Get list of business entities
      * @param pageNumber Page number for pagination
      * @param pageSize   Number of items per page

@@ -19,6 +19,14 @@ public interface SchemaService {
     EntityResponse<MdaSchema> get(int key);
 
     /**
+     * Update schema
+     *
+     * @param schema Schema to update
+     * @return EntityResponse<MdaSchema>
+     */
+    EntityResponse<MdaSchema> set(MdaSchema schema);
+
+    /**
      * Get list of schemas
      * @param databaseKey Filter by database key (-1 for no filter)
      * @param pageNumber Page number for pagination
