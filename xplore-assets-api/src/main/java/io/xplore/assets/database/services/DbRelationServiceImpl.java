@@ -136,7 +136,7 @@ public class DbRelationServiceImpl extends _DbBaseServiceImpl<MdaRelationEntity>
                 if (filter == null) {
                     filter = new QueryFilter();
                 }
-                filter.getFilters().put("columnKeyPar", String.valueOf(parentKey));
+                filter.addFilter("columnKeyPar", String.valueOf(parentKey));
             }
 
             CriteriaQuery cq = this.buildCriteriaQuery(MdaRelationEntity.class, cb, filter, sorting);

@@ -136,7 +136,7 @@ public class DbColumnServiceImpl extends _DbBaseServiceImpl<MdaColumnEntity> imp
                 if (filter == null) {
                     filter = new QueryFilter();
                 }
-                filter.getFilters().put("tableKey", String.valueOf(tableKey));
+                filter.addFilter("tableKey", String.valueOf(tableKey));
             }
 
             CriteriaQuery cq = this.buildCriteriaQuery(MdaColumnEntity.class, cb, filter, sorting);

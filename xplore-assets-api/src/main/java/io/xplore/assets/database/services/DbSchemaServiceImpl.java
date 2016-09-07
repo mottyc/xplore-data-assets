@@ -136,7 +136,7 @@ public class DbSchemaServiceImpl extends _DbBaseServiceImpl<MdaSchemaEntity> imp
                 if (filter == null) {
                     filter = new QueryFilter();
                 }
-                filter.getFilters().put("domainKey", String.valueOf(databaseKey));
+                filter.addFilter("domainKey", String.valueOf(databaseKey));
             }
 
             CriteriaQuery cq = this.buildCriteriaQuery(MdaSchemaEntity.class, cb, filter, sorting);

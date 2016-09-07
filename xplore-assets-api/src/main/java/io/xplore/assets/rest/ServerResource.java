@@ -62,7 +62,7 @@ public class ServerResource extends BaseResource {
             pageSize = (pageSize > 0) ? pageSize : Consts.DB_PAGE_SIZE;
 
             QuerySort sorting = QuerySort.create(sort);
-            QueryFilter filtering = QueryFilter.create(filter);
+            QueryFilter filtering = QueryFilter.createFromList(filter);
 
             return this.service.find(type, page, pageSize, filtering, sorting);
         } catch (Exception e) {

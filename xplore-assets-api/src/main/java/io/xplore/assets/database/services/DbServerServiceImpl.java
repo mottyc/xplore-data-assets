@@ -137,7 +137,7 @@ public class DbServerServiceImpl extends _DbBaseServiceImpl<MdaServerEntity> imp
                 if (filter == null) {
                     filter = new QueryFilter();
                 }
-                filter.getFilters().put("serverTypeCd", typeCode);
+                filter.addFilter("serverTypeCd", typeCode);
             }
 
             CriteriaQuery cq = this.buildCriteriaQuery(MdaServerEntity.class, cb, filter, sorting);

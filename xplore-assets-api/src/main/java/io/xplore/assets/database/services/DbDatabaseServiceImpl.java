@@ -145,7 +145,7 @@ public class DbDatabaseServiceImpl extends _DbBaseServiceImpl<MdaDbEntity> imple
                 if (filter == null) {
                     filter = new QueryFilter();
                 }
-                filter.getFilters().put("serverKey", String.valueOf(serverKey));
+                filter.addFilter("serverKey", String.valueOf(serverKey));
             }
 
             CriteriaQuery cq = this.buildCriteriaQuery(MdaDbEntity.class, cb, filter, sorting);

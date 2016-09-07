@@ -10,10 +10,7 @@ import io.xplore.assets.model.QueryFilter;
 import io.xplore.assets.model.QuerySort;
 import io.xplore.assets.util.StringUtils;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,8 +41,23 @@ public class _DbBaseServiceImpl<E>  {
             for (String field : filter.getFilters().keySet()) {
                 String filterField = this.validateField(clazz, field);
                 if (StringUtils.isNotEmpty(filterField)) {
-                    Predicate filterPredicate = cb.equal(from.get(field), filter.getFilters().get(field));
-                    predicates.add(filterPredicate);
+
+                    List<String> values = filter.getFilters().get(field);
+                    List<Predicate> valuePredicates = new ArrayList<Predicate>();
+
+                    values.forEach(v -> { valuePredicates.add(cb.equal(from.get(field), v)); });
+
+                    if (valuePredicates.size() > 0) {
+                        Predicate[] valuePredicateArray = new Predicate[valuePredicates.size()];
+                        valuePredicates.toArray(valuePredicateArray);
+                        cq.where(cb.and(valuePredicateArray));
+
+                        Predicate filterPredicate = cb.or(valuePredicateArray);
+                        predicates.add(filterPredicate);
+                    }
+
+                    // Predicate filterPredicate = cb.equal(from.get(field), filter.getFilters().get(field));
+                    //predicates.add(filterPredicate);
                 }
             }
         }

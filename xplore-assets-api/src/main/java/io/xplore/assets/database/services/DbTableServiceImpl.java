@@ -136,7 +136,7 @@ public class DbTableServiceImpl extends _DbBaseServiceImpl<MdaTableEntity> imple
                 if (filter == null) {
                     filter = new QueryFilter();
                 }
-                filter.getFilters().put("schemaKey", String.valueOf(schemaKey));
+                filter.addFilter("schemaKey", String.valueOf(schemaKey));
             }
 
             CriteriaQuery cq = this.buildCriteriaQuery(MdaTableEntity.class, cb, filter, sorting);
