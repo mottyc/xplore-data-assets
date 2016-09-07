@@ -43,7 +43,7 @@ public class DbUserServiceImpl extends _DbBaseServiceImpl<MdaUsernameEntity> imp
      * @return EntityResponse<MdaUser>
      */
     @Override
-    public EntityResponse<MdaUser> get(int key) {
+    public EntityResponse<MdaUser> get(String key) {
         try {
             MdaUsernameEntity entity = em.find(MdaUsernameEntity.class, key);
             return new EntityResponse<MdaUser>(MdaUserEntityConverter.get(entity));

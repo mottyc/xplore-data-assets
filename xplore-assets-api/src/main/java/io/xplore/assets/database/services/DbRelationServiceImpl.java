@@ -35,7 +35,6 @@ public class DbRelationServiceImpl extends _DbBaseServiceImpl<MdaRelationEntity>
     @Inject
     private EntityManager em;
 
-
     /**
      * Get single relation by key
      *

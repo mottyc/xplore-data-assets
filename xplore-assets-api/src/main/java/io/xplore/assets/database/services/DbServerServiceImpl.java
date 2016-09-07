@@ -36,7 +36,6 @@ public class DbServerServiceImpl extends _DbBaseServiceImpl<MdaServerEntity> imp
     @Inject
     private EntityManager em;
 
-
     /**
      * Get single server by key
      *

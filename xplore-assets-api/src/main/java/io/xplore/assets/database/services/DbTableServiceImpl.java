@@ -35,7 +35,6 @@ public class DbTableServiceImpl extends _DbBaseServiceImpl<MdaTableEntity> imple
     @Inject
     private EntityManager em;
 
-
     /**
      * Get single table by key
      *

@@ -35,7 +35,6 @@ public class DbSchemaServiceImpl extends _DbBaseServiceImpl<MdaSchemaEntity> imp
     @Inject
     private EntityManager em;
 
-
     /**
      * Get single schema by key
      *

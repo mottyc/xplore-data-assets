@@ -73,13 +73,34 @@ public class UserResource extends BaseResource {
      * Get specific user data
      * @param accessToken Access token
      * @param userKey User key
-     * @return EntityResponse[MdaTable]
+     * @return EntityResponse[MdaUser]
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/{userKey}")
-    public EntityResponse<MdaUser> get(@HeaderParam("X-Access-Token") String accessToken, @PathParam("userKey") int userKey) {
+    public EntityResponse<MdaUser> get(@HeaderParam("X-Access-Token") String accessToken, @PathParam("userKey") String userKey) {
+        try {
+            // Validation
+            TokenData token = this.parseJWT(accessToken);
+
+            return this.service.get(userKey);
+        } catch (Exception e) {
+            return new EntityResponse<MdaUser>(e.getMessage());
+        }
+    }
+
+    /**
+     * Get specific user data by post (since user key is a string)
+     * @param accessToken Access token
+     * @param userKey User key
+     * @return EntityResponse[MdaUser]
+     */
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/getuser")
+    public EntityResponse<MdaUser> getUser(@HeaderParam("X-Access-Token") String accessToken, String userKey) {
         try {
             // Validation
             TokenData token = this.parseJWT(accessToken);
@@ -95,7 +116,7 @@ public class UserResource extends BaseResource {
      * @param accessToken Access token
      * @param userKey User key
      * @param user User object to update
-     * @return EntityResponse[MdaTable]
+     * @return EntityResponse[MdaUser]
      */
     @PUT
     @Produces(MediaType.APPLICATION_JSON)

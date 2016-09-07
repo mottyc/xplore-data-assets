@@ -36,7 +36,6 @@ public class DbColumnServiceImpl extends _DbBaseServiceImpl<MdaColumnEntity> imp
     @Inject
     private EntityManager em;
 
-
     /**
      * Get single column by key
      *

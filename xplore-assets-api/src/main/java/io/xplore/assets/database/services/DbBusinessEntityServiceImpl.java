@@ -65,6 +65,7 @@ public class DbBusinessEntityServiceImpl extends _DbBaseServiceImpl<MdaBusinessE
 
             // Update w/r fields
             ent.setBusinessEntityNameDisplay(entity.displayName);
+            ent.setBusinessEntityDesc(entity.description);
 
             return new EntityResponse<MdaBusinessEntity>(MdaBusinessEntityConverter.get(ent));
         } catch (Exception ex) {

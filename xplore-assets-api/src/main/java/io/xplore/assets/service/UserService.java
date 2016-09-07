@@ -17,7 +17,7 @@ public interface UserService {
      * @param key user key
      * @return EntityResponse<MdaUser>
      */
-    EntityResponse<MdaUser> get(int key);
+    EntityResponse<MdaUser> get(String key);
 
     /**
      * Update user

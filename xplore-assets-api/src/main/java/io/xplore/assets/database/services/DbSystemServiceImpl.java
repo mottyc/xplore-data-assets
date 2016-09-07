@@ -35,7 +35,6 @@ public class DbSystemServiceImpl extends _DbBaseServiceImpl<MdaSystemEntity> imp
     @Inject
     private EntityManager em;
 
-
     /**
      * Get single system by key
      *
