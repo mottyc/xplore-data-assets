@@ -78,6 +78,21 @@ angular.module('myApp')
             MdaRelationModel.prototype = {
                 setData: function (data) {
                     angular.extend(this, data, this);
+                },
+
+                save: function() {
+                    var deferred = $q.defer();
+                    ApiRequest
+                        .put('relations/' + this.relationKey, {}, angular.toJson(this))
+                        .then(function (response) {
+                            if (response.data.error !== null) {
+                                deferred.reject(response);
+                            }
+                            deferred.resolve(response);
+                        }, function (error) {
+                            deferred.reject(error);
+                        });
+                    return deferred.promise;
                 }
             };
 

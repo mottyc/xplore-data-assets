@@ -50,7 +50,7 @@ angular.module('myApp')
                 save: function() {
                     var deferred = $q.defer();
                     ApiRequest
-                        .put('entities/' + this.serverKey, {}, angular.toJson(this))
+                        .put('entities/' + this.businessEntityKey, {}, angular.toJson(this))
                         .then(function (response) {
                             if (response.data.error !== null) {
                                 deferred.reject(response);
