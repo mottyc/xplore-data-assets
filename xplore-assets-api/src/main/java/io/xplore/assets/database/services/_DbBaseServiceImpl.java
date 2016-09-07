@@ -45,7 +45,16 @@ public class _DbBaseServiceImpl<E>  {
                     List<String> values = filter.getFilters().get(field);
                     List<Predicate> valuePredicates = new ArrayList<Predicate>();
 
-                    values.forEach(v -> { valuePredicates.add(cb.equal(from.get(field), v)); });
+                    // define predicate
+                    for (String v : values) {
+                        v.replace("*", "%");
+                        if (v.contains("%")) {
+                            valuePredicates.add(cb.equal(from.get(field), v));
+                        } else {
+                            valuePredicates.add(cb.like(from.get(field), v));
+                        }
+                    }
+                    // values.forEach(v -> { valuePredicates.add(cb.equal(from.get(field), v)); });
 
                     if (valuePredicates.size() > 0) {
                         Predicate[] valuePredicateArray = new Predicate[valuePredicates.size()];
