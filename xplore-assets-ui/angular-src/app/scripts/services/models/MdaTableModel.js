@@ -36,7 +36,8 @@
  */
 angular.module('myApp')
     .factory('MdaTableModel', [
-        function () {
+        '$q', 'ApiRequest',
+        function ($q, ApiRequest) {
             var self = this;
 
             function MdaTableModel(data) {

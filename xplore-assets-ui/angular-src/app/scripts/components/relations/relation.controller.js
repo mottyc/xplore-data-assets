@@ -29,7 +29,7 @@
 
         self.save = function () {
             relationsManager
-                .set(self.relation)
+                .save(self.relation)
                 .then(function (result) {
                     self.relation = result.data.entity;
                 });

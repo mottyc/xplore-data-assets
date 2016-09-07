@@ -41,7 +41,8 @@
  */
 angular.module('myApp')
     .factory('MdaRelationModel', [
-        function () {
+        '$q', 'ApiRequest',
+        function ($q, ApiRequest) {
             var self = this;
 
             function MdaRelationModel(data) {

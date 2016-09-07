@@ -36,7 +36,8 @@
  */
 angular.module('myApp')
     .factory('MdaColumnModel', [
-        function () {
+        '$q', 'ApiRequest',
+        function ($q, ApiRequest) {
             var self = this;
 
             function MdaColumnModel(data) {

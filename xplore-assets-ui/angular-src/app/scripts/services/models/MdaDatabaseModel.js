@@ -30,7 +30,8 @@
  */
 angular.module('myApp')
     .factory('MdaDatabaseModel', [
-        function () {
+        '$q', 'ApiRequest',
+        function ($q, ApiRequest) {
             var self = this;
 
             function MdaDatabaseModel(data) {

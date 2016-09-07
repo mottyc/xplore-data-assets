@@ -29,7 +29,7 @@
 
         self.save = function () {
             databasesManager
-                .set(self.database)
+                .save(self.database)
                 .then(function (result) {
                     self.database = result.data.entity;
                 });

@@ -31,7 +31,7 @@
 
         self.save = function () {
             tablesManager
-                .set(self.table)
+                .save(self.table)
                 .then(function (result) {
                     self.table = result.data.entity;
                 });

@@ -29,7 +29,7 @@
 
         self.save = function () {
             schemasManager
-                .set(self.schema)
+                .save(self.schema)
                 .then(function (result) {
                     self.schema = result.data.entity;
                 });

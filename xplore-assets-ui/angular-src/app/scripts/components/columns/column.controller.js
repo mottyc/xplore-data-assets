@@ -29,7 +29,7 @@
 
         self.save = function () {
             columnsManager
-                .get(self.column)
+                .save(self.column)
                 .then(function (result) {
                     self.column = result.data.entity;
                 });

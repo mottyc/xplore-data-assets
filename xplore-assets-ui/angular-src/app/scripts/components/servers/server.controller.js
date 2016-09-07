@@ -9,16 +9,16 @@
     angular.module('myApp')
         .controller('serverController', serverController);
 
-    serverController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'serversManager'];
+    serverController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'serversManager', 'MdaServerModel'];
 
-    function serverController($rootScope, $scope, $state, $stateParams, serversManager) {
+    function serverController($rootScope, $scope, $state, $stateParams, serversManager, MdaServerModel) {
 
         var self = this;
         self.key = $stateParams.key;
 
         // region --- Data Handlers ------------------------------------------------------------------------------------
 
-        self.server = {};
+        self.server = new MdaServerModel();
         self.relatedSystems = [];
         self.relatedTables = [];
         
@@ -26,14 +26,19 @@
         serversManager
              .get(self.key)
              .then(function (result) {
-                 self.server = result.data.entity;
+                 //self.server = result.data.entity;
+                 self.server.setData(result.data.entity)
              });
 
         self.save = function () {
-            serversManager
-                .set(self.server)
+
+            console.debug("Save: " + angular.toJson(self.server));
+            self.server
+                .save()
                 .then(function (result) {
-                    self.server = result.data.entity;
+                    console.debug(result);
+                    //self.server = result.data.entity;
+                    self.server.setData(result.data.entity)
                 });
         };
         // endregion

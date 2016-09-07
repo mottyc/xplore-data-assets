@@ -109,6 +109,21 @@ angular.module('myApp')
                         item = scope._retrieveInstance(data);
                     }
                     return item;
+                },
+
+                // Save item and get an its instance in return
+                save: function (data) {
+                    var deferred = $q.defer();
+
+                    ApiRequest
+                        .put(resourceName + '/' + data.businessEntityKey, {}, data)
+                        .then(function (response) {
+                            deferred.resolve(response);
+                        }, function (error) {
+                            deferred.reject(error);
+                        });
+
+                    return deferred.promise;
                 }
 
                 //endregion

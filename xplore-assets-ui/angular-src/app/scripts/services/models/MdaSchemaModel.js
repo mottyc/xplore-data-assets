@@ -28,7 +28,8 @@
  */
 angular.module('myApp')
     .factory('MdaSchemaModel', [
-        function () {
+        '$q', 'ApiRequest',
+        function ($q, ApiRequest) {
             var self = this;
 
             function MdaSchemaModel(data) {

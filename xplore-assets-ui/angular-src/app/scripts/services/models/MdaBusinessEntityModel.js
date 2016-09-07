@@ -23,7 +23,8 @@
  */
 angular.module('myApp')
     .factory('MdaBusinessEntityModel', [
-        function () {
+        '$q', 'ApiRequest',
+        function ($q, ApiRequest) {
             var self = this;
 
             function MdaBusinessEntityModel(data) {
@@ -44,6 +45,21 @@ angular.module('myApp')
             MdaBusinessEntityModel.prototype = {
                 setData: function (data) {
                     angular.extend(this, data, this);
+                },
+                
+                save: function() {
+                    var deferred = $q.defer();
+                    ApiRequest
+                        .put('entities/' + this.serverKey, {}, angular.toJson(this))
+                        .then(function (response) {
+                            if (response.data.error !== null) {
+                                deferred.reject(response);
+                            }
+                            deferred.resolve(response);
+                        }, function (error) {
+                            deferred.reject(error);
+                        });
+                    return deferred.promise;
                 }
             };
 

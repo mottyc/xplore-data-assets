@@ -31,7 +31,7 @@
 
         self.save = function () {
             systemsManager
-                .set(self.server)
+                .save(self.server)
                 .then(function (result) {
                     self.system = result.data.entity;
                 });

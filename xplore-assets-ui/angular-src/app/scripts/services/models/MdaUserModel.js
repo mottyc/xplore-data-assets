@@ -24,7 +24,8 @@
  */
 angular.module('myApp')
     .factory('MdaUserModel', [
-        function () {
+        '$q', 'ApiRequest',
+        function ($q, ApiRequest) {
             var self = this;
 
             function MdaUserModel(data) {
