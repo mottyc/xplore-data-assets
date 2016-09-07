@@ -83,7 +83,7 @@ public class ColumnResource extends BaseResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/")
+    @Path("/search")
     public QueryResponse<MdaColumn> search(@HeaderParam("X-Access-Token") String accessToken,
                                            @QueryParam("table") @DefaultValue("-1") int tableKey,
                                            @QueryParam("sort") @DefaultValue("") String sort,
@@ -106,6 +106,7 @@ public class ColumnResource extends BaseResource {
             return new QueryResponse<MdaColumn>(e.getMessage());
         }
     }
+
     /**
      * Get specific column data
      * @param accessToken Access token

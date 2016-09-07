@@ -4,6 +4,7 @@ import io.xplore.assets.Consts;
 import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
 import io.xplore.assets.messages.TokenData;
+import io.xplore.assets.model.Filter;
 import io.xplore.assets.model.MdaSchema;
 import io.xplore.assets.model.QueryFilter;
 import io.xplore.assets.model.QuerySort;
@@ -62,6 +63,43 @@ public class SchemaResource extends BaseResource {
 
             QuerySort sorting = QuerySort.create(sort);
             QueryFilter filtering = QueryFilter.createFromList(filter);
+
+            return this.service.find(databaseKey, page, pageSize, filtering, sorting);
+        } catch (Exception e) {
+            return new QueryResponse<MdaSchema>(e.getMessage());
+        }
+    }
+
+    /**
+     * Search list of schemas
+     * @param accessToken Access token
+     * @param databaseKey Filter by database key
+     * @param sort Sort by field in the format of field:{asc|desc}
+     * @param page Page number (for pagination)
+     * @param pageSize Number of results per page (default size: 50 items)
+     * @param filters List of filters by field
+     * @return QueryResponse[MdaSchema]
+     */
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/search")
+    public QueryResponse<MdaSchema> search(@HeaderParam("X-Access-Token") String accessToken,
+                                           @QueryParam("database") @DefaultValue("-1") int databaseKey,
+                                           @QueryParam("sort") @DefaultValue("") String sort,
+                                           @QueryParam("page") @DefaultValue("1") int page,
+                                           @QueryParam("pageSize") @DefaultValue("0") int pageSize,
+                                           List<Filter> filters) {
+        try {
+            // Validation
+            TokenData token = this.parseJWT(accessToken);
+
+            // Pagination
+            page = (page > 0) ? page : 1;
+            pageSize = (pageSize > 0) ? pageSize : Consts.DB_PAGE_SIZE;
+
+            QuerySort sorting = QuerySort.create(sort);
+            QueryFilter filtering = QueryFilter.createFromFilters(filters);
 
             return this.service.find(databaseKey, page, pageSize, filtering, sorting);
         } catch (Exception e) {

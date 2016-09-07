@@ -4,10 +4,7 @@ import io.xplore.assets.Consts;
 import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
 import io.xplore.assets.messages.TokenData;
-import io.xplore.assets.model.MdaTable;
-import io.xplore.assets.model.MdaUser;
-import io.xplore.assets.model.QueryFilter;
-import io.xplore.assets.model.QuerySort;
+import io.xplore.assets.model.*;
 import io.xplore.assets.service.UserService;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
@@ -68,6 +65,40 @@ public class UserResource extends BaseResource {
         }
     }
 
+    /**
+     * Search list of users
+     * @param accessToken Access token
+     * @param sort Sort by field in the format of field:{asc|desc}
+     * @param page Page number (for pagination)
+     * @param pageSize Number of results per page (default size: 50 items)
+     * @param filters List of filters by field
+     * @return QueryResponse[MdaUser]
+     */
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/search")
+    public QueryResponse<MdaUser> search(@HeaderParam("X-Access-Token") String accessToken,
+                                          @QueryParam("sort") @DefaultValue("") String sort,
+                                          @QueryParam("page") @DefaultValue("1") int page,
+                                          @QueryParam("pageSize") @DefaultValue("0") int pageSize,
+                                          List<Filter> filters) {
+        try {
+            // Validation
+            TokenData token = this.parseJWT(accessToken);
+
+            // Pagination
+            page = (page > 0) ? page : 1;
+            pageSize = (pageSize > 0) ? pageSize : Consts.DB_PAGE_SIZE;
+
+            QuerySort sorting = QuerySort.create(sort);
+            QueryFilter filtering = QueryFilter.createFromFilters(filters);
+
+            return this.service.find(page, pageSize, filtering, sorting);
+        } catch (Exception e) {
+            return new QueryResponse<MdaUser>(e.getMessage());
+        }
+    }
 
     /**
      * Get specific user data
@@ -131,6 +162,7 @@ public class UserResource extends BaseResource {
             return new EntityResponse<MdaUser>(e.getMessage());
         }
     }
+
     // ------------------ Sub entities actions -------------------------------------------------------------------------
 
 }
