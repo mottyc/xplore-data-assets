@@ -9,16 +9,16 @@
     angular.module('myApp')
         .controller('tableController', tableController);
 
-    tableController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'tablesManager'];
+    tableController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'tablesManager', 'MdaTableModel'];
 
-    function tableController($rootScope, $scope, $state, $stateParams, tablesManager) {
+    function tableController($rootScope, $scope, $state, $stateParams, tablesManager, MdaTableModel) {
 
         var self = this;
         self.key = $stateParams.key;
 
         // region --- Data Handlers ------------------------------------------------------------------------------------
 
-        self.table = {};
+        self.table = new MdaTableModel();
         self.relatedEntities = [];
         
 
@@ -26,14 +26,14 @@
         tablesManager
              .get(self.key)
              .then(function (result) {
-                 self.table = result.data.entity;
+                 self.table.setData(result.data.entity)
              });
 
         self.save = function () {
-            tablesManager
-                .save(self.table)
+            self.table
+                .save()
                 .then(function (result) {
-                    self.table = result.data.entity;
+                    self.table.setData(result.data.entity)
                 });
         };
         // endregion

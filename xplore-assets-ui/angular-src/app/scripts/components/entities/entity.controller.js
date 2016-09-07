@@ -9,16 +9,16 @@
     angular.module('myApp')
         .controller('entityController', entityController);
 
-    entityController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'entitiesManager'];
+    entityController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'entitiesManager', 'MdaBusinessEntityModel'];
 
-    function entityController($rootScope, $scope, $state, $stateParams, entitiesManager) {
+    function entityController($rootScope, $scope, $state, $stateParams, entitiesManager, MdaBusinessEntityModel) {
 
         var self = this;
         self.key = $stateParams.key;
 
         // region --- Data Handlers ------------------------------------------------------------------------------------
 
-        self.entity = {};
+        self.entity = new MdaBusinessEntityModel();
         self.relatedSystems = [];
         self.relatedTables = [];
 
@@ -26,14 +26,14 @@
         entitiesManager
              .get(self.key)
              .then(function (result) {
-                 self.database = result.data.entity;
+                 self.entity.setData(result.data.entity)
              });
 
         self.save = function () {
-            entitiesManager
-                .save(self.entity)
+            self.entity
+                .save()
                 .then(function (result) {
-                    self.entity = result.data.entity;
+                    self.entity.setData(result.data.entity)
                 });
         };
         // endregion

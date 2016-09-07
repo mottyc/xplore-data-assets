@@ -9,29 +9,29 @@
     angular.module('myApp')
         .controller('relationController', relationController);
 
-    relationController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'relationsManager'];
+    relationController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'relationsManager', 'MdaRelationModel'];
 
-    function relationController($rootScope, $scope, $state, $stateParams, relationsManager) {
+    function relationController($rootScope, $scope, $state, $stateParams, relationsManager, MdaRelationModel) {
 
         var self = this;
         self.key = $stateParams.key;
 
         // region --- Data Handlers ------------------------------------------------------------------------------------
 
-        self.relation = {};
+        self.relation = new MdaRelationModel();
 
         // Get info
         relationsManager
              .get(self.key)
              .then(function (result) {
-                 self.relation = result.data.entity;
+                 self.relation.setData(result.data.entity)
              });
 
         self.save = function () {
-            relationsManager
-                .save(self.relation)
+            self.relation
+                .save()
                 .then(function (result) {
-                    self.relation = result.data.entity;
+                    self.relation.setData(result.data.entity)
                 });
         };
         // endregion

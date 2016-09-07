@@ -9,29 +9,29 @@
     angular.module('myApp')
         .controller('databaseController', databaseController);
 
-    databaseController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'databasesManager'];
+    databaseController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'databasesManager', 'MdaDatabaseModel'];
 
-    function databaseController($rootScope, $scope, $state, $stateParams, databasesManager) {
+    function databaseController($rootScope, $scope, $state, $stateParams, databasesManager, MdaDatabaseModel) {
 
         var self = this;
         self.key = $stateParams.key;
 
         // region --- Data Handlers ------------------------------------------------------------------------------------
 
-        self.database = {};
+        self.database = new MdaDatabaseModel();
 
         // Get info
         databasesManager
              .get(self.key)
              .then(function (result) {
-                 self.database = result.data.entity;
+                 self.database.setData(result.data.entity)
              });
 
         self.save = function () {
-            databasesManager
-                .save(self.database)
+            self.database
+                .save()
                 .then(function (result) {
-                    self.database = result.data.entity;
+                    self.database.setData(result.data.entity)
                 });
         };
         // endregion

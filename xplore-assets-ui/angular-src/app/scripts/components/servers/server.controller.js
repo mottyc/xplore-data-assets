@@ -26,18 +26,13 @@
         serversManager
              .get(self.key)
              .then(function (result) {
-                 //self.server = result.data.entity;
                  self.server.setData(result.data.entity)
              });
 
         self.save = function () {
-
-            console.debug("Save: " + angular.toJson(self.server));
             self.server
                 .save()
                 .then(function (result) {
-                    console.debug(result);
-                    //self.server = result.data.entity;
                     self.server.setData(result.data.entity)
                 });
         };

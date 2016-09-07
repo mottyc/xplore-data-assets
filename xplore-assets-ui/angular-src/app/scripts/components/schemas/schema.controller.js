@@ -9,29 +9,29 @@
     angular.module('myApp')
         .controller('schemaController', schemaController);
 
-    schemaController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'schemasManager'];
+    schemaController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'schemasManager', 'MdaSchemaModel'];
 
-    function schemaController($rootScope, $scope, $state, $stateParams, schemasManager) {
+    function schemaController($rootScope, $scope, $state, $stateParams, schemasManager, MdaSchemaModel) {
 
         var self = this;
         self.key = $stateParams.key;
 
         // region --- Data Handlers ------------------------------------------------------------------------------------
 
-        self.schema = {};
+        self.schema = new MdaSchemaModel();
 
         // Get info
         schemasManager
              .get(self.key)
              .then(function (result) {
-                 self.schema = result.data.entity;
+                 self.schema.setData(result.data.entity)
              });
 
         self.save = function () {
-            schemasManager
-                .save(self.schema)
+            self.schema
+                .save()
                 .then(function (result) {
-                    self.schema = result.data.entity;
+                    self.schema.setData(result.data.entity)
                 });
         };
         // endregion

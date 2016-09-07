@@ -9,29 +9,29 @@
     angular.module('myApp')
         .controller('columnController', columnController);
 
-    columnController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'columnsManager'];
+    columnController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'columnsManager', 'MdaColumnModel'];
 
-    function columnController($rootScope, $scope, $state, $stateParams, columnsManager) {
+    function columnController($rootScope, $scope, $state, $stateParams, columnsManager, MdaColumnModel) {
 
         var self = this;
         self.key = $stateParams.key;
 
         // region --- Data Handlers ------------------------------------------------------------------------------------
 
-        self.column = {};
+        self.column = new MdaColumnModel();
         
         // Get info
         columnsManager
              .get(self.key)
              .then(function (result) {
-                 self.column = result.data.entity;
+                 self.column.setData(result.data.entity)
              });
 
         self.save = function () {
-            columnsManager
-                .save(self.column)
+            self.column
+                .save()
                 .then(function (result) {
-                    self.column = result.data.entity;
+                    self.column.setData(result.data.entity)
                 });
         };
         // endregion

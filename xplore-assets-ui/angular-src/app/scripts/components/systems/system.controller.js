@@ -9,16 +9,16 @@
     angular.module('myApp')
         .controller('systemController', systemController);
 
-    systemController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'systemsManager'];
+    systemController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'systemsManager', 'MdaSystemModel'];
 
-    function systemController($rootScope, $scope, $state, $stateParams, systemsManager) {
+    function systemController($rootScope, $scope, $state, $stateParams, systemsManager, MdaSystemModel) {
 
         var self = this;
         self.key = $stateParams.key;
 
         // region --- Data Handlers ------------------------------------------------------------------------------------
 
-        self.system = {};
+        self.system = new MdaSystemModel();
         self.relatedServers = [];
         self.relatedEntities = [];
 
@@ -26,14 +26,14 @@
         systemsManager
              .get(self.key)
              .then(function (result) {
-                 self.system = result.data.entity;
+                 self.system.setData(result.data.entity)
              });
 
         self.save = function () {
-            systemsManager
-                .save(self.server)
+            self.system
+                .save()
                 .then(function (result) {
-                    self.system = result.data.entity;
+                    self.system.setData(result.data.entity)
                 });
         };
         // endregion
