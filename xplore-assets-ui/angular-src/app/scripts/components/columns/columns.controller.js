@@ -65,7 +65,6 @@
         // endregion
 
         // region --- Filters ------------------------------------------------------------------------------------------
-        // self.filtersText = '';
 
         var filterChange = function (filters) {
 
@@ -81,18 +80,11 @@
 
         self.filterConfig = {
             fields: [
-                {
-                    id: 'columnName',
-                    title:  'Column Name',
-                    placeholder: 'Filter by Column Name...',
-                    filterType: 'text'
-                },
-                {
-                    id: 'columnNameDisplay',
-                    title:  'Display Name',
-                    placeholder: 'Filter by Display Name...',
-                    filterType: 'text'
-                }
+                { id: 'columnName', title:  'Name', placeholder: 'Filter by column name...', filterType: 'text' },
+                { id: 'columnNameDisplay', title:  'Display Name', placeholder: 'Filter by display name...', filterType: 'text' },
+                { id: 'tableName', title:  'Table Name', placeholder: 'Filter by table name...', filterType: 'text' },
+                { id: 'schemaName', title:  'Schema Name', placeholder: 'Filter by schema name...', filterType: 'text' },
+                { id: 'columnDataType', title:  'Data Type', placeholder: 'Filter by data type...', filterType: 'text' }
             ],
             resultsCount: self.items.length,
             appliedFilters: [],

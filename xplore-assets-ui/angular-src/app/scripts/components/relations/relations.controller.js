@@ -65,60 +65,31 @@
         // endregion
 
         // region --- Filters ------------------------------------------------------------------------------------------
-        self.filtersText = '';
-
-        var matchesFilter = function (item, filter) {
-            var match = true;
-
-            if (filter.id === 'name') {
-                match = item.name.match(filter.value) !== null;
-            }
-            return match;
-        };
-
-        var matchesFilters = function (item, filters) {
-            var matches = true;
-
-            filters.forEach(function(filter) {
-                if (!matchesFilter(item, filter)) {
-                    matches = false;
-                    return false;
-                }
-            });
-            return matches;
-        };
-
-        var applyFilters = function (filters) {
-            self.items = [];
-            if (filters && filters.length > 0) {
-                self.allItems.forEach(function (item) {
-                    if (matchesFilters(item, filters)) {
-                        self.items.push(item);
-                    }
-                });
-            } else {
-                self.items = self.allItems;
-            }
-        };
-
         var filterChange = function (filters) {
-            self.filtersText = "";
+
+            self.queryFilters = [];
+
             filters.forEach(function (filter) {
-                self.filtersText += filter.title + " : " + filter.value + "\n";
+                self.queryFilters.push({field:filter.id, value:filter.value});
             });
-            applyFilters(filters);
-            self.toolbarConfig.filterConfig.resultsCount = self.items.length;
+
+            self.loadEntities();
         };
 
 
         self.filterConfig = {
             fields: [
-                {
-                    id: 'name',
-                    title:  'Name',
-                    placeholder: 'Filter by Name...',
-                    filterType: 'text'
-                }
+                { id: 'fullRelationName', title:  'Name', placeholder: 'Filter by relation name...', filterType: 'text' },
+                { id: 'relationNameDisplay', title:  'Display Name', placeholder: 'Filter by display name...', filterType: 'text' },
+                { id: 'dbName', title:  'Database', placeholder: 'Filter by database name...', filterType: 'text' },
+                { id: 'schemaNamePar', title:  'Parent Schema', placeholder: 'Filter by parent schema name...', filterType: 'text' },
+                { id: 'tableNamePar', title:  'Parent Table', placeholder: 'Filter by parent table name...', filterType: 'text' },
+                { id: 'columnNamePar', title:  'Parent Column', placeholder: 'Filter by parent column name...', filterType: 'text' },
+                { id: 'schemaNameRef', title:  'Referenced Schema', placeholder: 'Filter by referenced schema name...', filterType: 'text' },
+                { id: 'tableNameRef', title:  'Referenced Table', placeholder: 'Filter by referenced table name...', filterType: 'text' },
+                { id: 'columnNameRef', title:  'Referenced Column', placeholder: 'Filter by referenced column name...', filterType: 'text' },
+                { id: 'relationTypeCd', title:  'Type', placeholder: 'Filter by relation type...', filterType: 'text' },
+                { id: 'relationSource', title:  'Source', placeholder: 'Filter by relation source...', filterType: 'text' }
             ],
             resultsCount: self.items.length,
             appliedFilters: [],

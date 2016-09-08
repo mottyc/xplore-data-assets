@@ -65,60 +65,22 @@
         // endregion
 
         // region --- Filters ------------------------------------------------------------------------------------------
-        self.filtersText = '';
-
-        var matchesFilter = function (item, filter) {
-            var match = true;
-
-            if (filter.id === 'name') {
-                match = item.name.match(filter.value) !== null;
-            } 
-            return match;
-        };
-
-        var matchesFilters = function (item, filters) {
-            var matches = true;
-
-            filters.forEach(function(filter) {
-                if (!matchesFilter(item, filter)) {
-                    matches = false;
-                    return false;
-                }
-            });
-            return matches;
-        };
-
-        var applyFilters = function (filters) {
-            self.items = [];
-            if (filters && filters.length > 0) {
-                self.allItems.forEach(function (item) {
-                    if (matchesFilters(item, filters)) {
-                        self.items.push(item);
-                    }
-                });
-            } else {
-                self.items = self.allItems;
-            }
-        };
-
         var filterChange = function (filters) {
-            self.filtersText = "";
-            filters.forEach(function (filter) {
-                self.filtersText += filter.title + " : " + filter.value + "\n";
-            });
-            applyFilters(filters);
-            self.toolbarConfig.filterConfig.resultsCount = self.items.length;
-        };
 
+            self.queryFilters = [];
+
+            filters.forEach(function (filter) {
+                self.queryFilters.push({field:filter.id, value:filter.value});
+            });
+
+            self.loadEntities();
+        };
 
         self.filterConfig = {
             fields: [
-                {
-                    id: 'name',
-                    title:  'Name',
-                    placeholder: 'Filter by Name...',
-                    filterType: 'text'
-                }
+                { id: 'tableName', title:  'Name', placeholder: 'Filter by table name...', filterType: 'text' },
+                { id: 'tableNameDisplay', title:  'Display Name', placeholder: 'Filter by display name...', filterType: 'text' },
+                { id: 'tableDesc', title:  'Description', placeholder: 'Filter by description...', filterType: 'text' }
             ],
             resultsCount: self.items.length,
             appliedFilters: [],

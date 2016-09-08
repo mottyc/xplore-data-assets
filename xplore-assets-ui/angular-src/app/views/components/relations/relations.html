@@ -93,16 +93,16 @@
                 </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="item in ctrl.items">
-                <td><a ui-sref="relation({key: {{item.relationKey}}})" class="pointer">{{ item.fullRelationName }}</a></td>
-                <td>{{ item.displayName }}</td>
-                <td>{{ item.dbName }}</td>
-                <td>{{ item.schemaNamePar }}.{{ item.tableNamePar }}.{{ item.columnNamePar }}</td>
-                <td>{{ item.schemaNameRef }}.{{ item.tableNameRef }}.{{ item.columnNameRef }}</td>
-                <td>{{ item.relationTypeCd }}</td>
-                <td>{{ item.relationScore }}</td>
-                <td>{{ item.relationSource }}</td>
-            </tr>
+                <tr ng-repeat="item in ctrl.items">
+                    <td><a ui-sref="relation({key: {{item.relationKey}}})" class="pointer">{{ item.fullRelationName }}</a></td>
+                    <td>{{ item.displayName }}</td>
+                    <td>{{ item.dbName }}</td>
+                    <td>{{ item.schemaNamePar }}.{{ item.tableNamePar }}.{{ item.columnNamePar }}</td>
+                    <td>{{ item.schemaNameRef }}.{{ item.tableNameRef }}.{{ item.columnNameRef }}</td>
+                    <td>{{ item.relationTypeCd }}</td>
+                    <td>{{ item.relationScore }}</td>
+                    <td>{{ item.relationSource }}</td>
+                </tr>
             </tbody>
         </table>
     </div>
