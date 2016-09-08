@@ -23,33 +23,41 @@
         self.totalPages = 1;
 
         self.querySort = "";
-        self.queryFilter = "";
+        self.queryFilters = [];
 
         // region --- Data Handlers ------------------------------------------------------------------------------------
 
-        self.loadEntities = function (page) {
+        self.loadEntities = function () {
 
-            page = (page > self.totalPages) ? self.totalPages : page;
+            // Validate range
+            self.currentPage = Math.min(self.totalPages, self.currentPage);
+            self.currentPage = Math.max(1, self.currentPage);
 
-            columnsManager.getAll(page).then(function (result) {
-                self.allItems = result.list;
-                self.items = self.allItems;
+            if (self.queryFilters && self.queryFilters.length > 0) {
+                columnsManager.search(self.currentPage, self.querySort, self.queryFilters).then(self.postLoad);
+            } else {
+                columnsManager.getAll(self.currentPage).then(self.postLoad);
+            }
 
-                self.totalItems = result.count;
-                self.currentPage = result.page;
-                self.totalPages = result.pages;
+        };
 
-                var str = "Page: " + self.currentPage + " / " + self.totalPages;
-                self.filterConfig.resultsCount = str + ",      Total: " + self.totalItems + "";
+        self.postLoad = function(result) {
+            self.allItems = result.list;
+            self.items = self.allItems;
 
-            })
+            self.totalItems = result.count;
+            self.currentPage = result.page;
+            self.totalPages = result.pages;
+
+            var str = "Page: " + self.currentPage + " / " + self.totalPages;
+            self.filterConfig.resultsCount = str + ",      Total: " + self.totalItems + "";
         };
 
         // Navigation
-        self.navStart = function () { self.loadEntities(1); };
-        self.navPrev = function () { self.loadEntities(self.currentPage - 1); };
-        self.navNext = function () { self.loadEntities(self.currentPage + 1); };
-        self.navEnd = function () { self.loadEntities(self.totalPages); };
+        self.navStart = function () { self.currentPage = 1; self.loadEntities(); };
+        self.navPrev = function () { self.currentPage -= 1; self.loadEntities(); };
+        self.navNext = function () { self.currentPage += 1; self.loadEntities(); };
+        self.navEnd = function () { self.currentPage = self.totalPages; self.loadEntities(); };
 
         var performAction = function(action, item) {
             console.debug("Action: " + action + " On: " + item);
@@ -57,58 +65,32 @@
         // endregion
 
         // region --- Filters ------------------------------------------------------------------------------------------
-        self.filtersText = '';
-
-        var matchesFilter = function (item, filter) {
-            var match = true;
-
-            if (filter.id === 'name') {
-                match = item.name.match(filter.value) !== null;
-            }
-            return match;
-        };
-
-        var matchesFilters = function (item, filters) {
-            var matches = true;
-
-            filters.forEach(function(filter) {
-                if (!matchesFilter(item, filter)) {
-                    matches = false;
-                    return false;
-                }
-            });
-            return matches;
-        };
-
-        var applyFilters = function (filters) {
-            self.items = [];
-            if (filters && filters.length > 0) {
-                self.allItems.forEach(function (item) {
-                    if (matchesFilters(item, filters)) {
-                        self.items.push(item);
-                    }
-                });
-            } else {
-                self.items = self.allItems;
-            }
-        };
+        // self.filtersText = '';
 
         var filterChange = function (filters) {
-            self.filtersText = "";
+
+            self.queryFilters = [];
+
             filters.forEach(function (filter) {
-                self.filtersText += filter.title + " : " + filter.value + "\n";
+                self.queryFilters.push({field:filter.id, value:filter.value});
             });
-            applyFilters(filters);
-            self.toolbarConfig.filterConfig.resultsCount = self.items.length;
+
+            self.loadEntities();
         };
 
 
         self.filterConfig = {
             fields: [
                 {
-                    id: 'name',
-                    title:  'Name',
-                    placeholder: 'Filter by Name...',
+                    id: 'columnName',
+                    title:  'Column Name',
+                    placeholder: 'Filter by Column Name...',
+                    filterType: 'text'
+                },
+                {
+                    id: 'columnNameDisplay',
+                    title:  'Display Name',
+                    placeholder: 'Filter by Display Name...',
                     filterType: 'text'
                 }
             ],
@@ -132,8 +114,7 @@
         self.viewType = self.viewsConfig.currentView;
 
         var sortChange = function (sortId, isAscending) {
-            console.debug("Sort: " + sortId + " - " + isAscending);
-            self.loadEntities(1);
+            self.loadEntities();
         };
 
         self.sortConfig = {

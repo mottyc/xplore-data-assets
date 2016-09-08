@@ -86,17 +86,17 @@
         <table class="datatable table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Full Name</th>
+                    <th>Database Name</th>
                     <th>Display Name</th>
-                    <th>Type Code</th>
+                    <th>Description</th>
+                    <th>Database Type</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="item in ctrl.items">
                     <td><a ui-sref="database({key: {{item.domainKey}}})" class="pointer">{{ item.dbName }}</a></td>
-                    <td>{{ item.fullDbName }}</td>
                     <td>{{ item.displayName }}</td>
+                    <td>{{ item.description }}</td>
                     <td>{{ item.dbTypeCd }}</td>
             </tr>
             </tbody>

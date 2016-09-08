@@ -98,18 +98,16 @@
             <thead>
                 <tr>
                     <th>System Name</th>
-                    <th>Application</th>
                     <th>Display Name</th>
-                    <th>Department</th>
+                    <th>Description</th>
                 </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="item in ctrl.items">
-                <td><a ui-sref="system({key: {{item.systemKey}}})" class="pointer">{{ item.systemName }}</a></td>
-                <td>{{ item.appName }}</td>
-                <td>{{ item.displayName }}</td>
-                <td>{{ item.systemDepartment }}</td>
-            </tr>
+                <tr ng-repeat="item in ctrl.items">
+                    <td><a ui-sref="system({key: {{item.systemKey}}})" class="pointer">{{ item.systemName }}</a></td>
+                    <td>{{ item.displayName }}</td>
+                    <td>{{ item.description }}</td>
+                </tr>
             </tbody>
         </table>
     </div>

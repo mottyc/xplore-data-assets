@@ -23,32 +23,41 @@
         self.totalPages = 1;
 
         self.querySort = "";
-        self.queryFilter = "";
+        self.queryFilters = [];
 
         // region --- Data Handlers ------------------------------------------------------------------------------------
 
-        self.loadEntities = function (page) {
+        self.loadEntities = function () {
 
-            page = (page > self.totalPages) ? self.totalPages : page;
+            // Validate range
+            self.currentPage = Math.min(self.totalPages, self.currentPage);
+            self.currentPage = Math.max(1, self.currentPage);
 
-            systemsManager.getAll(page).then(function (result) {
-                self.allItems = result.list;
-                self.items = self.allItems;
+            if (self.queryFilters && self.queryFilters.length > 0) {
+                systemsManager.search(self.currentPage, self.querySort, self.queryFilters).then(self.postLoad);
+            } else {
+                systemsManager.getAll(self.currentPage).then(self.postLoad);
+            }
 
-                self.totalItems = result.count;
-                self.currentPage = result.page;
-                self.totalPages = result.pages;
+        };
 
-                var str = "Page: " + self.currentPage + " / " + self.totalPages;
-                self.filterConfig.resultsCount = str + "      Total: " + self.totalItems + "";
-            })
+        self.postLoad = function(result) {
+            self.allItems = result.list;
+            self.items = self.allItems;
+
+            self.totalItems = result.count;
+            self.currentPage = result.page;
+            self.totalPages = result.pages;
+
+            var str = "Page: " + self.currentPage + " / " + self.totalPages;
+            self.filterConfig.resultsCount = str + ",      Total: " + self.totalItems + "";
         };
 
         // Navigation
-        self.navStart = function () { self.loadEntities(1); };
-        self.navPrev = function () { self.loadEntities(self.currentPage - 1); };
-        self.navNext = function () { self.loadEntities(self.currentPage + 1); };
-        self.navEnd = function () { self.loadEntities(self.totalPages); };
+        self.navStart = function () { self.currentPage = 1; self.loadEntities(); };
+        self.navPrev = function () { self.currentPage -= 1; self.loadEntities(); };
+        self.navNext = function () { self.currentPage += 1; self.loadEntities(); };
+        self.navEnd = function () { self.currentPage = self.totalPages; self.loadEntities(); };
 
         var performAction = function(action, item) {
             console.debug("Action: " + action + " On: " + item);

@@ -84,20 +84,18 @@
         <table class="datatable table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Database</th>
-                    <th>Full Name</th>
+                    <th>Schema Name</th>
                     <th>Display Name</th>
                     <th>Description</th>
+                    <th>Database</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="item in ctrl.items">
                     <td><a ui-sref="schema({key: {{item.schemaKey}}})" class="pointer">{{ item.schemaName }}</a></td>
-                    <td>{{ item.dbName }}</td>
-                    <td>{{ item.fullSchemaName }}</td>
                     <td>{{ item.displayName }}</td>
                     <td>{{ item.description }}</td>
+                    <td>{{ item.dbName }}</td>
                 </tr>
             </tbody>
         </table>

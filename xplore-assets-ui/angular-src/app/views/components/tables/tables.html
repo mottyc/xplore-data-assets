@@ -100,12 +100,10 @@
         <table class="datatable table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th>Name</th>
+                    <th>Table Name</th>
                     <th>Display Name</th>
                     <th># Rows</th>
-                    <th># Columns</th>
-                    <th>Object Type</th>
-                    <th>Primary Key</th>
+                    <th>Description</th>
                 </tr>
             </thead>
             <tbody>
@@ -113,9 +111,7 @@
                     <td><a ui-sref="table({key: {{item.tableKey}}})" class="pointer">{{ item.tableName }}</a></td>
                     <td>{{ item.displayName }}</td>
                     <td>{{ item.tableRowCount }}</td>
-                    <td>{{ item.tableNumOfCols }}</td>
-                    <td>{{ item.objectType }}</td>
-                    <td>{{ item.tablePk }}</td>
+                    <td>{{ item.description }}</td>
                 </tr>
             </tbody>
         </table>

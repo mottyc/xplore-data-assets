@@ -71,6 +71,29 @@ angular.module('myApp')
                     return deferred.promise;
                 },
 
+                // Search all items
+                search: function (currentPage, sort, filters) {
+                    var deferred = $q.defer();
+
+                    ApiRequest
+                        .post(resourceName + '/search', {
+                            page: currentPage,
+                            sort: sort
+                        }, filters)
+                        .then(function (response) {
+                            try {
+                                deferred.resolve(response.data);
+                            } catch (e) {
+                                deferred.reject(e);
+                            }
+
+                        }, function (error) {
+                            deferred.reject(error);
+                        });
+
+                    return deferred.promise;
+                },
+                
                 // Search items
                 find: function (search) {
                     var deferred = $q.defer();

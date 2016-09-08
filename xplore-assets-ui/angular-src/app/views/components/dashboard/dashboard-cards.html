@@ -1,0 +1,187 @@
+
+
+<div class="container-fluid container-cards-pf container-pf-nav-pf-vertical container-pf-nav-pf-vertical-with-sub-menus   ">
+  <!-- Row 1 -->
+  <div class="row row-cards-pf">
+
+    <!-- Systems -->
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <a ui-sref="systems" class="pointer">
+        <div class="card-pf card-pf-accented card-pf-aggregate-status">
+          <h2 class="card-pf-title">
+            <span class="pficon pficon-image"></span>
+            <span class="card-pf-aggregate-status-count">{{ctrl.statistics.systemsCount}}</span> Systems
+          </h2>
+          <div class="card-pf-body">
+            <p class="card-pf-aggregate-status-notifications">
+              <span class="card-pf-aggregate-status-notification"><span class="pficon pficon-ok"></span></span>
+            </p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Servers -->
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <a ui-sref="servers" class="pointer">
+        <div class="card-pf card-pf-accented card-pf-aggregate-status">
+          <h2 class="card-pf-title">
+            <span class="pficon pficon-cluster"></span>
+            <span class="card-pf-aggregate-status-count">{{ctrl.statistics.serversCount}}</span> Servers
+          </h2>
+          <div class="card-pf-body">
+            <p class="card-pf-aggregate-status-notifications">
+              <span class="card-pf-aggregate-status-notification"><span class="pficon pficon-ok"></span></span>
+            </p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Databases -->
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <a ui-sref="databases" class="pointer">
+        <div class="card-pf card-pf-accented card-pf-aggregate-status">
+          <h2 class="card-pf-title">
+            <span class="fa fa-database"></span>
+            <span class="card-pf-aggregate-status-count">{{ctrl.statistics.databasesCount}}</span> Databases
+          </h2>
+          <div class="card-pf-body">
+            <p class="card-pf-aggregate-status-notifications">
+              <span class="card-pf-aggregate-status-notification"><span class="pficon pficon-ok"></span></span>
+            </p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Row 2 -->
+  <div class="row row-cards-pf">
+
+    <!-- Schemas -->
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <a ui-sref="schemas" class="pointer">
+        <div class="card-pf card-pf-accented card-pf-aggregate-status">
+          <h2 class="card-pf-title">
+            <span class="fa fa-sitemap"></span>
+            <span class="card-pf-aggregate-status-count">{{ctrl.statistics.schemasCount}}</span> Schemas
+          </h2>
+          <div class="card-pf-body">
+            <p class="card-pf-aggregate-status-notifications">
+              <span class="card-pf-aggregate-status-notification"><span class="pficon pficon-ok"></span></span>
+            </p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Tables -->
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <a ui-sref="tables" class="pointer">
+        <div class="card-pf card-pf-accented card-pf-aggregate-status">
+          <h2 class="card-pf-title">
+            <span class="fa fa-table"></span>
+            <span class="card-pf-aggregate-status-count">{{ctrl.statistics.tablesCount}}</span> Tables
+          </h2>
+          <div class="card-pf-body">
+            <p class="card-pf-aggregate-status-notifications">
+              <span class="card-pf-aggregate-status-notification"><span class="pficon pficon-ok"></span></span>
+            </p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Columns -->
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <a ui-sref="columns" class="pointer">
+        <div class="card-pf card-pf-accented card-pf-aggregate-status">
+          <h2 class="card-pf-title">
+            <span class="fa fa-columns"></span>
+            <span class="card-pf-aggregate-status-count">{{ctrl.statistics.columnsCount}}</span> Columns
+          </h2>
+          <div class="card-pf-body">
+            <p class="card-pf-aggregate-status-notifications">
+              <span class="card-pf-aggregate-status-notification"><span class="pficon pficon-ok"></span></span>
+            </p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Row 3 -->
+  <div class="row row-cards-pf">
+
+    <!-- Relations -->
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <a ui-sref="relations" class="pointer">
+        <div class="card-pf card-pf-accented card-pf-aggregate-status">
+          <h2 class="card-pf-title">
+            <span class="fa fa-link"></span>
+            <span class="card-pf-aggregate-status-count">{{ctrl.statistics.relationsCount}}</span> Relations
+          </h2>
+          <div class="card-pf-body">
+            <p class="card-pf-aggregate-status-notifications">
+              <span class="card-pf-aggregate-status-notification"><span class="pficon pficon-ok"></span></span>
+            </p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Entities -->
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <a ui-sref="entities" class="pointer">
+        <div class="card-pf card-pf-accented card-pf-aggregate-status">
+          <h2 class="card-pf-title">
+            <span class="fa fa-cubes"></span>
+            <span class="card-pf-aggregate-status-count">{{ctrl.statistics.entitiesCount}}</span> Entities
+          </h2>
+          <div class="card-pf-body">
+            <p class="card-pf-aggregate-status-notifications">
+              <span class="card-pf-aggregate-status-notification"><span class="pficon pficon-ok"></span></span>
+            </p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Users -->
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <a ui-sref="users" class="pointer">
+        <div class="card-pf card-pf-accented card-pf-aggregate-status">
+          <h2 class="card-pf-title">
+            <span class="fa fa-user"></span>
+            <span class="card-pf-aggregate-status-count">{{ctrl.statistics.usersCount}}</span> Users
+          </h2>
+          <div class="card-pf-body">
+            <p class="card-pf-aggregate-status-notifications">
+              <span class="card-pf-aggregate-status-notification"><span class="pficon pficon-ok"></span></span>
+            </p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+
+<!--
+ * # StatisticsModel
+ * {
+ *    entitiesCount: int,
+ *    systemsCount: int,
+ *    serversCount: int,
+ *    databasesCount: int,
+ *    schemasCount: int,
+ *    tablesCount: int,
+ *    columnsCount: int,
+ *    relationsCount: int,
+ *    usersCount: int
+ * }
+-->
