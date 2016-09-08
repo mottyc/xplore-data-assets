@@ -77,7 +77,6 @@
             self.loadEntities();
         };
 
-
         self.filterConfig = {
             fields: [
                 { id: 'columnName', title:  'Name', placeholder: 'Filter by column name...', filterType: 'text' },
@@ -93,6 +92,26 @@
 
         // endregion
 
+        // region --- Sorting ------------------------------------------------------------------------------------------
+
+        var sortChange = function (sortId, isAscending) {
+            self.querySort = sortId + ":" + (isAscending) ? "asc" : "desc";
+            self.loadEntities();
+        };
+
+        self.sortConfig = {
+            fields: [
+                { id: 'columnName', title:  'Name', sortType: 'alpha' },
+                { id: 'columnNameDisplay', title:  'Display Name', sortType: 'alpha' },
+                { id: 'tableName', title:  'Table Name', sortType: 'alpha' },
+                { id: 'schemaName', title:  'Schema Name', sortType: 'alpha' },
+                { id: 'columnDataType', title:  'Data Type', sortType: 'alpha' }
+            ],
+            onSortChange: sortChange
+        };
+
+        // endregion
+
         // region --- Toolbar config -----------------------------------------------------------------------------------
         var viewSelected = function(viewId) {
             self.viewType = viewId;
@@ -104,26 +123,6 @@
         };
         self.viewsConfig.currentView = self.viewsConfig.views[0].id;
         self.viewType = self.viewsConfig.currentView;
-
-        var sortChange = function (sortId, isAscending) {
-            self.loadEntities();
-        };
-
-        self.sortConfig = {
-            fields: [
-                {
-                    id: 'key',
-                    title:  'Key',
-                    sortType: 'numeric'
-                },
-                {
-                    id: 'name',
-                    title:  'Name',
-                    sortType: 'alpha'
-                }
-            ],
-            onSortChange: sortChange
-        };
 
         self.actionsText = "";
 

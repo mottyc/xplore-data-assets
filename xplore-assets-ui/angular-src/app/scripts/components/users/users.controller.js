@@ -91,6 +91,23 @@
 
         // endregion
 
+        // region --- Sorting ------------------------------------------------------------------------------------------
+
+        var sortChange = function (sortId, isAscending) {
+            self.querySort = sortId + ":" + (isAscending) ? "asc" : "desc";
+            self.loadEntities();
+        };
+
+        self.sortConfig = {
+            fields: [
+                { id: 'usernameKey', title:  'Name', sortType: 'alpha' },
+                { id: 'employeeNameDisplay', title:  'Display Name', sortType: 'alpha' }
+            ],
+            onSortChange: sortChange
+        };
+
+        // endregion
+
         // region --- Toolbar config -----------------------------------------------------------------------------------
         var viewSelected = function(viewId) {
             self.viewType = viewId;
@@ -102,23 +119,7 @@
         };
         self.viewsConfig.currentView = self.viewsConfig.views[0].id;
         self.viewType = self.viewsConfig.currentView;
-
-        var sortChange = function (sortId, isAscending) {
-            console.debug("Sort: " + sortId + " - " + isAscending);
-            self.loadEntities();
-        };
-
-        self.sortConfig = {
-            fields: [
-                {
-                    id: 'name',
-                    title:  'Name',
-                    sortType: 'alpha'
-                }
-            ],
-            onSortChange: sortChange
-        };
-
+        
         self.actionsText = "";
 
         self.actionsConfig = {
