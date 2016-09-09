@@ -133,7 +133,7 @@
         self.toolbarConfig = {
             viewsConfig: self.viewsConfig,
             filterConfig: self.filterConfig,
-            sortConfig: self.sortConfig,
+            //sortConfig: self.sortConfig,
             actionsConfig: self.actionsConfig
         };
 
@@ -188,6 +188,7 @@
         };
         // endregion
 
+        self.loadEntities();
         return self;
     }
 })();
