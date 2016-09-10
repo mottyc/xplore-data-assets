@@ -42,33 +42,14 @@
                  self.entity.setData(result.data.entity)
              });
 
-        self.save = function () {
+        self.saveChanges = function () {
             self.entity
                 .save()
                 .then(function (result) {
                     self.entity.setData(result.data.entity);
-                    self.notifySuccess("Data saved");
+                    self.notifySuccess("Changes updated for entity: " + result.data.entity.businessEntityKey);
                 });
         };
-        
-        self.saveChanges = function(data, item) {
-            console.debug("Data: " + data + ", Item: " + item);
-            
-            var update = new MdaBusinessEntityModel();
-            update.setData(item)
-                .save()
-                .then(function (result) {
-                    if (result.status == 200) {
-                        if (result.data.code == 0) {
-                            self.notifySuccess("Changes updated for entity: " + item.businessEntityKey);
-                        } else {
-                            self.notifyWarning(result.data.error);
-                        }
-                    } else {
-                        self.notifyError(result.statusText);
-                    }
-                });
-        }
         // endregion
         
 

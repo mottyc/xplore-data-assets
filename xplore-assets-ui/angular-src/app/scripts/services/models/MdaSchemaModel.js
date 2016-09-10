@@ -54,6 +54,7 @@ angular.module('myApp')
             MdaSchemaModel.prototype = {
                 setData: function (data) {
                     angular.extend(this, data, this);
+                    return this;
                 },
 
                 save: function() {

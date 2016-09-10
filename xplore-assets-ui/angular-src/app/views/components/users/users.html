@@ -1,5 +1,10 @@
 
 <div class="container-fluid container-cards-pf container-pf-nav-pf-vertical" ng-controller="usersController">
+
+    <!-- Notifications Area -->
+    <div pf-toast-notification-list notifications="ctrl.notifications" show-close="true" close-callback="ctrl.handleClose" update-viewing="ctrl.updateViewing"></div>
+
+    <!-- Toolbar -->
     <div class="row">
         <div class="col-md-12">
             <div pf-toolbar id="ctrl.toolbar" config="ctrl.toolbarConfig"></div>

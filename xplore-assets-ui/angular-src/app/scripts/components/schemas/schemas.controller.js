@@ -9,9 +9,9 @@
     angular.module('myApp')
         .controller('schemasController', schemasController);
 
-    schemasController.$inject = ["pfViewUtils", "schemasManager"];
+    schemasController.$inject = ['pfViewUtils', 'schemasManager', 'Notifications'];
 
-    function schemasController(pfViewUtils, schemasManager) {
+    function schemasController(pfViewUtils, schemasManager, Notifications) {
 
         var self = this;
 
@@ -25,6 +25,19 @@
         self.querySort = "";
         self.queryFilters = [];
 
+        // region --- Notifications ------------------------------------------------------------------------------------
+
+        self.showClose = true;
+
+        self.handleClose = function (data) { Notifications.remove(data); };
+        self.updateViewing = function (viewing, data) { Notifications.setViewing(data, viewing); };
+        self.notifySuccess = function (message) { Notifications.message ('success', '', message, false); }
+        self.notifyWarning = function (message) { Notifications.message ('warning', '', message, false); }
+        self.notifyError = function (message) { Notifications.message ('danger', '', message, false); }
+
+        self.notifications = Notifications.data;
+        // endregion
+        
         // region --- Data Handlers ------------------------------------------------------------------------------------
 
         self.loadEntities = function () {

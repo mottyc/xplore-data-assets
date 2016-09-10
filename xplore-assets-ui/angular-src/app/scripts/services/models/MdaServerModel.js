@@ -48,6 +48,7 @@ angular.module('myApp')
             MdaServerModel.prototype = {
                 setData: function (data) {
                     angular.extend(this, data, this);
+                    return this;
                 },
 
                 save: function() {

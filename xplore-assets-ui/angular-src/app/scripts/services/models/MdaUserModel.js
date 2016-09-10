@@ -46,6 +46,7 @@ angular.module('myApp')
             MdaUserModel.prototype = {
                 setData: function (data) {
                     angular.extend(this, data, this);
+                    return this;
                 }
             };
 

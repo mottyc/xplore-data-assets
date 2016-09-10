@@ -9,9 +9,9 @@
     angular.module('myApp')
         .controller('databasesController', databasesController);
 
-    databasesController.$inject = ["pfViewUtils", "databasesManager"];
+    databasesController.$inject = ['pfViewUtils', 'databasesManager', 'Notifications'];
 
-    function databasesController(pfViewUtils, databasesManager) {
+    function databasesController(pfViewUtils, databasesManager, Notifications) {
 
         var self = this;
 
@@ -25,6 +25,36 @@
         self.querySort = "";
         self.queryFilters = [];
 
+        // region --- Notifications ------------------------------------------------------------------------------------
+
+        self.showClose = true;
+
+        self.handleClose = function (data) { Notifications.remove(data); };
+        self.updateViewing = function (viewing, data) { Notifications.setViewing(data, viewing); };
+        self.notifySuccess = function (message) { Notifications.message ('success', '', message, false); }
+        self.notifyWarning = function (message) { Notifications.message ('warning', '', message, false); }
+        self.notifyError = function (message) { Notifications.message ('danger', '', message, false); }
+
+        self.notifications = Notifications.data;
+
+        self.saveChanges = function(data, item) {
+            var update = new MdaBusinessEntityModel();
+            update.setData(item)
+                .save()
+                .then(function (result) {
+                    if (result.status == 200) {
+                        if (result.data.code == 0) {
+                            self.notifySuccess("Changes updated for database: " + item.domainKey);
+                        } else {
+                            self.notifyWarning(result.data.error);
+                        }
+                    } else {
+                        self.notifyError(result.statusText);
+                    }
+                });
+        }
+        // endregion
+        
         // region --- Data Handlers ------------------------------------------------------------------------------------
 
         self.loadEntities = function () {

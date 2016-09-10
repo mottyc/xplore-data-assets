@@ -9,9 +9,9 @@
     angular.module('myApp')
         .controller('serversController', serversController);
 
-    serversController.$inject = ["pfViewUtils", "serversManager"];
+    serversController.$inject = ['pfViewUtils', 'serversManager', 'Notifications'];
 
-    function serversController(pfViewUtils, serversManager) {
+    function serversController(pfViewUtils, serversManager, Notifications) {
 
         var self = this;
 
@@ -25,6 +25,19 @@
         self.querySort = "";
         self.queryFilters = [];
 
+        // region --- Notifications ------------------------------------------------------------------------------------
+
+        self.showClose = true;
+
+        self.handleClose = function (data) { Notifications.remove(data); };
+        self.updateViewing = function (viewing, data) { Notifications.setViewing(data, viewing); };
+        self.notifySuccess = function (message) { Notifications.message ('success', '', message, false); }
+        self.notifyWarning = function (message) { Notifications.message ('warning', '', message, false); }
+        self.notifyError = function (message) { Notifications.message ('danger', '', message, false); }
+
+        self.notifications = Notifications.data;
+        // endregion
+        
         // region --- Data Handlers ------------------------------------------------------------------------------------
 
         self.loadEntities = function () {
@@ -62,6 +75,23 @@
         var performAction = function(action, item) {
             console.debug("Action: " + action + " On: " + item);
         };
+
+        self.saveChanges = function(data, item) {
+            var update = new MdaBusinessEntityModel();
+            update.setData(item)
+                .save()
+                .then(function (result) {
+                    if (result.status == 200) {
+                        if (result.data.code == 0) {
+                            self.notifySuccess("Changes updated for server: " + item.serverKey);
+                        } else {
+                            self.notifyWarning(result.data.error);
+                        }
+                    } else {
+                        self.notifyError(result.statusText);
+                    }
+                });
+        }
         // endregion
 
         // region --- Filters ------------------------------------------------------------------------------------------
