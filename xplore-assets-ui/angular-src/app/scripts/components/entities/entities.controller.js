@@ -89,7 +89,7 @@
                         self.notifyError(result.statusText);
                     }
                 });
-        }
+        };
         
         // endregion
 

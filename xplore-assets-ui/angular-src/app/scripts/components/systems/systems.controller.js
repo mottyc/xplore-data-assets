@@ -9,9 +9,9 @@
     angular.module('myApp')
         .controller('systemsController', systemsController);
 
-    systemsController.$inject = ['pfViewUtils', 'systemsManager', 'Notifications'];
+    systemsController.$inject = ['pfViewUtils', 'systemsManager', 'MdaSystemModel', 'Notifications'];
 
-    function systemsController(pfViewUtils, systemsManager, Notifications) {
+    function systemsController(pfViewUtils, systemsManager, MdaSystemModel, Notifications) {
 
         var self = this;
 
@@ -77,7 +77,7 @@
         };
 
         self.saveChanges = function(data, item) {
-            var update = new MdaBusinessEntityModel();
+            var update = new MdaSystemModel();
             update.setData(item)
                 .save()
                 .then(function (result) {

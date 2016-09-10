@@ -89,7 +89,7 @@
         <table class="table table-striped table-bordered row-border column-border hover">
             <thead>
                 <tr>
-                    <th style="width: 5%">Primary</th>
+                    <th style="width: 5%">Type</th>
                     <th style="width: 20%">Column</th>
                     <th style="width: 20%">Table</th>
                     <th style="width: 20%">Schema</th>
@@ -105,9 +105,10 @@
                     <td>{{ item.tableName }}</td>
                     <td>{{ item.schemaName }}</td>
                     <td>{{ item.columnDataType }}</td>
-                    <td><span editable-text="item.displayName" e-name="name" e-form="rowform" onaftersave="ctrl.saveName($data, item)">{{ item.displayName || "" }}</span>
+
+                    <td><span editable-text="item.displayName" e-name="name" e-form="rowform">{{ item.displayName || "" }}</span>
                     <td>
-                        <form editable-form name="rowform" onaftersave="saveChanges($data, item)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="false">
+                        <form editable-form name="rowform" onaftersave="ctrl.saveChanges($data, item)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="false">
                             <button type="submit" ng-disabled="rowform.$waiting"><span class="fa fa-check"></span></button>
                             <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" ><span class="fa fa-close"></span></button>
                         </form>

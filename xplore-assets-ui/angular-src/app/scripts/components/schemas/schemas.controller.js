@@ -9,9 +9,9 @@
     angular.module('myApp')
         .controller('schemasController', schemasController);
 
-    schemasController.$inject = ['pfViewUtils', 'schemasManager', 'Notifications'];
+    schemasController.$inject = ['pfViewUtils', 'schemasManager', 'MdaSchemaModel', 'Notifications'];
 
-    function schemasController(pfViewUtils, schemasManager, Notifications) {
+    function schemasController(pfViewUtils, schemasManager, MdaSchemaModel, Notifications) {
 
         var self = this;
 
@@ -75,6 +75,24 @@
         var performAction = function(action, item) {
             console.debug("Action: " + action + " On: " + item);
         };
+
+
+        self.saveChanges = function(data, item) {
+            var update = new MdaSchemaModel();
+            update.setData(item)
+                .save()
+                .then(function (result) {
+                    if (result.status == 200) {
+                        if (result.data.code == 0) {
+                            self.notifySuccess("Changes updated for schema: " + item.schemaKey);
+                        } else {
+                            self.notifyWarning(result.data.error);
+                        }
+                    } else {
+                        self.notifyError(result.statusText);
+                    }
+                });
+        }
         // endregion
 
         // region --- Filters ------------------------------------------------------------------------------------------

@@ -9,9 +9,9 @@
     angular.module('myApp')
         .controller('usersController', usersController);
 
-    usersController.$inject = ['pfViewUtils', 'usersManager', 'Notifications'];
+    usersController.$inject = ['pfViewUtils', 'usersManager', 'MdaUserModel', 'Notifications'];
 
-    function usersController(pfViewUtils, usersManager, Notifications) {
+    function usersController(pfViewUtils, usersManager, MdaUserModel, Notifications) {
 
         var self = this;
 
@@ -77,7 +77,7 @@
         };
 
         self.saveChanges = function(data, item) {
-            var update = new MdaBusinessEntityModel();
+            var update = new MdaUserModel();
             update.setData(item)
                 .save()
                 .then(function (result) {

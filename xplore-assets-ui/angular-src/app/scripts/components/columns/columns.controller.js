@@ -9,9 +9,9 @@
     angular.module('myApp')
         .controller('columnsController', columnsController);
 
-    columnsController.$inject = ['pfViewUtils', 'columnsManager', 'Notifications'];
+    columnsController.$inject = ['pfViewUtils', 'columnsManager', 'MdaColumnModel', 'Notifications'];
 
-    function columnsController(pfViewUtils, columnsManager, Notifications) {
+    function columnsController(pfViewUtils, columnsManager, MdaColumnModel, Notifications) {
 
         var self = this;
 
@@ -77,7 +77,7 @@
         };
 
         self.saveChanges = function(data, item) {
-            var update = new MdaBusinessEntityModel();
+            var update = new MdaColumnModel();
             update.setData(item)
                 .save()
                 .then(function (result) {
@@ -91,7 +91,8 @@
                         self.notifyError(result.statusText);
                     }
                 });
-        }
+        };
+        
         // endregion
 
         // region --- Filters ------------------------------------------------------------------------------------------

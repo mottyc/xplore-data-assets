@@ -9,9 +9,9 @@
     angular.module('myApp')
         .controller('serversController', serversController);
 
-    serversController.$inject = ['pfViewUtils', 'serversManager', 'Notifications'];
+    serversController.$inject = ['pfViewUtils', 'serversManager', 'MdaServerModel', 'Notifications'];
 
-    function serversController(pfViewUtils, serversManager, Notifications) {
+    function serversController(pfViewUtils, serversManager, MdaServerModel, Notifications) {
 
         var self = this;
 
@@ -77,7 +77,7 @@
         };
 
         self.saveChanges = function(data, item) {
-            var update = new MdaBusinessEntityModel();
+            var update = new MdaServerModel();
             update.setData(item)
                 .save()
                 .then(function (result) {

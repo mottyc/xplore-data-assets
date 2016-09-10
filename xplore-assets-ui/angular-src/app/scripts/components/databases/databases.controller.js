@@ -9,9 +9,9 @@
     angular.module('myApp')
         .controller('databasesController', databasesController);
 
-    databasesController.$inject = ['pfViewUtils', 'databasesManager', 'Notifications'];
+    databasesController.$inject = ['pfViewUtils', 'databasesManager', 'MdaDatabaseModel', 'Notifications'];
 
-    function databasesController(pfViewUtils, databasesManager, Notifications) {
+    function databasesController(pfViewUtils, databasesManager, MdaDatabaseModel, Notifications) {
 
         var self = this;
 
@@ -38,7 +38,7 @@
         self.notifications = Notifications.data;
 
         self.saveChanges = function(data, item) {
-            var update = new MdaBusinessEntityModel();
+            var update = new MdaDatabaseModel();
             update.setData(item)
                 .save()
                 .then(function (result) {
@@ -93,6 +93,22 @@
             console.debug("Action: " + action + " On: " + item);
         };
 
+        self.saveChanges = function(data, item) {
+            var update = new MdaDatabaseModel();
+            update.setData(item)
+                .save()
+                .then(function (result) {
+                    if (result.status == 200) {
+                        if (result.data.code == 0) {
+                            self.notifySuccess("Changes updated for database: " + item.domainKey);
+                        } else {
+                            self.notifyWarning(result.data.error);
+                        }
+                    } else {
+                        self.notifyError(result.statusText);
+                    }
+                });
+        };
         // endregion
 
         // region --- Filters ------------------------------------------------------------------------------------------

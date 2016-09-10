@@ -9,9 +9,9 @@
     angular.module('myApp')
         .controller('relationsController', relationsController);
 
-    relationsController.$inject = ['pfViewUtils', 'relationsManager', 'Notifications'];
+    relationsController.$inject = ['pfViewUtils', 'relationsManager', 'MdaRelationModel', 'Notifications'];
 
-    function relationsController(pfViewUtils, relationsManager, Notifications) {
+    function relationsController(pfViewUtils, relationsManager, MdaRelationModel, Notifications) {
 
         var self = this;
 
@@ -77,7 +77,7 @@
         };
 
         self.saveChanges = function(data, item) {
-            var update = new MdaBusinessEntityModel();
+            var update = new MdaRelationModel();
             update.setData(item)
                 .save()
                 .then(function (result) {
