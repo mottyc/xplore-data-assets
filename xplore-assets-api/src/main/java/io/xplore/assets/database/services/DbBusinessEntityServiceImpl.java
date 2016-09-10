@@ -7,13 +7,15 @@ package io.xplore.assets.database.services;
 
 
 import io.xplore.assets.database.converters.MdaBusinessEntityConverter;
-import io.xplore.assets.database.model.MdaBusinessEntityEntity;
+import io.xplore.assets.database.converters.MdaSystemEntityConverter;
+import io.xplore.assets.database.converters.MdaTableEntityConverter;
+import io.xplore.assets.database.model.*;
+import io.xplore.assets.messages.EntitiesResponse;
 import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
-import io.xplore.assets.model.MdaBusinessEntity;
-import io.xplore.assets.model.QueryFilter;
-import io.xplore.assets.model.QuerySort;
+import io.xplore.assets.model.*;
 import io.xplore.assets.service.BusinessEntityService;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -21,6 +23,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -142,6 +146,196 @@ public class DbBusinessEntityServiceImpl extends _DbBaseServiceImpl<MdaBusinessE
             String err = String.format("Action failed: %s", ex.getMessage());
             log.severe(err);
             return new QueryResponse<MdaBusinessEntity>(err);
+        }
+    }
+
+    // ------------------ Entity related systems actions ---------------------------------------------------------------
+
+    /**
+     * Get business entity related systems
+     * @param entityKey Entity key
+     * @return EntityResponse[MdaSystem]
+     */
+    public EntitiesResponse<MdaSystem> getSystems(int entityKey) {
+        try {
+            List<Integer> keys = new ArrayList<>();
+            EntitiesResponse<MdaSystem> response = new EntitiesResponse<MdaSystem>();
+
+            // First, get list of related systems keys
+            List<MdaBusinessEntitySystemRelEntity> list = em.createNamedQuery("MdaBusinessEntitySystemRelEntity.findByEntityKey", MdaBusinessEntitySystemRelEntity.class)
+                    .setParameter("businessEntityKey", entityKey)
+                    .getResultList();
+
+            list.forEach(r -> { keys.add(r.getSystemKey()); });
+
+            // Now get all systems in the list
+            List<MdaSystemEntity> systems = em.createNamedQuery("MdaSystemEntity.findByKeys", MdaSystemEntity.class)
+                    .setParameter("keys", keys)
+                    .getResultList();
+
+            systems.forEach(sys -> { response.getList().add(MdaSystemEntityConverter.get(sys)); } );
+            return response;
+        } catch (Exception ex) {
+            String err = String.format("Action failed: %s", ex.getMessage());
+            log.severe(err);
+            return new EntitiesResponse<MdaSystem>(err);
+        }
+    }
+
+    /**
+     * Link systems to business entity
+     * @param entityKey Entity key
+     * @param systemsKeys List of keys to link
+     * @return EntityResponse[MdaSystem]
+     */
+    @Override
+    public EntitiesResponse<MdaSystem> linkSystems(int entityKey, int[] systemsKeys) {
+        try {
+            for(int systemKey : systemsKeys) {
+                try {
+                    MdaBusinessEntitySystemRelEntity rel = em.createNamedQuery("MdaBusinessEntitySystemRelEntity.findByEntityAndSystem", MdaBusinessEntitySystemRelEntity.class)
+                            .setParameter("businessEntityKey", entityKey)
+                            .setParameter("systemKey", systemKey)
+                            .getSingleResult();
+
+                    if (rel == null) {
+                        rel = new MdaBusinessEntitySystemRelEntity();
+                        rel.setBusinessEntityKey(entityKey);
+                        rel.setSystemKey(systemKey);
+                        em.persist(rel);
+                    }
+                } catch (Exception ex) {
+
+                }
+            }
+            return this.getSystems(entityKey);
+        } catch (Exception ex) {
+            String err = String.format("Action failed: %s", ex.getMessage());
+            log.severe(err);
+            return new EntitiesResponse<MdaSystem>(err);
+        }
+    }
+
+    /**
+     * Unlink systems from business entity
+     * @param entityKey Entity key
+     * @param systemsKeys List of keys to unlink
+     * @return EntityResponse[MdaSystem]
+     */
+    @Override
+    public EntitiesResponse<MdaSystem> unlinkSystems(int entityKey, int[] systemsKeys) {
+        try {
+            for(int systemKey : systemsKeys) {
+                try {
+                    MdaBusinessEntitySystemRelEntity rel = em.createNamedQuery("MdaBusinessEntitySystemRelEntity.findByEntityAndSystem", MdaBusinessEntitySystemRelEntity.class)
+                            .setParameter("businessEntityKey", entityKey)
+                            .setParameter("systemKey", systemKey)
+                            .getSingleResult();
+
+                    if (rel != null) {
+                        em.remove(rel);
+                    }
+                } catch (Exception ex) {}
+            }
+            return this.getSystems(entityKey);        } catch (Exception ex) {
+            String err = String.format("Action failed: %s", ex.getMessage());
+            log.severe(err);
+            return new EntitiesResponse<MdaSystem>(err);
+        }
+    }
+
+    // ------------------ Entity related tables actions ----------------------------------------------------------------
+
+    /**
+     * Get business entity related table
+     * @param entityKey Entity key
+     * @return EntityResponse[MdaTable]
+     */
+    @Override
+    public EntitiesResponse<MdaTable> getTables(int entityKey) {
+        try {
+            List<Integer> keys = new ArrayList<>();
+            EntitiesResponse<MdaTable> response = new EntitiesResponse<MdaTable>();
+
+            // First, get list of related tables keys
+            List<MdaBusinessEntityTableRelEntity> list = em.createNamedQuery("MdaBusinessEntityTableRelEntity.findByEntityKey", MdaBusinessEntityTableRelEntity.class)
+                    .setParameter("businessEntityKey", entityKey)
+                    .getResultList();
+
+            list.forEach(r -> { keys.add(r.getTableKey()); });
+
+            // Now get all tables in the list
+            List<MdaTableEntity> tables = em.createNamedQuery("MdaSystemEntity.findByKeys", MdaTableEntity.class)
+                    .setParameter("keys", keys)
+                    .getResultList();
+
+            tables.forEach(table -> { response.getList().add(MdaTableEntityConverter.get(table)); } );
+            return response;
+        } catch (Exception ex) {
+            String err = String.format("Action failed: %s", ex.getMessage());
+            log.severe(err);
+            return new EntitiesResponse<MdaTable>(err);
+        }
+    }
+
+    /**
+     * Link tables to business entity
+     * @param entityKey Entity key
+     * @param tablesKeys List of keys to link
+     * @return EntityResponse[MdaTable]
+     */
+    @Override
+    public EntitiesResponse<MdaTable> linkTables(int entityKey, int[] tablesKeys) {
+        try {
+            for(int tableKey : tablesKeys) {
+                try {
+                    MdaBusinessEntityTableRelEntity rel = em.createNamedQuery("MdaBusinessEntityTableRelEntity.findByEntityAndTable", MdaBusinessEntityTableRelEntity.class)
+                            .setParameter("businessEntityKey", entityKey)
+                            .setParameter("tableKey", tableKey)
+                            .getSingleResult();
+
+                    if (rel == null) {
+                        rel = new MdaBusinessEntityTableRelEntity();
+                        rel.setBusinessEntityKey(entityKey);
+                        rel.setTableKey(tableKey);
+                        em.persist(rel);
+                    }
+                } catch (Exception ex) {}
+            }
+            return this.getTables(entityKey);
+        } catch (Exception ex) {
+            String err = String.format("Action failed: %s", ex.getMessage());
+            log.severe(err);
+            return new EntitiesResponse<MdaTable>(err);
+        }
+    }
+
+    /**
+     * Unlink tables from business entity
+     * @param entityKey Entity key
+     * @param tablesKeys List of keys to unlink
+     * @return EntityResponse[MdaTable]
+     */
+    @Override
+    public EntitiesResponse<MdaTable> unlinkTables(int entityKey, int[] tablesKeys) {
+        try {
+            for(int tableKey : tablesKeys) {
+                try {
+                    MdaBusinessEntityTableRelEntity rel = em.createNamedQuery("MdaBusinessEntityTableRelEntity.findByEntityAndTable", MdaBusinessEntityTableRelEntity.class)
+                            .setParameter("businessEntityKey", entityKey)
+                            .setParameter("tableKey", tableKey)
+                            .getSingleResult();
+
+                    if (rel != null) {
+                        em.remove(rel);
+                    }
+                } catch (Exception ex) {}
+            }
+            return this.getTables(entityKey);
+        } catch (Exception ex) {
+            String err = String.format("Action failed: %s", ex.getMessage());
+            log.severe(err);
+            return new EntitiesResponse<MdaTable>(err);
         }
     }
 

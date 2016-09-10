@@ -8,6 +8,11 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "mda_business_entity_table_rel", schema = "dbo", catalog = "data_asset")
+@NamedQueries({
+        @NamedQuery(name="MdaBusinessEntityTableRelEntity.findByTableKey", query="SELECT a FROM MdaBusinessEntityTableRelEntity a WHERE a.tableKey = :tableKey"),
+        @NamedQuery(name="MdaBusinessEntityTableRelEntity.findByEntityKey", query="SELECT a FROM MdaBusinessEntityTableRelEntity a WHERE a.businessEntityKey = :businessEntityKey"),
+        @NamedQuery(name="MdaBusinessEntityTableRelEntity.findByEntityAndTable", query="SELECT a FROM MdaBusinessEntityTableRelEntity a WHERE (a.businessEntityKey = :businessEntityKey) AND (a.tableKey = :tableKey)")
+})
 public class MdaBusinessEntityTableRelEntity {
     private int businessEntityTableRelKey;
     private String businessEntityTableRelName;

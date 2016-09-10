@@ -6,7 +6,9 @@
 package io.xplore.assets.database.services;
 
 
+import io.xplore.assets.database.converters.MdaColumnEntityConverter;
 import io.xplore.assets.database.converters.MdaTableEntityConverter;
+import io.xplore.assets.database.model.MdaColumnEntity;
 import io.xplore.assets.database.model.MdaTableEntity;
 import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
@@ -21,6 +23,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -45,7 +48,13 @@ public class DbTableServiceImpl extends _DbBaseServiceImpl<MdaTableEntity> imple
     public EntityResponse<MdaTable> get(int key) {
         try {
             MdaTableEntity entity = em.find(MdaTableEntity.class, key);
-            return new EntityResponse<MdaTable>(MdaTableEntityConverter.get(entity));
+            MdaTable table = MdaTableEntityConverter.get(entity);
+
+            // Get all related columns
+            List<MdaColumnEntity> columns = em.createNamedQuery("MdaColumnEntity.findByTable", MdaColumnEntity.class).setParameter("tableKey", table.tableKey).getResultList();
+            columns.forEach(column -> { table.columns.add(MdaColumnEntityConverter.get(column)); });
+
+            return new EntityResponse<MdaTable>(table);
         } catch (Exception ex) {
             String err = String.format("Action failed: %s", ex.getMessage());
             log.severe(err);

@@ -1,10 +1,11 @@
 package io.xplore.assets.service;
 
+import io.xplore.assets.messages.EntitiesResponse;
 import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
-import io.xplore.assets.model.MdaBusinessEntity;
-import io.xplore.assets.model.QueryFilter;
-import io.xplore.assets.model.QuerySort;
+import io.xplore.assets.model.*;
+
+import java.util.List;
 
 /**
  * Created by motty on 26/08/2016.
@@ -44,4 +45,54 @@ public interface BusinessEntityService {
      * @return QueryResponse<MdaBusinessEntity>
      */
     QueryResponse<MdaBusinessEntity> find(int pageNumber, int pageSize, QueryFilter filter, QuerySort sorting);
+
+    // ------------------ Entity related systems actions ---------------------------------------------------------------
+
+    /**
+     * Get business entity related systems
+     * @param entityKey Entity key
+     * @return EntityResponse[MdaSystem]
+     */
+    EntitiesResponse<MdaSystem> getSystems(int entityKey);
+
+    /**
+     * Link systems to business entity
+     * @param entityKey Entity key
+     * @param systemsKeys List of keys to link
+     * @return EntityResponse[MdaSystem]
+     */
+    EntitiesResponse<MdaSystem> linkSystems(int entityKey, int[] systemsKeys);
+
+    /**
+     * Unlink systems from business entity
+     * @param entityKey Entity key
+     * @param systemsKeys List of keys to unlink
+     * @return EntityResponse[MdaSystem]
+     */
+    EntitiesResponse<MdaSystem> unlinkSystems(int entityKey, int[] systemsKeys);
+
+    // ------------------ Entity related tables actions ----------------------------------------------------------------
+
+    /**
+     * Get business entity related table
+     * @param entityKey Entity key
+     * @return EntityResponse[MdaTable]
+     */
+    EntitiesResponse<MdaTable> getTables(int entityKey);
+
+    /**
+     * Link tables to business entity
+     * @param entityKey Entity key
+     * @param tablesKeys List of keys to link
+     * @return EntityResponse[MdaTable]
+     */
+    EntitiesResponse<MdaTable> linkTables(int entityKey, int[] tablesKeys);
+
+    /**
+     * Unlink tables from business entity
+     * @param entityKey Entity key
+     * @param tablesKeys List of keys to unlink
+     * @return EntityResponse[MdaTable]
+     */
+    EntitiesResponse<MdaTable> unlinkTables(int entityKey, int[] tablesKeys);
 }
