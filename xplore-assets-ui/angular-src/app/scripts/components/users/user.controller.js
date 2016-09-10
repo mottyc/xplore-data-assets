@@ -9,9 +9,9 @@
     angular.module('myApp')
         .controller('userController', userController);
 
-    userController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'usersManager', 'Notifications'];
+    userController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'usersManager', 'MdaUserModel', 'Notifications'];
 
-    function userController($rootScope, $scope, $state, $stateParams, usersManager, Notifications) {
+    function userController($rootScope, $scope, $state, $stateParams, usersManager, MdaUserModel, Notifications) {
 
         var self = this;
         self.key = $stateParams.key;
@@ -31,13 +31,13 @@
         
         // region --- Data Handlers ------------------------------------------------------------------------------------
 
-        self.user = {};
+        self.user = new MdaUserModel();
 
         // Get info
         usersManager
              .get(self.key)
              .then(function (result) {
-                 self.user = result.data.entity;
+                 self.user.setData(result.data.entity)
              });
 
         self.save = function () {

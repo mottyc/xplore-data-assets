@@ -37,124 +37,98 @@
     </div>
 
     <!-- General Info -->
-    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
-        <div class="panel-body">
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-systemKey">System Key</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-systemKey" class="form-control" value="{{ctrl.system.systemKey}}" disabled>
-                    </div>
-                    <label class="col-sm-2 control-label" for="text-systemName">System Name</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-systemName" class="form-control" value="{{ctrl.system.systemName}}" disabled>
-                    </div>
-                </div>
+    <div class="row" ng-show="ctrl.tabId == 'info'">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-systemKey">System Key:</label>
+                <span class="col-sm-4" id="text-systemKey">{{ctrl.system.systemKey}}</span>
 
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-appName">Application</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-appName" class="form-control" value="{{ctrl.system.appName}}" disabled>
-                    </div>
-                    <label class="col-sm-2 control-label" for="text-systemDepartment">Department</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-systemDepartment" class="form-control" value="{{ctrl.system.systemDepartment}}" disabled>
-                    </div>
+                <label class="col-sm-2 control-label" for="text-systemName">System Name:</label>
+                <span class="col-sm-4" id="text-systemName">{{ctrl.system.systemName}}</span>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-appName">Application:</label>
+                <span class="col-sm-4" id="text-appName">{{ctrl.system.appName}}</span>
+
+                <label class="col-sm-2 control-label" for="text-systemDepartment">Department:</label>
+                <span class="col-sm-4" id="text-systemDepartment">{{ctrl.system.systemDepartment}}</span>
+            </div>
+
+            <!-- Display Name -->
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-displayName">Display Name:</label>
+                <div class="col-sm-4">
+                    <input type="text" id="text-displayName" class="form-control" ng-model="ctrl.system.displayName">
                 </div>
-            </form>
-        </div>
+            </div>
+
+            <!-- Description -->
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-description">Description:</label>
+                <div class="col-sm-4">
+                    <input type="text" id="text-description" class="form-control" ng-model="ctrl.system.description">
+                </div>
+            </div>
+
+            <!-- Audit Info -->
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-createDate">Created On:</label>
+                <span class="col-sm-4" id="text-createDate">{{ctrl.system.createDate}}</span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-updateDate">Updated On:</label>
+                <span class="col-sm-4" id="text-updateDate">{{ctrl.system.updateDate}}</span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-updateBy">Updated By:</label>
+                <span class="col-sm-4" id="text-updateBy">{{ctrl.system.updateBy}}</span>
+            </div>
+        </form>
     </div>
 
-    <!-- Editable section -->
-    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
-        <div class="panel-body">
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-displayName">Display Name</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-displayName" class="form-control" ng-model="ctrl.system.displayName">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-description">Description</label>
-                    <div class="col-sm-10">
-                        <input type="text" id="text-description" class="form-control" ng-model="ctrl.system.description">
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Audit info -->
-    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
-        <div class="panel-body">
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-createDate">Created On</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-createDate" class="form-control" value="{{ctrl.system.createDate}}" disabled>
-                    </div>
-
-                    <label class="col-sm-2 control-label" for="text-updateDate">Updated On</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-updateDate" class="form-control" value="{{ctrl.system.updateDate}}" disabled>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-updateBy">Updated By</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-updateBy" class="form-control" value="{{ctrl.system.updateBy}}" disabled>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+    <div class="row"><p></p></div>
 
     <!-- List of Related Servers -->
     <div class="panel panel-default" ng-show="ctrl.tabId == 'servers'">
-        <div class="panel-body">
-            <table class="datatable table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Display Name</th>
-                        <th>Description</th>
-                        <th>Type</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="server in ctrl.relatedServers">
-                        <td><a ui-sref="server({key: {{server.serverKey}}})" class="pointer">{{ server.serverName }}</a></td>
-                        <td>{{ server.displayName }}</td>
-                        <td>{{ server.description }}</td>
-                        <td>{{ server.serverTypeCd }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <table class="datatable table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Display Name</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="server in ctrl.relatedServers">
+                    <td><a ui-sref="server({key: {{server.serverKey}}})" class="pointer">{{ server.serverName }}</a></td>
+                    <td>{{ server.displayName }}</td>
+                    <td>{{ server.description }}</td>
+                    <td>{{ server.serverTypeCd }}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
     <!-- List of Related Entities -->
     <div class="panel panel-default" ng-show="ctrl.tabId == 'entities'">
-        <div class="panel-body">
-            <table class="datatable table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Display Name</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="entity in ctrl.relatedEntities">
-                        <td><a ui-sref="entity({key: {{entity.businessEntityKey}}})" class="pointer">{{ entity.businessEntityName }}</a></td>
-                        <td>{{ entity.displayName }}</td>
-                        <td>{{ entity.description }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <table class="datatable table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Display Name</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="entity in ctrl.relatedEntities">
+                    <td><a ui-sref="entity({key: {{entity.businessEntityKey}}})" class="pointer">{{ entity.businessEntityName }}</a></td>
+                    <td>{{ entity.displayName }}</td>
+                    <td>{{ entity.description }}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
 </div>

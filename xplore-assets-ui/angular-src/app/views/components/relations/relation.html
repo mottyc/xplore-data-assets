@@ -33,90 +33,65 @@
         </div>
     </div>
 
+    <div class="row"><p></p></div>
+
     <!-- General Info -->
-    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
-        <div class="panel-body">
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-relationKey">Relation Key</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-relationKey" class="form-control" value="{{ctrl.relation.relationKey}}" disabled>
-                    </div>
-                    <label class="col-sm-2 control-label" for="text-fullRelationName">Relation Name</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-fullRelationName" class="form-control" value="{{ctrl.relation.fullRelationName}}" disabled>
-                    </div>
-                </div>
+    <div class="row" ng-show="ctrl.tabId == 'info'">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-relationKey">Relation Key:</label>
+                <span class="col-sm-4" id="text-relationKey">{{ctrl.relation.relationKey}}</span>
 
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-dbName">Database</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-dbName" class="form-control" value="{{ctrl.relation.dbName}}" disabled>
-                    </div>
-                    <label class="col-sm-2 control-label" for="text-relationSource">Source</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-relationSource" class="form-control" value="{{ctrl.relation.relationSource}}" disabled>
-                    </div>
-                </div>
+                <label class="col-sm-2 control-label" for="text-fullRelationName">Relation Name:</label>
+                <span class="col-sm-4" id="text-fullRelationName">{{ctrl.relation.fullRelationName}}</span>
+            </div>
 
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-relationTypeCd">Type</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-relationTypeCd" class="form-control" value="{{ctrl.relation.relationTypeCd}}" disabled>
-                    </div>
-                    <label class="col-sm-2 control-label" for="text-relationScore">Score</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-relationScore" class="form-control" value="{{ctrl.relation.relationScore}}" disabled>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-dbName">Database:</label>
+                <span class="col-sm-4" id="text-dbName">{{ctrl.relation.dbName}}</span>
 
-    <!-- Editable section -->
-    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
-        <div class="panel-body">
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-displayName">Display Name</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-displayName" class="form-control" ng-model="ctrl.relation.displayName">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-description">Description</label>
-                    <div class="col-sm-10">
-                        <input type="text" id="text-description" class="form-control" ng-model="ctrl.relation.description">
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+                <label class="col-sm-2 control-label" for="text-relationSource">Source:</label>
+                <span class="col-sm-4" id="text-relationSource">{{ctrl.relation.relationSource}}</span>
+            </div>
 
-    <!-- Audit info -->
-    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
-        <div class="panel-body">
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-createDate">Created On</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-createDate" class="form-control" value="{{ctrl.entity.createDate}}" disabled>
-                    </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-relationTypeCd">Type:</label>
+                <span class="col-sm-4" id="text-relationTypeCd">{{ctrl.relation.relationTypeCd}}</span>
 
-                    <label class="col-sm-2 control-label" for="text-updateDate">Updated On</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-updateDate" class="form-control" value="{{ctrl.entity.updateDate}}" disabled>
-                    </div>
-                </div>
+                <label class="col-sm-2 control-label" for="text-relationScore">Score:</label>
+                <span class="col-sm-4" id="text-relationScore">{{ctrl.relation.relationScore}}</span>
+            </div>
 
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-updateBy">Updated By</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-updateBy" class="form-control" value="{{ctrl.entity.updateBy}}" disabled>
-                    </div>
+            <!-- Display Name -->
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-displayName">Display Name:</label>
+                <div class="col-sm-4">
+                    <input type="text" id="text-displayName" class="form-control" ng-model="ctrl.relation.displayName">
                 </div>
-            </form>
-        </div>
+            </div>
+
+            <!-- Description -->
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-description">Description:</label>
+                <div class="col-sm-4">
+                    <input type="text" id="text-description" class="form-control" ng-model="ctrl.relation.description">
+                </div>
+            </div>
+
+            <!-- Audit Info -->
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-createDate">Created On:</label>
+                <span class="col-sm-4" id="text-createDate">{{ctrl.relation.createDate}}</span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-updateDate">Updated On:</label>
+                <span class="col-sm-4" id="text-updateDate">{{ctrl.relation.updateDate}}</span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-updateBy">Updated By:</label>
+                <span class="col-sm-4" id="text-updateBy">{{ctrl.relation.updateBy}}</span>
+            </div>
+        </form>
     </div>
 
     <!-- Parent Column Info -->
@@ -127,24 +102,18 @@
         <div class="panel-body">
             <form class="form-horizontal">
                 <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-columnKeyPar">Column Key</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-columnKeyPar" class="form-control" value="{{ctrl.relation.columnKeyPar}}" disabled>
-                    </div>
-                    <label class="col-sm-2 control-label" for="text-columnNamePar">Column Name</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-columnNamePar" class="form-control" value="{{ctrl.relation.columnNamePar}}" disabled>
-                    </div>
+                    <label class="col-sm-2 control-label" for="text-columnKeyPar">Column Key:</label>
+                    <span class="col-sm-4" id="text-columnKeyPar">{{ctrl.relation.columnKeyPar}}</span>
+
+                    <label class="col-sm-2 control-label" for="text-columnNamePar">Column Name:</label>
+                    <span class="col-sm-4" id="text-columnNamePar">{{ctrl.relation.columnNamePar}}</span>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-tableNamePar">Table</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-tableNamePar" class="form-control" value="{{ctrl.relation.tableNamePar}}" disabled>
-                    </div>
-                    <label class="col-sm-2 control-label" for="text-schemaNamePar">Schema</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-schemaNamePar" class="form-control" value="{{ctrl.relation.schemaNamePar}}" disabled>
-                    </div>
+                    <label class="col-sm-2 control-label" for="text-tableNamePar">Table:</label>
+                    <span class="col-sm-4" id="text-tableNamePar">{{ctrl.relation.tableNamePar}}</span>
+
+                    <label class="col-sm-2 control-label" for="text-schemaNamePar">Schema:</label>
+                    <span class="col-sm-4" id="text-schemaNamePar">{{ctrl.relation.schemaNamePar}}</span>
                 </div>
             </form>
         </div>
@@ -158,24 +127,17 @@
         <div class="panel-body">
             <form class="form-horizontal">
                 <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-columnKeyPar">Column Key</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-columnKeyRef" class="form-control" value="{{ctrl.relation.columnKeyRef}}" disabled>
-                    </div>
-                    <label class="col-sm-2 control-label" for="text-columnNamePar">Column Name</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-columnNameRef" class="form-control" value="{{ctrl.relation.columnNameRef}}" disabled>
-                    </div>
+                    <label class="col-sm-2 control-label" for="text-columnKeyPar">Column Key:</label>
+                    <span class="col-sm-4" id="text-columnKeyRef">{{ctrl.relation.columnKeyRef}}</span>
+                    <label class="col-sm-2 control-label" for="text-columnNamePar">Column Name:</label>
+                    <span class="col-sm-4" id="text-columnNameRef">{{ctrl.relation.columnNameRef}}</span>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-tableNameRef">Table</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-tableNameRef" class="form-control" value="{{ctrl.relation.tableNameRef}}" disabled>
-                    </div>
-                    <label class="col-sm-2 control-label" for="text-schemaNameRef">Schema</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-schemaNameRef" class="form-control" value="{{ctrl.relation.schemaNameRef}}" disabled>
-                    </div>
+                    <label class="col-sm-2 control-label" for="text-tableNameRef">Table:</label>
+                    <span class="col-sm-4" id="text-tableNameRef">{{ctrl.relation.tableNameRef}}</span>
+
+                    <label class="col-sm-2 control-label" for="text-schemaNameRef">Schema:</label>
+                    <span class="col-sm-4" id="text-schemaNameRef">{{ctrl.relation.schemaNameRef}}</span>
                 </div>
             </form>
         </div>
@@ -189,32 +151,24 @@
         <div class="panel-body">
             <form class="form-horizontal">
                 <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-dxpColumnGkPar">Parent Column GK</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-dxpColumnGkPar" class="form-control" value="{{ctrl.relation.dxpColumnGkPar}}" disabled>
-                    </div>
-                    <label class="col-sm-2 control-label" for="text-dxpColumnGkRef">Referenced Column GK</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-dxpColumnGkRef" class="form-control" value="{{ctrl.relation.dxpColumnGkRef}}" disabled>
-                    </div>
+                    <label class="col-sm-2 control-label" for="text-dxpColumnGkPar">Parent Column GK:</label>
+                    <span class="col-sm-4" id="text-dxpColumnGkPar">{{ctrl.relation.dxpColumnGkPar}}</span>
+
+                    <label class="col-sm-2 control-label" for="text-dxpColumnGkRef">Referenced Column GK:</label>
+                    <span class="col-sm-4" id="text-dxpColumnGkRef">{{ctrl.relation.dxpColumnGkRef}}</span>
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-dxpColumnGk">Column GK</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-dxpColumnGk" class="form-control" value="{{ctrl.relation.dxpColumnGk}}" disabled>
-                    </div>
-                    <label class="col-sm-2 control-label" for="text-dxpTableGk">Table GK</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-dxpTableGk" class="form-control" value="{{ctrl.relation.dxpTableGk}}" disabled>
-                    </div>
+                    <label class="col-sm-2 control-label" for="text-dxpColumnGk">Column GK:</label>
+                    <span class="col-sm-4" id="text-dxpColumnGk">{{ctrl.relation.dxpColumnGk}}</span>
+
+                    <label class="col-sm-2 control-label" for="text-dxpTableGk">Table GK:</label>
+                    <span class="col-sm-4" id="text-dxpTableGk">{{ctrl.relation.dxpTableGk}}</span>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-2 control-label" for="text-tableId">Table Id</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-tableId" class="form-control" value="{{ctrl.relation.tableId}}" disabled>
-                    </div>
+                    <span class="col-sm-4" id="text-tableId">{{ctrl.relation.tableId}}</span>
                 </div>
             </form>
         </div>

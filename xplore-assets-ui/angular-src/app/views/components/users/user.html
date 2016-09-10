@@ -31,70 +31,47 @@
     </div>
 
     <!-- General Info -->
-    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
-        <div class="panel-body">
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-usernameKey">User Key</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-usernameKey" class="form-control" value="{{ctrl.user.usernameKey}}" disabled>
-                    </div>
-                </div>
+    <div class="row" ng-show="ctrl.tabId == 'info'">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-usernameKey">User Key:</label>
+                <span class="col-sm-4" id="text-usernameKey">{{ctrl.user.usernameKey}}</span>
+            </div>
 
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-firstName">First Name</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-firstName" class="form-control" value="{{ctrl.user.firstName}}" disabled>
-                    </div>
-                    <label class="col-sm-2 control-label" for="text-lastName">Last Name</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-lastName" class="form-control" value="{{ctrl.user.lastName}}" disabled>
-                    </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-firstName">First Name:</label>
+                <span class="col-sm-4" id="text-firstName">{{ctrl.user.firstName}}</span>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-lastName">Last Name:</label>
+                <span class="col-sm-4" id="text-lastName">{{ctrl.user.lastName}}</span>
+            </div>
+
+            <!-- Display Name -->
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-displayName">Display Name:</label>
+                <div class="col-sm-4">
+                    <input type="text" id="text-displayName" class="form-control" ng-model="ctrl.user.displayName">
                 </div>
-            </form>
-        </div>
+            </div>
+            <!-- Audit Info -->
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-createDate">Created On:</label>
+                <span class="col-sm-4" id="text-createDate">{{ctrl.user.createDate}}</span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-updateDate">Updated On:</label>
+                <span class="col-sm-4" id="text-updateDate">{{ctrl.user.updateDate}}</span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-updateBy">Updated By:</label>
+                <span class="col-sm-4" id="text-updateBy">{{ctrl.user.updateBy}}</span>
+            </div>
+        </form>
     </div>
 
-    <!-- Editable section -->
-    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
-        <div class="panel-body">
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-displayName">Display Name</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-displayName" class="form-control" value="{{ctrl.user.displayName}}">
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
-
-    <!-- Audit info -->
-    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
-        <div class="panel-body">
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-createDate">Created On</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-createDate" class="form-control" value="{{ctrl.user.createDate}}" disabled>
-                    </div>
-
-                    <label class="col-sm-2 control-label" for="text-updateDate">Updated On</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-updateDate" class="form-control" value="{{ctrl.user.updateDate}}" disabled>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-updateBy">Updated By</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-updateBy" class="form-control" value="{{ctrl.user.updateBy}}" disabled>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+    <div class="row"><p></p></div>
 
 </div>
 

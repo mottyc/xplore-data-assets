@@ -40,112 +40,77 @@
     </div>
 
     <!-- General Info -->
-    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
-        <div class="panel-body">
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-tableKey">Table Key</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-tableKey" class="form-control" value="{{ctrl.table.tableKey}}" disabled>
-                    </div>
-                    <label class="col-sm-2 control-label" for="text-fullTableName">Full Name</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-fullTableName" class="form-control" value="{{ctrl.table.fullTableName}}" disabled>
-                    </div>
-                </div>
+    <div class="row" ng-show="ctrl.tabId == 'info'">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-tableKey">Table Key:</label>
+                <span class="col-sm-4" id="text-tableKey">{{ctrl.table.tableKey}}</span>
 
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-tableName">Table Name</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-tableName" class="form-control" value="{{ctrl.table.tableName}}" disabled>
-                    </div>
-                    <label class="col-sm-2 control-label" for="text-schemaName">Schema Name</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-schemaName" class="form-control" value="{{ctrl.table.schemaName}}" disabled>
-                    </div>
+                <label class="col-sm-2 control-label" for="text-fullTableName">Full Name:</label>
+                <span class="col-sm-4" id="text-fullTableName">{{ctrl.table.fullTableName}}</span>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-tableName">Table Name:</label>
+                <span class="col-sm-4" id="text-tableName">{{ctrl.table.tableName}}</span>
+
+                <label class="col-sm-2 control-label" for="text-schemaName">Schema Name:</label>
+                <span class="col-sm-4" id="text-schemaName">{{ctrl.table.schemaName}}</span>
+            </div>
+
+            <!-- Display Name -->
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-displayName">Display Name:</label>
+                <div class="col-sm-4">
+                    <input type="text" id="text-displayName" class="form-control" ng-model="ctrl.table.displayName">
                 </div>
-            </form>
-        </div>
+            </div>
+
+            <!-- Description -->
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-description">Description:</label>
+                <div class="col-sm-4">
+                    <input type="text" id="text-description" class="form-control" ng-model="ctrl.table.description">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-dbName">Database:</label>
+                <span class="col-sm-4" id="text-dbName">{{ctrl.table.dbName}}</span>
+
+                <label class="col-sm-2 control-label" for="text-objectType">Object Type:</label>
+                <span class="col-sm-4" id="text-objectType">{{ctrl.table.objectType}}</span>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-tableNumOfCols">Columns Count:</label>
+                <span class="col-sm-4" id="text-tableNumOfCols">{{ctrl.table.tableNumOfCols}}</span>
+
+                <label class="col-sm-2 control-label" for="text-schemaName">Rows Count:</label>
+                <span class="col-sm-4" id="text-tableRowCount">{{ctrl.table.tableRowCount}}</span>
+            </div>
+
+            <!-- Audit Info -->
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-createDate">Created On:</label>
+                <span class="col-sm-4" id="text-createDate">{{ctrl.table.createDate}}</span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-updateDate">Updated On:</label>
+                <span class="col-sm-4" id="text-updateDate">{{ctrl.table.updateDate}}</span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-updateBy">Updated By:</label>
+                <span class="col-sm-4" id="text-updateBy">{{ctrl.table.updateBy}}</span>
+            </div>
+        </form>
     </div>
 
-    <!-- Editable section -->
-    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
-        <div class="panel-body">
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-displayName">Display Name</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-displayName" class="form-control" ng-model="ctrl.table.displayName">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-description">Description</label>
-                    <div class="col-sm-10">
-                        <input type="text" id="text-description" class="form-control" ng-model="ctrl.table.description">
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+    <div class="row"><p></p></div>
 
-    <!-- Statistics info -->
-    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
-        <div class="panel-body">
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-dbName">Database</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-dbName" class="form-control" value="{{ctrl.table.dbName}}" disabled>
-                    </div>
-
-                    <label class="col-sm-2 control-label" for="text-objectType">Object Type</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-objectType" class="form-control" value="{{ctrl.table.objectType}}" disabled>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-tableNumOfCols">Columns Count</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-tableNumOfCols" class="form-control" value="{{ctrl.table.tableNumOfCols}}" disabled>
-                    </div>
-                    <label class="col-sm-2 control-label" for="text-tableRowCount">Rows Count</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-tableRowCount" class="form-control" value="{{ctrl.table.tableRowCount}}" disabled>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Audit info -->
-    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
-        <div class="panel-body">
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-createDate">Created On</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-createDate" class="form-control" value="{{ctrl.table.createDate}}" disabled>
-                    </div>
-
-                    <label class="col-sm-2 control-label" for="text-updateDate">Updated On</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-updateDate" class="form-control" value="{{ctrl.table.updateDate}}" disabled>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-updateBy">Updated By</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-updateBy" class="form-control" value="{{ctrl.table.updateBy}}" disabled>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
 
     <!-- List of Columns -->
-    <div class="panel panel-default" ng-show="ctrl.tabId == 'columns'">
+    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
         <div class="panel-body">
             <table class="datatable table table-striped table-bordered">
                 <thead>
@@ -170,48 +135,44 @@
 
     <!-- List of Related Entities -->
     <div class="panel panel-default" ng-show="ctrl.tabId == 'entities'">
-        <div class="panel-body">
-            <table class="datatable table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Display Name</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="entity in ctrl.relatedEntities">
-                        <td><a ui-sref="entity({key: {{entity.businessEntityKey}}})" class="pointer">{{ entity.businessEntityName }}</a></td>
-                        <td>{{ entity.displayName }}</td>
-                        <td>{{ entity.description }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <table class="datatable table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Display Name</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="entity in ctrl.relatedEntities">
+                    <td><a ui-sref="entity({key: {{entity.businessEntityKey}}})" class="pointer">{{ entity.businessEntityName }}</a></td>
+                    <td>{{ entity.displayName }}</td>
+                    <td>{{ entity.description }}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
     <!-- List of Related Systems -->
     <div class="panel panel-default" ng-show="ctrl.tabId == 'systems'">
-        <div class="panel-body">
-            <table class="datatable table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>System Name</th>
-                        <th>Application</th>
-                        <th>Display Name</th>
-                        <th>Department</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="system in ctrl.relatedSystems">
-                        <td><a ui-sref="system({key: {{system.systemKey}}})" class="pointer">{{ system.systemName }}</a></td>
-                        <td>{{ system.appName }}</td>
-                        <td>{{ system.displayName }}</td>
-                        <td>{{ system.systemDepartment }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <table class="datatable table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>System Name</th>
+                    <th>Application</th>
+                    <th>Display Name</th>
+                    <th>Department</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="system in ctrl.relatedSystems">
+                    <td><a ui-sref="system({key: {{system.systemKey}}})" class="pointer">{{ system.systemName }}</a></td>
+                    <td>{{ system.appName }}</td>
+                    <td>{{ system.displayName }}</td>
+                    <td>{{ system.systemDepartment }}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 

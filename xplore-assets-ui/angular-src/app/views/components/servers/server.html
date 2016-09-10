@@ -37,125 +37,99 @@
     </div>
 
     <!-- General Info -->
-    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
-        <div class="panel-body">
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-serverKey">Server Key</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-serverKey" class="form-control" value="{{ctrl.server.serverKey}}" disabled>
-                    </div>
-                    <label class="col-sm-2 control-label" for="text-serverName">Server Name</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-serverName" class="form-control" value="{{ctrl.server.serverName}}" disabled>
-                    </div>
-                </div>
+    <div class="row" ng-show="ctrl.tabId == 'info'">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-serverKey">Server Key:</label>
+                <span class="col-sm-4" id="text-serverKey">{{ctrl.server.serverKey}}</span>
 
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-serverTypeCd">Server Type</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-serverTypeCd" class="form-control" value="{{ctrl.server.serverTypeCd}}" disabled>
-                    </div>
+                <label class="col-sm-2 control-label" for="text-serverName">Server Name:</label>
+                <span class="col-sm-4" id="text-serverName">{{ctrl.server.serverName}}</span>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-serverTypeCd">Server Type:</label>
+                <span class="col-sm-4" id="text-serverTypeCd">{{ctrl.server.serverTypeCd}}</span>
+            </div>
+
+            <!-- Display Name -->
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-displayName">Display Name:</label>
+                <div class="col-sm-4">
+                    <input type="text" id="text-displayName" class="form-control" ng-model="ctrl.server.displayName">
                 </div>
-            </form>
-        </div>
+            </div>
+
+            <!-- Description -->
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-description">Description:</label>
+                <div class="col-sm-4">
+                    <input type="text" id="text-description" class="form-control" ng-model="ctrl.server.description">
+                </div>
+            </div>
+
+            <!-- Audit Info -->
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-createDate">Created On:</label>
+                <span class="col-sm-4" id="text-createDate">{{ctrl.server.createDate}}</span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-updateDate">Updated On:</label>
+                <span class="col-sm-4" id="text-updateDate">{{ctrl.server.updateDate}}</span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-updateBy">Updated By:</label>
+                <span class="col-sm-4" id="text-updateBy">{{ctrl.server.updateBy}}</span>
+            </div>
+        </form>
     </div>
 
-    <!-- Editable section -->
-    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
-        <div class="panel-body">
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-displayName">Display Name</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-displayName" class="form-control" ng-model="ctrl.server.displayName">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-description">Description</label>
-                    <div class="col-sm-10">
-                        <input type="text" id="text-description" class="form-control" ng-model="ctrl.server.description">
-
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Audit info -->
-    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
-        <div class="panel-body">
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-createDate">Created On</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-createDate" class="form-control" value="{{ctrl.server.createDate}}" disabled>
-                    </div>
-
-                    <label class="col-sm-2 control-label" for="text-updateDate">Updated On</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-updateDate" class="form-control" value="{{ctrl.server.updateDate}}" disabled>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-updateBy">Updated By</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-updateBy" class="form-control" value="{{ctrl.server.updateBy}}" disabled>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+    <div class="row"><p></p></div>
 
     <!-- List of Related Systems -->
     <div class="panel panel-default" ng-show="ctrl.tabId == 'systems'">
-        <div class="panel-body">
-            <table class="datatable table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>System Name</th>
-                        <th>Application</th>
-                        <th>Display Name</th>
-                        <th>Department</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="system in ctrl.relatedSystems">
-                        <td><a ui-sref="system({key: {{system.systemKey}}})" class="pointer">{{ system.systemName }}</a></td>
-                        <td>{{ system.appName }}</td>
-                        <td>{{ system.displayName }}</td>
-                        <td>{{ system.systemDepartment }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <table class="datatable table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>System Name</th>
+                    <th>Application</th>
+                    <th>Display Name</th>
+                    <th>Department</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="system in ctrl.relatedSystems">
+                    <td><a ui-sref="system({key: {{system.systemKey}}})" class="pointer">{{ system.systemName }}</a></td>
+                    <td>{{ system.appName }}</td>
+                    <td>{{ system.displayName }}</td>
+                    <td>{{ system.systemDepartment }}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
-    <!-- List of Related Tables -->
-    <div class="panel panel-default" ng-show="ctrl.tabId == 'tables'">
-        <div class="panel-body">
-            <table class="datatable table table-striped table-bordered">
-                <thead>
-                <tr>
-                    <th>Table Name</th>
-                    <th>Display Name</th>
-                    <th># Rows</th>
-                    <th># Columns</th>
-                    <th>Object Type</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="table in ctrl.relatedTables">
-                    <td><a ui-sref="table({key: {{table.tableKey}}})" class="pointer">{{ table.tableName }}</a></td>
-                    <td>{{ table.displayName }}</td>
-                    <td>{{ table.tableRowCount }}</td>
-                    <td>{{ table.tableNumOfCols }}</td>
-                    <td>{{ table.objectType }}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+    <!-- List of Related Databases ? -->
+    <div class="panel panel-default" ng-show="ctrl.tabId == 'databases'">
+        <table class="datatable table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>Table Name</th>
+                <th>Display Name</th>
+                <th># Rows</th>
+                <th># Columns</th>
+                <th>Object Type</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="table in ctrl.relatedTables">
+                <td><a ui-sref="table({key: {{table.tableKey}}})" class="pointer">{{ table.tableName }}</a></td>
+                <td>{{ table.displayName }}</td>
+                <td>{{ table.tableRowCount }}</td>
+                <td>{{ table.tableNumOfCols }}</td>
+                <td>{{ table.objectType }}</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 
 </div>
