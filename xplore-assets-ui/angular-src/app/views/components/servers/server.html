@@ -1,5 +1,5 @@
 
-<div class="container-fluid container-cards-pf container-pf-nav-pf-vertical">
+<div class="container-fluid container-cards-pf container-pf-nav-pf-vertical panel-default">
 
     <!-- Notifications Area -->
     <div pf-toast-notification-list notifications="ctrl.notifications" show-close="ctrl.showClose" close-callback="ctrl.handleClose" update-viewing="ctrl.updateViewing"></div>
@@ -7,7 +7,7 @@
     <!-- Top Header -->
     <div class="row panel-heading">
         <div class="col-md-10">
-            <h2 class="panel-title">[{{ctrl.server.serverKey}}] - {{ctrl.server.serverName}}</h2>
+            <h2 class="panel-title">{{ctrl.server.serverName}}</h2>
         </div>
         <div class="col-md-2">
             <a ui-sref="servers" class="pointer pull-right">Back to list</a>
