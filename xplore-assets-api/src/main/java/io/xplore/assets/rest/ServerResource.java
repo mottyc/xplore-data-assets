@@ -1,6 +1,7 @@
 package io.xplore.assets.rest;
 
 import io.xplore.assets.Consts;
+import io.xplore.assets.messages.EntitiesResponse;
 import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
 import io.xplore.assets.messages.TokenData;
@@ -146,6 +147,74 @@ public class ServerResource extends BaseResource {
         }
     }
 
-    // ------------------ Sub entities actions -------------------------------------------------------------------------
+
+    // ------------------ Related Systems actions ----------------------------------------------------------------------
+
+    /**
+     * Get server related systems
+     * @param accessToken Access token
+     * @param serverKey Server key
+     * @return EntityResponse[MdaSystem]
+     */
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{serverKey}/systems")
+    public EntitiesResponse<MdaSystem> getSystems(@HeaderParam("X-Access-Token") String accessToken, @PathParam("serverKey") int serverKey) {
+        try {
+            // Validation
+            TokenData token = this.parseJWT(accessToken);
+            return this.service.getSystems(serverKey);
+        } catch (Exception e) {
+            return new EntitiesResponse<MdaSystem>(e.getMessage());
+        }
+    }
+
+    /**
+     * Link systems to server
+     * @param accessToken Access token
+     * @param serverKey Server key
+     * @param systemsKeys List of system keys to link
+     * @return EntityResponse[MdaSystem]
+     */
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{serverKey}/systems")
+    public EntitiesResponse<MdaSystem> linkSystems(@HeaderParam("X-Access-Token") String accessToken,
+                                                   @PathParam("serverKey") int serverKey,
+                                                   int[] systemsKeys) {
+        try {
+            // Validation
+            TokenData token = this.parseJWT(accessToken);
+            return this.service.linkSystems(serverKey, systemsKeys);
+        } catch (Exception e) {
+            return new EntitiesResponse<MdaSystem>(e.getMessage());
+        }
+    }
+
+    /**
+     * Unlink systems from server
+     * @param accessToken Access token
+     * @param serverKey Server key
+     * @param systemsKeys List of systems keys to link
+     * @return EntityResponse[MdaSystem]
+     */
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{serverKey}/systems")
+    public EntitiesResponse<MdaSystem> unlinkSystems(@HeaderParam("X-Access-Token") String accessToken,
+                                                     @PathParam("serverKey") int serverKey,
+                                                     int[] systemsKeys) {
+        try {
+            // Validation
+            TokenData token = this.parseJWT(accessToken);
+            return this.service.unlinkSystems(serverKey, systemsKeys);
+        } catch (Exception e) {
+            return new EntitiesResponse<MdaSystem>(e.getMessage());
+        }
+    }
+
 
 }

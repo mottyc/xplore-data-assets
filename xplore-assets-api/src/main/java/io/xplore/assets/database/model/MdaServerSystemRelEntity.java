@@ -8,6 +8,11 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "mda_server_system_rel", schema = "dbo", catalog = "data_asset")
+@NamedQueries({
+        @NamedQuery(name="MdaServerSystemRelEntity.findBySystemKey", query="SELECT a FROM MdaServerSystemRelEntity a WHERE a.systemKey = :systemKey"),
+        @NamedQuery(name="MdaServerSystemRelEntity.findByServerKey", query="SELECT a FROM MdaServerSystemRelEntity a WHERE a.serverKey = :serverKey"),
+        @NamedQuery(name="MdaServerSystemRelEntity.findByServerAndSystem", query="SELECT a FROM MdaServerSystemRelEntity a WHERE (a.serverKey = :serverKey) AND (a.systemKey = :systemKey)")
+})
 public class MdaServerSystemRelEntity {
     private int mdaServerSystemKey;
     private String mdaServerSystemName;

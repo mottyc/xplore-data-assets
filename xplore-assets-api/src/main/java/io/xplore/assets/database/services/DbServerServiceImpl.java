@@ -7,10 +7,15 @@ package io.xplore.assets.database.services;
 
 
 import io.xplore.assets.database.converters.MdaServerEntityConverter;
+import io.xplore.assets.database.converters.MdaSystemEntityConverter;
 import io.xplore.assets.database.model.MdaServerEntity;
+import io.xplore.assets.database.model.MdaServerSystemRelEntity;
+import io.xplore.assets.database.model.MdaSystemEntity;
+import io.xplore.assets.messages.EntitiesResponse;
 import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
 import io.xplore.assets.model.MdaServer;
+import io.xplore.assets.model.MdaSystem;
 import io.xplore.assets.model.QueryFilter;
 import io.xplore.assets.model.QuerySort;
 import io.xplore.assets.service.ServerService;
@@ -22,6 +27,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -160,6 +167,102 @@ public class DbServerServiceImpl extends _DbBaseServiceImpl<MdaServerEntity> imp
         }
     }
 
+
+    // ------------------ Entity related systems actions ---------------------------------------------------------------
+
+    /**
+     * Get business entity related systems
+     * @param serverKey Server key
+     * @return EntityResponse[MdaSystem]
+     */
+    public EntitiesResponse<MdaSystem> getSystems(int serverKey) {
+        try {
+            List<Integer> keys = new ArrayList<>();
+            EntitiesResponse<MdaSystem> response = new EntitiesResponse<MdaSystem>();
+
+            // First, get list of related systems keys
+            List<MdaServerSystemRelEntity> list = em.createNamedQuery("MdaServerSystemRelEntity.findByServerKey", MdaServerSystemRelEntity.class)
+                    .setParameter("serverKey", serverKey)
+                    .getResultList();
+
+            list.forEach(r -> { keys.add(r.getSystemKey()); });
+
+            // Now get all systems in the list
+            List<MdaSystemEntity> systems = em.createNamedQuery("MdaSystemEntity.findByKeys", MdaSystemEntity.class)
+                    .setParameter("keys", keys)
+                    .getResultList();
+
+            systems.forEach(sys -> { response.getList().add(MdaSystemEntityConverter.get(sys)); } );
+            return response;
+        } catch (Exception ex) {
+            String err = String.format("Action failed: %s", ex.getMessage());
+            log.severe(err);
+            return new EntitiesResponse<MdaSystem>(err);
+        }
+    }
+
+    /**
+     * Link systems to business entity
+     * @param serverKey Server key
+     * @param systemsKeys List of keys to link
+     * @return EntityResponse[MdaSystem]
+     */
+    @Override
+    public EntitiesResponse<MdaSystem> linkSystems(int serverKey, int[] systemsKeys) {
+        try {
+            for(int systemKey : systemsKeys) {
+                try {
+                    MdaServerSystemRelEntity rel = em.createNamedQuery("MdaServerSystemRelEntity.findByServerAndSystem", MdaServerSystemRelEntity.class)
+                            .setParameter("serverKey", serverKey)
+                            .setParameter("systemKey", systemKey)
+                            .getSingleResult();
+
+                    if (rel == null) {
+                        rel = new MdaServerSystemRelEntity();
+                        rel.setServerKey(serverKey);
+                        rel.setSystemKey(systemKey);
+                        em.persist(rel);
+                    }
+                } catch (Exception ex) {
+
+                }
+            }
+            return this.getSystems(serverKey);
+        } catch (Exception ex) {
+            String err = String.format("Action failed: %s", ex.getMessage());
+            log.severe(err);
+            return new EntitiesResponse<MdaSystem>(err);
+        }
+    }
+
+    /**
+     * Unlink systems from business entity
+     * @param serverKey Server key
+     * @param systemsKeys List of keys to unlink
+     * @return EntityResponse[MdaSystem]
+     */
+    @Override
+    public EntitiesResponse<MdaSystem> unlinkSystems(int serverKey, int[] systemsKeys) {
+        try {
+            for(int systemKey : systemsKeys) {
+                try {
+                    MdaServerSystemRelEntity rel = em.createNamedQuery("MdaServerSystemRelEntity.findByServerAndSystem", MdaServerSystemRelEntity.class)
+                            .setParameter("serverKey", serverKey)
+                            .setParameter("systemKey", systemKey)
+                            .getSingleResult();
+
+                    if (rel != null) {
+                        em.remove(rel);
+                    }
+                } catch (Exception ex) {}
+            }
+            return this.getSystems(serverKey);
+        } catch (Exception ex) {
+            String err = String.format("Action failed: %s", ex.getMessage());
+            log.severe(err);
+            return new EntitiesResponse<MdaSystem>(err);
+        }
+    }
     // ------ Private Section ------------------------------------------------------------------------------------------
 
     /**

@@ -1,8 +1,10 @@
 package io.xplore.assets.service;
 
+import io.xplore.assets.messages.EntitiesResponse;
 import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
 import io.xplore.assets.model.MdaServer;
+import io.xplore.assets.model.MdaSystem;
 import io.xplore.assets.model.QueryFilter;
 import io.xplore.assets.model.QuerySort;
 
@@ -45,4 +47,30 @@ public interface ServerService {
      * @return QueryResponse<MdaServer>
      */
     QueryResponse<MdaServer> find(String typeCode, int pageNumber, int pageSize, QueryFilter filter, QuerySort sorting);
+
+    // ------------------ Entity related systems actions ---------------------------------------------------------------
+
+    /**
+     * Get server related systems
+     * @param serverKey Server key
+     * @return EntityResponse[MdaSystem]
+     */
+    EntitiesResponse<MdaSystem> getSystems(int serverKey);
+
+    /**
+     * Link systems to server
+     * @param serverKey Server key
+     * @param systemsKeys List of keys to link
+     * @return EntityResponse[MdaSystem]
+     */
+    EntitiesResponse<MdaSystem> linkSystems(int serverKey, int[] systemsKeys);
+
+    /**
+     * Unlink systems from server
+     * @param serverKey Entity key
+     * @param systemsKeys List of keys to unlink
+     * @return EntityResponse[MdaSystem]
+     */
+    EntitiesResponse<MdaSystem> unlinkSystems(int serverKey, int[] systemsKeys);
+
 }
