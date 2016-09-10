@@ -1,7 +1,24 @@
 
 <div class="container-fluid container-cards-pf container-pf-nav-pf-vertical">
+
+    <!-- Notifications Area -->
+    <div pf-toast-notification-list notifications="ctrl.notifications" show-close="ctrl.showClose" close-callback="ctrl.handleClose" update-viewing="ctrl.updateViewing"></div>
+
+    <!-- Top Header -->
+    <div class="row panel-heading">
+        <div class="col-md-10">
+            <h2 class="panel-title">[{{ctrl.table.tableKey}}] - {{ctrl.table.fullTableName}}</h2>
+        </div>
+        <div class="col-md-2">
+            <a ui-sref="tables" class="pointer pull-right">Back to list</a>
+        </div>
+    </div>
+
+    <div class="row"><p></p></div>
+
+    <!-- tabs-->
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <ul class="nav navbar-nav navbar-primary nav-tabs col-md-12">
                 <li ng-class="(ctrl.tabId == 'info') ? 'active' : ''">
                     <a class="pointer" ng-click="ctrl.tabSelected('info')">Info</a>
@@ -17,10 +34,7 @@
                 </li>
             </ul>
         </div>
-        <div class="col-md-2">
-            <a ui-sref="tables" class="pointer pull-right">Back to list</a>
-        </div>
-        <div class="col-md-2">
+        <div class="col-md-2" ng-show="ctrl.tabId == 'info'">
             <button class="btn btn-default pull-right" type="button" ng-click="ctrl.saveChanges()">Save Changes</button>
         </div>
     </div>
