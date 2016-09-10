@@ -37,7 +37,6 @@ angular.module('myApp')
                 // Get item by ID
                 get: function (key) {
                     var deferred = $q.defer();
-
                     ApiRequest
                         .get(resourceName + '/' + key, {})
                         .then(function (response) {

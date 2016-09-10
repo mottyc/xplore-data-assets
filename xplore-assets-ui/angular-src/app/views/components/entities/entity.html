@@ -1,7 +1,23 @@
 
-<div class="container-fluid container-cards-pf container-pf-nav-pf-vertical">
+<div class="container-fluid container-cards-pf container-pf-nav-pf-vertical panel-default">
+
+    <div pf-toast-notification-list notifications="ctrl.notifications" show-close="ctrl.showClose" close-callback="ctrl.handleClose" update-viewing="ctrl.updateViewing"></div>
+
+    <div class="row panel-heading">
+        <div class="col-md-10">
+            <h2 class="panel-title">[{{ctrl.entity.businessEntityKey}}] - {{ctrl.entity.businessEntityName}}</h2>
+        </div>
+        <div class="col-md-2">
+            <a ui-sref="entities" class="pointer pull-right">Back to list</a>
+        </div>
+    </div>
+
+
+    <div class="row"><p></p></div>
+
+    <!-- tabs-->
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <ul class="nav navbar-nav navbar-primary nav-tabs col-md-12">
                 <li ng-class="(ctrl.tabId == 'info') ? 'active' : ''">
                     <a class="pointer" ng-click="ctrl.tabSelected('info')">Info</a>
@@ -10,84 +26,60 @@
                     <a class="pointer" ng-click="ctrl.tabSelected('systems')">Schemas</a>
                 </li>
                 <li ng-class="(ctrl.tabId == 'tables') ? 'active' : ''">
-                    <a class="pointer" ng-click="ctrl.tabSelected('tables')">Schemas</a>
+                    <a class="pointer" ng-click="ctrl.tabSelected('tables')">Tables</a>
                 </li>
             </ul>
         </div>
-        <div class="col-md-2">
-            <a ui-sref="entities" class="pointer pull-right">Back to list</a>
-        </div>
-        <div class="col-md-2">
+        <div class="col-md-2" ng-show="ctrl.tabId == 'info'">
             <button class="btn btn-default pull-right" type="button" ng-click="ctrl.save()">Save Changes</button>
         </div>
     </div>
 
-    <!-- General Info -->
-    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
-        <div class="panel-body">
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-businessEntityKey">Entity Key</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-businessEntityKey" class="form-control" value="{{ctrl.entity.businessEntityKey}}" disabled>
-                    </div>
-                    <label class="col-sm-2 control-label" for="text-businessEntityName">Entity Name</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-businessEntityName" class="form-control" value="{{ctrl.entity.businessEntityName}}" disabled>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+    <div class="row"><p></p></div>
 
-    <!-- Editable section -->
-    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
-        <div class="panel-body">
-            <form class="form-horizontal">
+    <!-- General Info -->
+    <div class="row" ng-show="ctrl.tabId == 'info'">
+
+        <form class="form-horizontal">
                 <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-displayName">Display Name</label>
+                    <label class="col-sm-2 control-label" for="text-businessEntityKey">Entity Key:</label>
+                    <span class="col-sm-4" id="text-businessEntityKey">{{ctrl.entity.businessEntityKey}}</span>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-businessEntityName">Entity Name:</label>
+                    <span class="col-sm-4" id="text-businessEntityName">{{ctrl.entity.businessEntityName}}</span>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-displayName">Display Name:</label>
                     <div class="col-sm-4">
                         <input type="text" id="text-displayName" class="form-control" ng-model="ctrl.entity.displayName">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-description">Description</label>
-                    <div class="col-sm-10">
+                    <label class="col-sm-2 control-label" for="text-description">Description:</label>
+                    <div class="col-sm-4">
                         <input type="text" id="text-description" class="form-control" ng-model="ctrl.entity.description">
                     </div>
                 </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Audit info -->
-    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
-        <div class="panel-body">
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-createDate">Created On</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-createDate" class="form-control" value="{{ctrl.entity.createDate}}" disabled>
-                    </div>
-
-                    <label class="col-sm-2 control-label" for="text-updateDate">Updated On</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-updateDate" class="form-control" value="{{ctrl.entity.updateDate}}" disabled>
-                    </div>
-                </div>
 
                 <div class="form-group">
-                    <label class="col-sm-2 control-label" for="text-updateBy">Updated By</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="text-updateBy" class="form-control" value="{{ctrl.entity.updateBy}}" disabled>
-                    </div>
+                    <label class="col-sm-2 control-label" for="text-createDate">Created On:</label>
+                    <span class="col-sm-4" id="text-createDate">{{ctrl.entity.createDate}}</span>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-updateDate">Updated On:</label>
+                    <span class="col-sm-4" id="text-updateDate">{{ctrl.entity.updateDate}}</span>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="text-updateBy">Updated By:</label>
+                    <span class="col-sm-4" id="text-updateBy">{{ctrl.entity.updateBy}}</span>
                 </div>
             </form>
-        </div>
     </div>
+
 
     <!-- List of Related Systems -->
-    <div class="panel panel-default" ng-show="ctrl.tabId == 'systems'">
+    <div class="row" ng-show="ctrl.tabId == 'systems'">
         <div class="panel-body">
             <table class="datatable table table-striped table-bordered">
                 <thead>
@@ -111,7 +103,7 @@
     </div>
 
     <!-- List of Related Tables -->
-    <div class="panel panel-default" ng-show="ctrl.tabId == 'tables'">
+    <div class="row" ng-show="ctrl.tabId == 'tables'">
         <div class="panel-body">
             <table class="datatable table table-striped table-bordered">
                 <thead>

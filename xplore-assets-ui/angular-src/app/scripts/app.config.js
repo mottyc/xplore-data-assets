@@ -11,7 +11,8 @@ angular.module('myApp', [
     'patternfly',
     'patternfly.charts',
     'datatables',
-    'angular-loading-bar'
+    'angular-loading-bar',
+    'xeditable'
 ])
     .constant('CONFIG', {
         DebugMode: true,
@@ -33,6 +34,10 @@ angular.module('myApp', [
     })
     
     .run(function () {
+
+        // Set xeditable theme
+        //editableOptions.theme = 'bs3';
+
         /**
          * Function to format currencies.
          * @param n The number of zeros after the given value (xxx.n)

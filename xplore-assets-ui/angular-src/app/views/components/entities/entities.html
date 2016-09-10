@@ -1,5 +1,8 @@
 
 <div class="container-fluid container-cards-pf container-pf-nav-pf-vertical" ng-controller="entitiesController">
+
+    <div pf-toast-notification-list notifications="ctrl.notifications" show-close="true" close-callback="ctrl.handleClose" update-viewing="ctrl.updateViewing"></div>
+
     <div class="row">
         <div class="col-md-12">
             <div pf-toolbar id="toolbar" config="ctrl.toolbarConfig"></div>
@@ -76,23 +79,32 @@
         <table class="datatable table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th>Entity Name</th>
-                    <th>Display Name</th>
-                    <th>Description</th>
+                    <th style="width: 20%">Entity Name</th>
+                    <th style="width: 30%">Display Name</th>
+                    <th style="width: 40%">Description</th>
+                    <th style="width: 10%">Edit</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="item in ctrl.items">
                     <td><a ui-sref="entity({key: {{item.businessEntityKey}}})" class="pointer">{{ item.businessEntityName }}</a></td>
-                    <td>{{ item.displayName }}</td>
-                    <td>{{ item.description }}</td>
+                    <td><span editable-text="item.displayName" e-name="name" e-form="rowform">{{ item.displayName || "" }}</span>
+                    <td><span editable-text="item.description" e-name="desc" e-form="rowform">{{ item.description || "" }}</span>
+                    <td>
+                        <form editable-form name="rowform" onaftersave="ctrl.saveChanges($data, item)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="false">
+                            <button type="submit" ng-disabled="rowform.$waiting"><span class="fa fa-check"></span></button>
+                            <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" ><span class="fa fa-close"></span></button>
+                        </form>
+                        <div class="buttons" ng-show="!rowform.$visible">
+                            <button ng-click="rowform.$show()"><span class="pficon pficon-edit pointer"></span></button>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
     </div>
 
 </div>
-
 <!--
  * # MdaBusinessEntity
  * {

@@ -45,6 +45,7 @@ angular.module('myApp')
             MdaBusinessEntityModel.prototype = {
                 setData: function (data) {
                     angular.extend(this, data, this);
+                    return this;
                 },
                 
                 save: function() {

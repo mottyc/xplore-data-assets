@@ -9,13 +9,12 @@
     angular.module('myApp')
         .controller('entitiesController', entitiesController);
 
-    entitiesController.$inject = ["pfViewUtils", "entitiesManager"];
+    entitiesController.$inject = ['pfViewUtils', 'entitiesManager', 'MdaBusinessEntityModel', 'Notifications'];
 
-    function entitiesController(pfViewUtils, entitiesManager) {
+    function entitiesController(pfViewUtils, entitiesManager, MdaBusinessEntityModel, Notifications) {
 
         var self = this;
 
-        self.allItems = [];
         self.items = [];
         self.totalItems = 0;
 
@@ -24,6 +23,19 @@
 
         self.querySort = "";
         self.queryFilters = [];
+
+        // region --- Notifications ------------------------------------------------------------------------------------
+
+        self.showClose = true;
+
+        self.handleClose = function (data) { Notifications.remove(data); };
+        self.updateViewing = function (viewing, data) { Notifications.setViewing(data, viewing); };
+        self.notifySuccess = function (message) { Notifications.message ('success', '', message, false); }
+        self.notifyWarning = function (message) { Notifications.message ('warning', '', message, false); }
+        self.notifyError = function (message) { Notifications.message ('danger', '', message, false); }
+
+        self.notifications = Notifications.data;
+        // endregion
 
         // region --- Data Handlers ------------------------------------------------------------------------------------
 
@@ -34,7 +46,7 @@
             self.currentPage = Math.max(1, self.currentPage);
 
             if (self.queryFilters && self.queryFilters.length > 0) {
-                entitiesManager.search(self.currentPage, self.querySort, self.queryFilters).then(self.postLoad);
+                 entitiesManager.search(self.currentPage, self.querySort, self.queryFilters).then(self.postLoad);
             } else {
                 entitiesManager.getAll(self.currentPage).then(self.postLoad);
             }
@@ -42,9 +54,8 @@
         };
 
         self.postLoad = function(result) {
-            self.allItems = result.list;
-            self.items = self.allItems;
 
+            self.items = result.list;
             self.totalItems = result.count;
             self.currentPage = result.page;
             self.totalPages = result.pages;
@@ -62,6 +73,24 @@
         var performAction = function(action, item) {
             console.debug("Action: " + action + " On: " + item);
         };
+        
+        self.saveChanges = function(data, item) {
+            var update = new MdaBusinessEntityModel();
+            update.setData(item)
+                .save()
+                .then(function (result) {
+                    if (result.status == 200) {
+                        if (result.data.code == 0) {
+                            self.notifySuccess("Changes updated for entity: " + item.businessEntityKey);
+                        } else {
+                            self.notifyWarning(result.data.error);
+                        }
+                    } else {
+                        self.notifyError(result.statusText);
+                    }
+                });
+        }
+        
         // endregion
 
         // region --- Filters ------------------------------------------------------------------------------------------
@@ -94,7 +123,6 @@
 
         var sortChange = function (sortId, isAscending) {
             self.querySort = sortId + ":" + (isAscending) ? "asc" : "desc";
-            console.debug("Sort: " + self.querySort);
             self.loadEntities();
         };
 
