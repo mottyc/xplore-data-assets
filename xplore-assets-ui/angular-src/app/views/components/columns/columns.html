@@ -99,14 +99,6 @@
                 </tr>
             </thead>
             <tbody>
-                <!--<tr ng-repeat="item in ctrl.items">-->
-                    <!--<td><a ui-sref="column({key: {{item.columnKey}}})" class="pointer">{{ item.columnName }}</a></td>-->
-                    <!--<td>{{ item.tableName }}</td>-->
-                    <!--<td>{{ item.schemaName }}</td>-->
-                    <!--<td>{{ item.displayName }}</td>-->
-                    <!--<td>{{ item.columnDataType }}</td>-->
-                <!--</tr>-->
-
                 <tr ng-repeat="item in ctrl.items">
                     <td><span class="fa fa-key" ng-show="item.isPk" data-toggle="tooltip" title="Primary key"></span></td>
                     <td><a ui-sref="column({key: {{item.columnKey}}})" class="pointer">{{ item.columnName }}</a></td>

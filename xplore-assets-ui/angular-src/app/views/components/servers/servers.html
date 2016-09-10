@@ -84,18 +84,29 @@
         <table class="datatable table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Display Name</th>
-                    <th>Description</th>
-                    <th>Type</th>
+                    <th style="width: 20%">Name</th>
+                    <th style="width: 10%">Type</th>
+                    <th style="width: 20%">Display Name</th>
+                    <th style="width: 40%">Description</th>
+                    <th style="width: 10%">Edit</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="item in ctrl.items">
                     <td><a ui-sref="server({key: {{item.serverKey}}})" class="pointer">{{ item.serverName }}</a></td>
-                    <td>{{ item.displayName }}</td>
-                    <td>{{ item.description }}</td>
                     <td>{{ item.serverTypeCd }}</td>
+
+                    <td><span editable-text="item.displayName" e-name="name" e-form="rowform">{{ item.displayName || "" }}</span>
+                    <td><span editable-text="item.description" e-name="desc" e-form="rowform">{{ item.description || "" }}</span>
+                    <td>
+                        <form editable-form name="rowform" onaftersave="ctrl.saveChanges($data, item)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="false">
+                            <button type="submit" ng-disabled="rowform.$waiting"><span class="fa fa-check"></span></button>
+                            <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" ><span class="fa fa-close"></span></button>
+                        </form>
+                        <div class="buttons" ng-show="!rowform.$visible">
+                            <button ng-click="rowform.$show()"><span class="pficon pficon-edit pointer"></span></button>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>

@@ -1,8 +1,10 @@
 
 <div class="container-fluid container-cards-pf container-pf-nav-pf-vertical panel-default">
 
+    <!-- Notifications Area -->
     <div pf-toast-notification-list notifications="ctrl.notifications" show-close="ctrl.showClose" close-callback="ctrl.handleClose" update-viewing="ctrl.updateViewing"></div>
 
+    <!-- Top Header -->
     <div class="row panel-heading">
         <div class="col-md-10">
             <h2 class="panel-title">[{{ctrl.entity.businessEntityKey}}] - {{ctrl.entity.businessEntityName}}</h2>

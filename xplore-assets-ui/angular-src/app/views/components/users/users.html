@@ -100,10 +100,11 @@
         <table class="datatable table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th>User Key</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Display Name</th>
+                    <th style="width: 30%">User Key</th>
+                    <th style="width: 20%">First Name</th>
+                    <th style="width: 20%">Last Name</th>
+                    <th style="width: 20%">Display Name</th>
+                    <th style="width: 10%">Edit</th>
                 </tr>
             </thead>
             <tbody>
@@ -111,7 +112,17 @@
                     <td><a ui-sref="user({key: '{{item.usernameKey}}'})" class="pointer">{{ item.usernameKey }}</a></td>
                     <td>{{ item.firstName }}</td>
                     <td>{{ item.lastName }}</td>
-                    <td>{{ item.displayName }}</td>
+
+                    <td><span editable-text="item.displayName" e-name="name" e-form="rowform">{{ item.displayName || "" }}</span>
+                    <td>
+                        <form editable-form name="rowform" onaftersave="ctrl.saveChanges($data, item)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="false">
+                            <button type="submit" ng-disabled="rowform.$waiting"><span class="fa fa-check"></span></button>
+                            <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" ><span class="fa fa-close"></span></button>
+                        </form>
+                        <div class="buttons" ng-show="!rowform.$visible">
+                            <button ng-click="rowform.$show()"><span class="pficon pficon-edit pointer"></span></button>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
