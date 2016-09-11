@@ -81,6 +81,44 @@ angular.module('myApp')
                     return deferred.promise;
                 },
 
+                // Load related servers
+                getRelatedServers: function(key) {
+                    var deferred = $q.defer();
+                    ApiRequest
+                        .get(resourceName + '/' + key + '/servers', {})
+                        .then(function (response) {
+                            try {
+                                deferred.resolve(response.data);
+                            } catch (e) {
+                                deferred.reject(e);
+                            }
+
+                        }, function (error) {
+                            deferred.reject(error);
+                        });
+
+                    return deferred.promise;
+                },
+
+                // Load related servers
+                getRelatedEntities: function(key) {
+                    var deferred = $q.defer();
+                    ApiRequest
+                        .get(resourceName + '/' + key + '/entities', {})
+                        .then(function (response) {
+                            try {
+                                deferred.resolve(response.data);
+                            } catch (e) {
+                                deferred.reject(e);
+                            }
+
+                        }, function (error) {
+                            deferred.reject(error);
+                        });
+
+                    return deferred.promise;
+                },
+                
                 // Search all items
                 search: function (currentPage, sort, filters) {
                     var deferred = $q.defer();

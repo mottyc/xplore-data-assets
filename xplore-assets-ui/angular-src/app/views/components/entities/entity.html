@@ -25,10 +25,10 @@
                     <a class="pointer" ng-click="ctrl.tabSelected('info')">Info</a>
                 </li>
                 <li ng-class="(ctrl.tabId == 'systems') ? 'active' : ''">
-                    <a class="pointer" ng-click="ctrl.tabSelected('systems')">Schemas</a>
+                    <a class="pointer" ng-click="ctrl.tabSelected('systems')">Related Systems</a>
                 </li>
                 <li ng-class="(ctrl.tabId == 'tables') ? 'active' : ''">
-                    <a class="pointer" ng-click="ctrl.tabSelected('tables')">Tables</a>
+                    <a class="pointer" ng-click="ctrl.tabSelected('tables')">Related Tables</a>
                 </li>
             </ul>
         </div>
@@ -62,7 +62,6 @@
                     <input type="text" id="text-description" class="form-control" ng-model="ctrl.entity.description">
                 </div>
             </div>
-
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="text-createDate">Created On:</label>
                 <span class="col-sm-4" id="text-createDate">{{ctrl.entity.createDate}}</span>
@@ -94,6 +93,7 @@
                 <tbody>
                     <tr ng-repeat="system in ctrl.relatedSystems">
                         <td><a ui-sref="system({key: {{system.systemKey}}})" class="pointer">{{ system.systemName }}</a></td>
+                        <!--<td>{{ system.systemName }}</td>-->
                         <td>{{ system.appName }}</td>
                         <td>{{ system.displayName }}</td>
                         <td>{{ system.systemDepartment }}</td>
@@ -108,22 +108,23 @@
         <div class="panel-body">
             <table class="datatable table table-striped table-bordered">
                 <thead>
-                <tr>
-                    <th>Table Name</th>
-                    <th>Display Name</th>
-                    <th># Rows</th>
-                    <th># Columns</th>
-                    <th>Object Type</th>
-                </tr>
+                    <tr>
+                        <th>Table Name</th>
+                        <th>Display Name</th>
+                        <th># Rows</th>
+                        <th># Columns</th>
+                        <th>Object Type</th>
+                    </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="table in ctrl.relatedTables">
-                    <td><a ui-sref="table({key: {{table.tableKey}}})" class="pointer">{{ table.tableName }}</a></td>
-                    <td>{{ table.displayName }}</td>
-                    <td>{{ table.tableRowCount }}</td>
-                    <td>{{ table.tableNumOfCols }}</td>
-                    <td>{{ table.objectType }}</td>
-                </tr>
+                    <tr ng-repeat="table in ctrl.relatedTables">
+                        <td><a ui-sref="table({key: {{table.tableKey}}})" class="pointer">{{ table.tableName }}</a></td>
+                        <!--<td>{{ table.tableName }}</td>-->
+                        <td>{{ table.displayName }}</td>
+                        <td>{{ table.tableRowCount }}</td>
+                        <td>{{ table.tableNumOfCols }}</td>
+                        <td>{{ table.objectType }}</td>
+                    </tr>
                 </tbody>
             </table>
         </div>

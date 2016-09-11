@@ -50,12 +50,34 @@
                     self.notifySuccess("Changes updated for entity: " + result.data.entity.businessEntityKey);
                 });
         };
+
+        self.loadRelatedSystems = function() {
+            entitiesManager
+                .getRelatedSystems(self.key)
+                .then(function (result) {
+                    self.relatedSystems = result.list;
+                });
+        };
+
+        self.loadRelatedTables = function() {
+            entitiesManager
+                .getRelatedTables(self.key)
+                .then(function (result) {
+                    self.relatedTables = result.list;
+                });
+        };
         // endregion
         
 
         // region --- Tabs config --------------------------------------------------------------------------------------
         self.tabId = "info";
         self.tabSelected = function(tab_id) {
+            if (tab_id === "systems") {
+                self.loadRelatedSystems();
+            }
+            if (tab_id === "tables") {
+                self.loadRelatedTables();
+            }
             self.tabId = tab_id;
         }; 
         // endregion

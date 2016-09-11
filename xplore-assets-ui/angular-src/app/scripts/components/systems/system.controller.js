@@ -52,11 +52,33 @@
                     self.notifySuccess("Changes updated for system: " + result.data.entity.systemKey);
                 });
         };
+
+        self.loadRelatedServers = function() {
+            systemsManager
+                .getRelatedServers(self.key)
+                .then(function (result) {
+                    self.relatedServers = result.list;
+                });
+        };
+
+        self.loadRelatedEntities = function() {
+            systemsManager
+                .getRelatedEntities(self.key)
+                .then(function (result) {
+                    self.relatedEntities = result.list;
+                });
+        };
         // endregion
         
         // region --- Tabs config --------------------------------------------------------------------------------------
         self.tabId = "info";
         self.tabSelected = function(tab_id) {
+            if (tab_id === "servers") {
+                self.loadRelatedServers();
+            }
+            if (tab_id === "entities") {
+                self.loadRelatedEntities();
+            }
             self.tabId = tab_id;
         }; 
         // endregion

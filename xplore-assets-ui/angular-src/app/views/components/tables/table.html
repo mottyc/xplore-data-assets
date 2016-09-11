@@ -23,9 +23,6 @@
                 <li ng-class="(ctrl.tabId == 'info') ? 'active' : ''">
                     <a class="pointer" ng-click="ctrl.tabSelected('info')">Info</a>
                 </li>
-                <li ng-class="(ctrl.tabId == 'columns') ? 'active' : ''">
-                    <a class="pointer" ng-click="ctrl.tabSelected('columns')">Table Columns</a>
-                </li>
                 <li ng-class="(ctrl.tabId == 'entities') ? 'active' : ''">
                     <a class="pointer" ng-click="ctrl.tabSelected('entities')">Related Entities</a>
                 </li>
@@ -111,7 +108,10 @@
 
     <!-- List of Columns -->
     <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
-        <div class="panel-body">
+        <div class="panel-heading">
+            <h3 class="panel-title">Columns</h3>
+        </div>
+        <!--<div class="panel-body">-->
             <table class="datatable table table-striped table-bordered">
                 <thead>
                     <tr>
@@ -124,13 +124,13 @@
                 <tbody>
                     <tr ng-repeat="column in ctrl.table.columns">
                         <td><a ui-sref="column({key: {{column.columnKey}}})" class="pointer">{{ column.columnName }}</a></td>
-                        <td>{{ server.columnDataType }}</td>
-                        <td>{{ server.displayName }}</td>
-                        <td>{{ server.isPk }}</td>
+                        <td>{{ column.columnDataType }}</td>
+                        <td>{{ column.displayName }}</td>
+                        <td>{{ column.isPk }}</td>
                     </tr>
                 </tbody>
             </table>
-        </div>
+        <!--</div>-->
     </div>
 
     <!-- List of Related Entities -->
