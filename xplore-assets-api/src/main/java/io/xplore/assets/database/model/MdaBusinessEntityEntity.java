@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 @NamedQueries({
         @NamedQuery(name="MdaBusinessEntityEntity.findAll", query="SELECT a FROM MdaBusinessEntityEntity a"),
         @NamedQuery(name="MdaBusinessEntityEntity.findByKey", query="SELECT a FROM MdaBusinessEntityEntity a WHERE a.businessEntityKey = :businessEntityKey"),
+        @NamedQuery(name="MdaBusinessEntityEntity.findByKeys", query="SELECT a FROM MdaBusinessEntityEntity a WHERE a.businessEntityKey IN :keys")
 })
 public class MdaBusinessEntityEntity {
     private int businessEntityKey;

@@ -167,6 +167,7 @@ public class DbBusinessEntityServiceImpl extends _DbBaseServiceImpl<MdaBusinessE
                     .getResultList();
 
             list.forEach(r -> { keys.add(r.getSystemKey()); });
+            if (keys.size() == 0) return response;
 
             // Now get all systems in the list
             List<MdaSystemEntity> systems = em.createNamedQuery("MdaSystemEntity.findByKeys", MdaSystemEntity.class)
@@ -237,7 +238,8 @@ public class DbBusinessEntityServiceImpl extends _DbBaseServiceImpl<MdaBusinessE
                     }
                 } catch (Exception ex) {}
             }
-            return this.getSystems(entityKey);        } catch (Exception ex) {
+            return this.getSystems(entityKey);
+        } catch (Exception ex) {
             String err = String.format("Action failed: %s", ex.getMessage());
             log.severe(err);
             return new EntitiesResponse<MdaSystem>(err);
@@ -263,9 +265,10 @@ public class DbBusinessEntityServiceImpl extends _DbBaseServiceImpl<MdaBusinessE
                     .getResultList();
 
             list.forEach(r -> { keys.add(r.getTableKey()); });
+            if (keys.size() == 0) return response;
 
             // Now get all tables in the list
-            List<MdaTableEntity> tables = em.createNamedQuery("MdaSystemEntity.findByKeys", MdaTableEntity.class)
+            List<MdaTableEntity> tables = em.createNamedQuery("MdaTableEntity.findByKeys", MdaTableEntity.class)
                     .setParameter("keys", keys)
                     .getResultList();
 
