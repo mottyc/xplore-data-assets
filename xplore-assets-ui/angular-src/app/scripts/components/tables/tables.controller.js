@@ -142,7 +142,7 @@
         };
 
         self.viewsConfig = {
-            views: [pfViewUtils.getTableView(), pfViewUtils.getListView(), pfViewUtils.getCardView()],
+            views: [pfViewUtils.getTableView(), pfViewUtils.getListView()],
             onViewSelect: viewSelected
         };
         self.viewsConfig.currentView = self.viewsConfig.views[0].id;
