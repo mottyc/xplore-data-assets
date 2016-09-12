@@ -47,12 +47,16 @@ public class _DbBaseServiceImpl<E>  {
 
                     // define predicate
                     for (String v : values) {
-                        v.replace("*", "%");
-                        if (v.contains("%")) {
-                            valuePredicates.add(cb.equal(from.get(field), v));
-                        } else {
-                            valuePredicates.add(cb.like(from.get(field), v));
-                        }
+                        // set partial search
+                        String search = String.format("%%%s%%", v);
+                        valuePredicates.add(cb.like(from.get(field), search));
+
+//                        v.replace("*", "%");
+//                        if (v.contains("%")) {
+//                            valuePredicates.add(cb.equal(from.get(field), v));
+//                        } else {
+//                            valuePredicates.add(cb.like(from.get(field), v));
+//                        }
                     }
                     // values.forEach(v -> { valuePredicates.add(cb.equal(from.get(field), v)); });
 
