@@ -6,6 +6,8 @@
 package io.xplore.assets.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Server domain model
@@ -54,6 +56,10 @@ public class MdaServer implements Serializable {
      */
     public String updateBy;
 
+    /**
+     * List of databases
+     */
+    public List<MdaDatabase> databases = new ArrayList<>();
 
     /**
      * Default Constructor

@@ -215,6 +215,4 @@ public class ServerResource extends BaseResource {
             return new EntitiesResponse<MdaSystem>(e.getMessage());
         }
     }
-
-
 }

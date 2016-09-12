@@ -6,18 +6,17 @@
 package io.xplore.assets.database.services;
 
 
+import io.xplore.assets.database.converters.MdaDbEntityConverter;
 import io.xplore.assets.database.converters.MdaServerEntityConverter;
 import io.xplore.assets.database.converters.MdaSystemEntityConverter;
+import io.xplore.assets.database.model.MdaDbEntity;
 import io.xplore.assets.database.model.MdaServerEntity;
 import io.xplore.assets.database.model.MdaServerSystemRelEntity;
 import io.xplore.assets.database.model.MdaSystemEntity;
 import io.xplore.assets.messages.EntitiesResponse;
 import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
-import io.xplore.assets.model.MdaServer;
-import io.xplore.assets.model.MdaSystem;
-import io.xplore.assets.model.QueryFilter;
-import io.xplore.assets.model.QuerySort;
+import io.xplore.assets.model.*;
 import io.xplore.assets.service.ServerService;
 import io.xplore.assets.util.StringUtils;
 
@@ -53,7 +52,16 @@ public class DbServerServiceImpl extends _DbBaseServiceImpl<MdaServerEntity> imp
     public EntityResponse<MdaServer> get(int key) {
         try {
             MdaServerEntity entity = em.find(MdaServerEntity.class, key);
-            return new EntityResponse<MdaServer>(MdaServerEntityConverter.get(entity));
+            MdaServer server = MdaServerEntityConverter.get(entity);
+
+            // Get all related databases
+            List<MdaDbEntity> databases = em.createNamedQuery("MdaDbEntity.findByServer", MdaDbEntity.class)
+                    .setParameter("serverKey", server.serverKey)
+                    .getResultList();
+
+            databases.forEach(db -> { server.databases.add(MdaDbEntityConverter.get(db)); });
+
+            return new EntityResponse<>(server);
         } catch (Exception ex) {
             String err = String.format("Action failed: %s", ex.getMessage());
             log.severe(err);
@@ -186,6 +194,7 @@ public class DbServerServiceImpl extends _DbBaseServiceImpl<MdaServerEntity> imp
                     .getResultList();
 
             list.forEach(r -> { keys.add(r.getSystemKey()); });
+            if (keys.size() == 0) return response;
 
             // Now get all systems in the list
             List<MdaSystemEntity> systems = em.createNamedQuery("MdaSystemEntity.findByKeys", MdaSystemEntity.class)
@@ -263,6 +272,7 @@ public class DbServerServiceImpl extends _DbBaseServiceImpl<MdaServerEntity> imp
             return new EntitiesResponse<MdaSystem>(err);
         }
     }
+
     // ------ Private Section ------------------------------------------------------------------------------------------
 
     /**

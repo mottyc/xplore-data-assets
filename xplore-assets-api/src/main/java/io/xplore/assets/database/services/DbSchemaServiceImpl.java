@@ -6,8 +6,12 @@
 package io.xplore.assets.database.services;
 
 
+import io.xplore.assets.database.converters.MdaDbEntityConverter;
 import io.xplore.assets.database.converters.MdaSchemaEntityConverter;
+import io.xplore.assets.database.converters.MdaTableEntityConverter;
+import io.xplore.assets.database.model.MdaDbEntity;
 import io.xplore.assets.database.model.MdaSchemaEntity;
+import io.xplore.assets.database.model.MdaTableEntity;
 import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
 import io.xplore.assets.model.MdaSchema;
@@ -21,6 +25,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -45,7 +50,16 @@ public class DbSchemaServiceImpl extends _DbBaseServiceImpl<MdaSchemaEntity> imp
     public EntityResponse<MdaSchema> get(int key) {
         try {
             MdaSchemaEntity entity = em.find(MdaSchemaEntity.class, key);
-            return new EntityResponse<MdaSchema>(MdaSchemaEntityConverter.get(entity));
+            MdaSchema schema = MdaSchemaEntityConverter.get(entity);
+
+            // Get all related tables
+            List<MdaTableEntity> tables = em.createNamedQuery("MdaTableEntity.findBySchema", MdaTableEntity.class)
+                    .setParameter("schemaKey", schema.schemaKey)
+                    .getResultList();
+
+            tables.forEach(tbl -> { schema.tables.add(MdaTableEntityConverter.get(tbl)); });
+
+            return new EntityResponse<>(schema);
         } catch (Exception ex) {
             String err = String.format("Action failed: %s", ex.getMessage());
             log.severe(err);
