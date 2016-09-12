@@ -33,6 +33,7 @@
 
         self.table = new MdaTableModel();
         self.relatedEntities = [];
+        self.relatedSystems = [];
         
 
         // Get info
@@ -51,11 +52,33 @@
                     self.notifySuccess("Changes updated for table: " + result.data.entity.tableKey);
                 });
         };
+
+        self.loadRelatedSystems = function() {
+            tablesManager
+                .getRelatedSystems(self.key)
+                .then(function (result) {
+                    self.relatedSystems = result.list;
+                });
+        };
+
+        self.loadRelatedEntities = function() {
+            tablesManager
+                .getRelatedEntities(self.key)
+                .then(function (result) {
+                    self.relatedEntities = result.list;
+                });
+        };
         // endregion
         
         // region --- Tabs config --------------------------------------------------------------------------------------
         self.tabId = "info";
         self.tabSelected = function(tab_id) {
+            if (tab_id === "systems") {
+                self.loadRelatedSystems();
+            }
+            if (tab_id === "entities") {
+                self.loadRelatedEntities();
+            }
             self.tabId = tab_id;
         }; 
         // endregion

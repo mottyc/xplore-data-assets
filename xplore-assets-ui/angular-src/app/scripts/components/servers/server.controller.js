@@ -33,7 +33,6 @@
 
         self.server = new MdaServerModel();
         self.relatedSystems = [];
-        self.relatedTables = [];
         
         // Get info
         serversManager
@@ -51,11 +50,22 @@
                     self.notifySuccess("Changes updated for server: " + result.data.entity.serverKey);
                 });
         };
+
+        self.loadRelatedSystems = function() {
+            serversManager
+                .getRelatedSystems(self.key)
+                .then(function (result) {
+                    self.relatedSystems = result.list;
+                });
+        };
         // endregion
         
         // region --- Tabs config --------------------------------------------------------------------------------------
         self.tabId = "info";
         self.tabSelected = function(tab_id) {
+            if (tab_id === "systems") {
+                self.loadRelatedSystems();
+            }
             self.tabId = tab_id;
         }; 
         // endregion

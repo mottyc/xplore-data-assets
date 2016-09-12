@@ -23,9 +23,6 @@
                 <li ng-class="(ctrl.tabId == 'info') ? 'active' : ''">
                     <a class="pointer" ng-click="ctrl.tabSelected('info')">Info</a>
                 </li>
-                <li ng-class="(ctrl.tabId == 'tables') ? 'active' : ''">
-                    <a class="pointer" ng-click="ctrl.tabSelected('tables')">Schemas</a>
-                </li>
             </ul>
         </div>
         <div class="col-md-2" ng-show="ctrl.tabId == 'info'">
@@ -87,7 +84,10 @@
     <div class="row"><p></p></div>
 
     <!-- List of Tables -->
-    <div class="panel panel-default" ng-show="ctrl.tabId == 'tables'">
+    <div class="panel panel-default" ng-show="ctrl.tabId == 'info'">
+        <div class="panel-heading">
+            <h3 class="panel-title">Tables</h3>
+        </div>
         <table class="datatable table table-striped table-bordered">
             <thead>
                 <tr>
