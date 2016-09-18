@@ -9,9 +9,9 @@
     angular.module('myApp')
         .controller('entityController', entityController);
 
-    entityController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'entitiesManager', 'MdaBusinessEntityModel', 'Notifications'];
+    entityController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'entitiesManager', 'MdaBusinessEntityModel', 'Notifications', '$mdDialog', '$mdMedia'];
 
-    function entityController($rootScope, $scope, $state, $stateParams, entitiesManager, MdaBusinessEntityModel, Notifications) {
+    function entityController($rootScope, $scope, $state, $stateParams, entitiesManager, MdaBusinessEntityModel, Notifications, $mdDialog, $mdMedia) {
 
         var self = this;
         self.key = $stateParams.key;
@@ -66,8 +66,41 @@
                     self.relatedTables = result.list;
                 });
         };
+
+        self.linkSystems = function(event) {
+            var confirm = $mdDialog.confirm()
+                .title('Confirmation')
+                .textContent('Lint systems to Entity?')
+                .ariaLabel('')
+                .targetEvent(event)
+                .ok('Yes')
+                .cancel('Cancel');
+
+            $mdDialog
+                .show(confirm)
+                .then(function () {
+                    console.debug("Confirmation accepted");
+                });
+        }
+
+        self.linkTables = function(event) {
+
+            $mdDialog
+                .show({
+                    controller: 'tablesDialogController',
+                    controllerAs: 'ctrl',
+                    bindToController: true,
+                    templateUrl: 'views/components/tables/tables.dialog.html',
+                    parent: angular.element(document.body),
+                    targetEvent: event,
+                    clickOutsideToClose: true,
+                    fullscreen: $mdMedia('sm')
+                })
+                .then(function () {
+                    //self.search();
+                });
+        }
         // endregion
-        
 
         // region --- Tabs config --------------------------------------------------------------------------------------
         self.tabId = "info";

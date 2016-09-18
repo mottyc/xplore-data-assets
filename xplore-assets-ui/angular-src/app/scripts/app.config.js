@@ -12,7 +12,8 @@ angular.module('myApp', [
     'patternfly.charts',
     'datatables',
     'angular-loading-bar',
-    'xeditable'
+    'xeditable',
+    'ngMaterial'
 ])
     .constant('CONFIG', {
         DebugMode: true,
