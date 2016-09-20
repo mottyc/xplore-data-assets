@@ -9,9 +9,9 @@
     angular.module('myApp')
         .controller('entityController', entityController);
 
-    entityController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'entitiesManager', 'MdaBusinessEntityModel', 'Notifications', '$mdDialog', '$mdMedia'];
+    entityController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'entitiesManager', 'MdaBusinessEntityModel', 'Notifications', '$mdDialog', 'ngDialog'];
 
-    function entityController($rootScope, $scope, $state, $stateParams, entitiesManager, MdaBusinessEntityModel, Notifications, $mdDialog, $mdMedia) {
+    function entityController($rootScope, $scope, $state, $stateParams, entitiesManager, MdaBusinessEntityModel, Notifications, $mdDialog, ngDialog) {
 
         var self = this;
         self.key = $stateParams.key;
@@ -68,6 +68,7 @@
         };
 
         self.linkSystems = function(event) {
+            /***
             var confirm = $mdDialog.confirm()
                 .title('Confirmation')
                 .textContent('Lint systems to Entity?')
@@ -81,10 +82,21 @@
                 .then(function () {
                     console.debug("Confirmation accepted");
                 });
+             ***/
+            // ngDialog.open({ template: 'views/components/tables/tables.dialog.html', className: 'ngdialog-theme-default' });
+            ngDialog.open({
+                template: 'views/components/tables/tables.dialog.html',
+                controller: 'tablesDialogController',
+                controllerAs: 'ctrl',
+                width: '60%',
+                height: '40%'
+
+            });
         }
 
         self.linkTables = function(event) {
 
+            /***
             $mdDialog
                 .show({
                     controller: 'tablesDialogController',
@@ -99,7 +111,34 @@
                 .then(function () {
                     //self.search();
                 });
+
+             ***/
+            self.open();
         }
+        // endregion
+
+        // region --- Modal dialog -------------------------------------------------------------------------------------
+
+        self.additionalInfo = "Donec consequat dignissim neque, sed suscipit quam egestas in. Fusce bibendum " +
+            "laoreet lectus commodo interdum. Vestibulum odio ipsum, tristique et ante vel, iaculis placerat nulla. " +
+            "Suspendisse iaculis urna feugiat lorem semper, ut iaculis risus tempus.";
+        self.copyright = "Trademark and Copyright Information";
+        self.imgAlt = "Patternfly Symbol";
+        self.imgSrc = "img/logo-alt.svg";
+        self.title = "Product Title";
+        self.productInfo = [
+            { name: 'Version', value: '1.0.0.0.20160819142038_51be77c' },
+            { name: 'Server Name', value: 'Localhost' },
+            { name: 'User Name', value: 'admin' },
+            { name: 'User Role', value: 'Administrator' }];
+        self.open = function () {
+            self.isOpen = true;
+        }
+        self.onClose = function() {
+            self.isOpen = false;
+        }
+
+
         // endregion
 
         // region --- Tabs config --------------------------------------------------------------------------------------

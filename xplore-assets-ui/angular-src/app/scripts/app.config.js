@@ -13,7 +13,8 @@ angular.module('myApp', [
     'datatables',
     'angular-loading-bar',
     'xeditable',
-    'ngMaterial'
+    'ngMaterial',
+    'ngDialog'
 ])
     .constant('CONFIG', {
         DebugMode: true,
