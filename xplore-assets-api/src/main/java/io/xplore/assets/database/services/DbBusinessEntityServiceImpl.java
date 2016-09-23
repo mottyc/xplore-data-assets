@@ -20,6 +20,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -199,15 +200,12 @@ public class DbBusinessEntityServiceImpl extends _DbBaseServiceImpl<MdaBusinessE
                             .setParameter("systemKey", systemKey)
                             .getSingleResult();
 
-                    if (rel == null) {
-                        rel = new MdaBusinessEntitySystemRelEntity();
-                        rel.setBusinessEntityKey(entityKey);
-                        rel.setSystemKey(systemKey);
-                        em.persist(rel);
-                    }
-                } catch (Exception ex) {
-
-                }
+                } catch (NoResultException ex){
+                    MdaBusinessEntitySystemRelEntity created = new MdaBusinessEntitySystemRelEntity();
+                    created.setBusinessEntityKey(entityKey);
+                    created.setSystemKey(systemKey);
+                    em.persist(created);
+                } catch (Exception ex) { }
             }
             return this.getSystems(entityKey);
         } catch (Exception ex) {
@@ -297,12 +295,11 @@ public class DbBusinessEntityServiceImpl extends _DbBaseServiceImpl<MdaBusinessE
                             .setParameter("tableKey", tableKey)
                             .getSingleResult();
 
-                    if (rel == null) {
-                        rel = new MdaBusinessEntityTableRelEntity();
-                        rel.setBusinessEntityKey(entityKey);
-                        rel.setTableKey(tableKey);
-                        em.persist(rel);
-                    }
+                } catch (NoResultException ex) {
+                    MdaBusinessEntityTableRelEntity created = new MdaBusinessEntityTableRelEntity();
+                    created.setBusinessEntityKey(entityKey);
+                    created.setTableKey(tableKey);
+                    em.persist(created);
                 } catch (Exception ex) {}
             }
             return this.getTables(entityKey);

@@ -247,7 +247,7 @@ public class EntityResource extends BaseResource {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/{entityKey}/systems")
+    @Path("/{entityKey}/tables")
     public EntitiesResponse<MdaTable> linkTables(@HeaderParam("X-Access-Token") String accessToken,
                                                    @PathParam("entityKey") int entityKey,
                                                    int[] tablesKeys) {
@@ -270,7 +270,7 @@ public class EntityResource extends BaseResource {
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/{entityKey}/systems")
+    @Path("/{entityKey}/tables")
     public EntitiesResponse<MdaTable> unlinkTables(@HeaderParam("X-Access-Token") String accessToken,
                                                      @PathParam("entityKey") int entityKey,
                                                      int[] tablesKeys) {

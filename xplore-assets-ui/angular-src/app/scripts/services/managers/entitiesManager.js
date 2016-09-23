@@ -184,8 +184,67 @@ angular.module('myApp')
                         });
 
                     return deferred.promise;
-                }
+                },
 
+                // Link tables to entity
+                linkTables: function (businessEntityKey, tablesKeys) {
+                    var deferred = $q.defer();
+
+                    ApiRequest
+                        .put(resourceName + '/' + businessEntityKey + '/tables', {}, tablesKeys)
+                        .then(function (response) {
+                            deferred.resolve(response.data);
+                        }, function (error) {
+                            deferred.reject(error);
+                        });
+
+                    return deferred.promise;
+                },
+
+                // Unlink tables from entity
+                unlinkTables: function (businessEntityKey, tablesKeys) {
+                    var deferred = $q.defer();
+
+                    ApiRequest
+                        .delete(resourceName + '/' + businessEntityKey + '/tables', {}, tablesKeys)
+                        .then(function (response) {
+                            deferred.resolve(response.data);
+                        }, function (error) {
+                            deferred.reject(error);
+                        });
+
+                    return deferred.promise;
+                },
+
+                // Link systems to entity
+                linkSystems: function (businessEntityKey, systemsKeys) {
+                    var deferred = $q.defer();
+
+                    ApiRequest
+                        .put(resourceName + '/' + businessEntityKey + '/systems', {}, systemsKeys)
+                        .then(function (response) {
+                            deferred.resolve(response.data);
+                        }, function (error) {
+                            deferred.reject(error);
+                        });
+
+                    return deferred.promise;
+                },
+
+                // Unlink systems from entity
+                unlinkSystems: function (businessEntityKey, systemsKeys) {
+                    var deferred = $q.defer();
+
+                    ApiRequest
+                        .delete(resourceName + '/' + businessEntityKey + '/systems', {}, systemsKeys)
+                        .then(function (response) {
+                            deferred.resolve(response.data);
+                        }, function (error) {
+                            deferred.reject(error);
+                        });
+
+                    return deferred.promise;
+                }
                 //endregion
             };
 

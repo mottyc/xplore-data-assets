@@ -36,12 +36,10 @@
             <button class="btn btn-default pull-right" type="button" ng-click="ctrl.saveChanges()">Save Changes</button>
         </div>
         <div class="col-md-2" ng-show="ctrl.tabId == 'systems'">
-            <button class="btn btn-default pull-right" type="button" ng-click="ctrl.linkSystems($event)">Link Systems</button>
+            <button class="btn btn-default pull-right" type="button" ng-click="ctrl.openLinkSystemsDialog()">Link Systems</button>
         </div>
         <div class="col-md-2" ng-show="ctrl.tabId == 'tables'">
-            <button class="btn btn-default pull-right" type="button" ng-click="ctrl.linkTables($event)">Link Tables</button>
-            <!--<button class="btn btn-default" data-toggle="modal" data-target="#tablesModal">Link Tables</button>-->
-
+            <button class="btn btn-default pull-right" type="button" ng-click="ctrl.openLinkTablesDialog()">Link Tables</button>
         </div>
     </div>
 
@@ -139,58 +137,10 @@
     </div>
 
     <!-- Link Tables modal dialog -->
+    <div select-tables-modal is-open="ctrl.isOpenTablesDlg" on-close="ctrl.onCloseTablesDlg()" on-save="ctrl.onSaveTablesDlg(selectedItems)" title="ctrl.linkTablesTitle"></div>
 
-
-    <!-- Link Tables modal dialog 2 -->
-    <div class="modal-dialog" ng-show="ctrl.isOpen">
-        <div class="modal-content">
-            <div class="modal-header">
-                <span><strong>Select tables</strong></span>
-                <span class="fa fa-close pull-right" data-toggle="tooltip" title="Dismiss" ng-click="ctrl.onClose()"></span>
-            </div>
-            <!--<div class="modal-body">-->
-                <!--<md-content flex layout="row" layout-align="center">-->
-                    <!--<md-content flex="60">-->
-                        <!--<p>This is the body of the dialog</p>-->
-                        <!--<p>This is the body of the dialog</p>-->
-                        <!--<p>This is the body of the dialog</p>-->
-                        <!--<p>This is the body of the dialog</p>-->
-                        <!--<p>This is the body of the dialog</p>-->
-                        <!--<p>This is the body of the dialog</p>-->
-                        <!--<p>This is the body of the dialog</p>-->
-                        <!--<p>This is the body of the dialog</p>-->
-                        <!--<p>This is the body of the dialog</p>-->
-                        <!--<p>This is the body of the dialog</p>-->
-                        <!--<p>This is the body of the dialog</p>-->
-                    <!--</md-content>-->
-                <!--</md-content>-->
-            <!--</div>-->
-
-            <div class="modal-body">
-                <md-content flex layout="row" layout-align="center">
-                    <md-content md-scroll-y>
-                        <p>This is the body of the dialog</p>
-                        <p>This is the body of the dialog</p>
-                        <p>This is the body of the dialog</p>
-                        <p>This is the body of the dialog</p>
-                        <p>This is the body of the dialog</p>
-                        <p>This is the body of the dialog</p>
-                        <p>This is the body of the dialog</p>
-                        <p>This is the body of the dialog</p>
-                        <p>This is the body of the dialog</p>
-                        <p>This is the body of the dialog</p>
-                        <p>This is the body of the dialog</p>
-                    </md-content>
-                </md-content>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" ng-click="ctrl.onClose()">Cancel</button>
-                <button type="button" class="btn btn-primary">Save</button>
-            </div>
-        </div>
-    </div>
-
+    <!-- Link Systems modal dialog -->
+    <div select-systems-modal is-open="ctrl.isOpenSystemsDlg" on-close="ctrl.onCloseSystemsDlg()" on-save="ctrl.onSaveSystemsDlg(selectedItems)" title="ctrl.linkTSystemsTitle"></div>
 
 </div>
 

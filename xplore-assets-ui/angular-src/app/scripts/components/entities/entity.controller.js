@@ -67,77 +67,86 @@
                 });
         };
 
-        self.linkSystems = function(event) {
-            /***
-            var confirm = $mdDialog.confirm()
-                .title('Confirmation')
-                .textContent('Lint systems to Entity?')
-                .ariaLabel('')
-                .targetEvent(event)
-                .ok('Yes')
-                .cancel('Cancel');
+        self.linkTables = function(tablesKeys) {
+            entitiesManager
+                .linkTables(self.key, tablesKeys)
+                .then(function (result) {
 
-            $mdDialog
-                .show(confirm)
-                .then(function () {
-                    console.debug("Confirmation accepted");
+                    console.log("Refresh tables");
+                    console.log(angular.toJson(result));
+
+                    self.relatedTables = result.list;
+                    //self.loadRelatedTables();
                 });
-             ***/
-            // ngDialog.open({ template: 'views/components/tables/tables.dialog.html', className: 'ngdialog-theme-default' });
-            ngDialog.open({
-                template: 'views/components/tables/tables.dialog.html',
-                controller: 'tablesDialogController',
-                controllerAs: 'ctrl',
-                width: '60%',
-                height: '40%'
+        };
 
-            });
-        }
-
-        self.linkTables = function(event) {
-
-            /***
-            $mdDialog
-                .show({
-                    controller: 'tablesDialogController',
-                    controllerAs: 'ctrl',
-                    bindToController: true,
-                    templateUrl: 'views/components/tables/tables.dialog.html',
-                    parent: angular.element(document.body),
-                    targetEvent: event,
-                    clickOutsideToClose: true,
-                    fullscreen: $mdMedia('sm')
-                })
-                .then(function () {
-                    //self.search();
+        self.unlinkTables = function(tablesKeys) {
+            entitiesManager
+                .unlinkTables(self.key, tablesKeys)
+                .then(function (result) {
+                    self.relatedTables = result.list;
                 });
+        };
 
-             ***/
-            self.open();
-        }
+        self.linkSystems = function(systemsKeys) {
+            entitiesManager
+                .linkSystems(self.key, systemsKeys)
+                .then(function (result) {
+
+                    console.log("Refresh systems");
+                    console.log(angular.toJson(result));
+
+                    self.relatedSystems = result.list;
+                    //self.loadRelatedSystems();
+
+                });
+        };
+
+        self.unlinkSystems = function(systemsKeys) {
+            entitiesManager
+                .unlinkSystems(self.key, systemsKeys)
+                .then(function (result) {
+                    self.relatedSystems = result.list;
+                });
+        };
+
+        // region --- Link Tables Modal dialog -------------------------------------------------------------------------
+
+        self.linkTablesTitle = "Link Tables";
+
+        self.openLinkTablesDialog = function() {
+            self.isOpenTablesDlg = true;
+        };
+
+        self.onCloseTablesDlg = function() {
+            self.isOpenTablesDlg = false;
+        };
+
+        self.onSaveTablesDlg = function(selectedItems) {
+            console.log("On save Items: " + selectedItems);
+            self.linkTables(selectedItems);
+            self.isOpenTablesDlg = false;
+        };
+
         // endregion
 
-        // region --- Modal dialog -------------------------------------------------------------------------------------
+        // region --- Link Systems Modal dialog ------------------------------------------------------------------------
 
-        self.additionalInfo = "Donec consequat dignissim neque, sed suscipit quam egestas in. Fusce bibendum " +
-            "laoreet lectus commodo interdum. Vestibulum odio ipsum, tristique et ante vel, iaculis placerat nulla. " +
-            "Suspendisse iaculis urna feugiat lorem semper, ut iaculis risus tempus.";
-        self.copyright = "Trademark and Copyright Information";
-        self.imgAlt = "Patternfly Symbol";
-        self.imgSrc = "img/logo-alt.svg";
-        self.title = "Product Title";
-        self.productInfo = [
-            { name: 'Version', value: '1.0.0.0.20160819142038_51be77c' },
-            { name: 'Server Name', value: 'Localhost' },
-            { name: 'User Name', value: 'admin' },
-            { name: 'User Role', value: 'Administrator' }];
-        self.open = function () {
-            self.isOpen = true;
-        }
-        self.onClose = function() {
-            self.isOpen = false;
-        }
+        self.linkSystemsTitle = "Link Systems";
 
+        self.openLinkSystemsDialog = function() {
+            self.isOpenSystemsDlg = true;
+        };
+
+        self.onCloseSystemsDlg = function() {
+            self.isOpenSystemsDlg = false;
+        };
+
+        self.onSaveSystemsDlg = function(selectedItems) {
+            console.log("On save Items: " + selectedItems);
+            self.linkSystems(selectedItems);
+            self.isOpenSystemsDlg = false;
+        };
 
         // endregion
 

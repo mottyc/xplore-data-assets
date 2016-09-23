@@ -7,16 +7,32 @@
     'use strict';
 
     angular.module('myApp')
-        .controller('tablesDialogController', tablesDialogController);
+        .controller('selectTablesController', selectTablesController);
 
-    tablesDialogController.$inject = ['tablesManager', 'MdaTableModel'];
+    selectTablesController.$inject = ['$scope', '$modalInstance', 'content', 'tablesManager', 'MdaTableModel'];
 
-    function tablesDialogController(tablesManager, MdaTableModel) {
+    function selectTablesController($scope, $modalInstance, content, tablesManager, MdaTableModel) {
+
+        $scope.template = content;
+        $scope.close = function () {
+            $modalInstance.close();
+        };
+        $scope.$watch(
+            function () {
+                return $scope.isOpen;
+            },
+            function (newValue) {
+                if (newValue === false) {
+                    $modalInstance.close();
+                }
+            }
+        );
 
         var self = this;
 
         self.allItems = [];
         self.items = [];
+        self.selectedItems = [];
         self.totalItems = 0;
 
         self.currentPage = 1;
@@ -26,7 +42,6 @@
         self.queryFilters = [];
 
 
-        
         // region --- Data Handlers ------------------------------------------------------------------------------------
 
         self.loadEntities = function () {
@@ -61,7 +76,17 @@
         self.navNext = function () { self.currentPage += 1; self.loadEntities(); };
         self.navEnd = function () { self.currentPage = self.totalPages; self.loadEntities(); };
 
-        
+        var performAction = function(action, item) {
+            console.debug("Action: " + action + " On: " + item);
+        };
+
+        self.saveChanges = function() {
+            console.log("Save: " + self.selectedItems);
+
+            $scope.save({selectedItems: self.selectedItems});
+            $scope.close();
+        }
+
         // endregion
 
         // region --- Filters ------------------------------------------------------------------------------------------
@@ -80,11 +105,29 @@
             fields: [
                 { id: 'tableName', title:  'Name', placeholder: 'Filter by table name...', filterType: 'text' },
                 { id: 'tableNameDisplay', title:  'Display Name', placeholder: 'Filter by display name...', filterType: 'text' },
-                { id: 'tableDesc', title:  'Description', placeholder: 'Filter by description...', filterType: 'text' }
+                { id: 'schemaName', title:  'Schema', placeholder: 'Filter by schema...', filterType: 'text' },
+                { id: 'dbName', title:  'Database', placeholder: 'Filter by database...', filterType: 'text' }
             ],
             resultsCount: self.items.length,
             appliedFilters: [],
             onFilterChange: filterChange
+        };
+
+        // self.selectedItem = null;
+
+        self.itemChanged = function(event) {
+            var index = self.selectedItems.indexOf(event.item.tableKey);
+
+            if ((event.item.isChecked == true) && (index < 0)) {
+                self.selectedItems.push(event.item.tableKey);
+            }
+
+            if ((event.item.isChecked == false) && (index > -1)) {
+                self.selectedItems.splice(index, 1);
+            }
+
+            console.log(self.selectedItems);
+
         };
 
         // endregion
@@ -108,7 +151,6 @@
 
         // region --- Toolbar config -----------------------------------------------------------------------------------
 
-
         self.actionsConfig = {
             primaryActions: [
                 { name: '|<<', title: 'Start', actionFn: self.navStart },
@@ -121,101 +163,16 @@
 
         self.toolbarConfig = {
             filterConfig: self.filterConfig,
+            //sortConfig: self.sortConfig,
             actionsConfig: self.actionsConfig
         };
 
         // endregion
 
-        // region --- List Config --------------------------------------------------------------------------------------
-
-        self.listConfig = {
-            selectItems: true,
-            multiSelect: true,
-            dblClick: false,
-            selectedItems: [],
-            checkDisabled: false,
-            showSelectBox: false,
-            //onSelect: handleSelect,
-            //onSelectionChange: handleSelectionChange,
-            //onCheckBoxChange: handleCheckBoxChange,
-            //onClick: handleClick,
-            //onDblClick: handleDblClick
-        };
-        
-        // endregion
 
 
-        self.isDisabled = false;
-        self.noCache = true;
 
-        // list of `state` value/display objects
-        self.states       = [];
-        self.query        = [];
-        self.selectedItem = null;
-
-        self.newState = function (state) {
-            alert("Sorry! You'll need to create a Constitution for " + state + " first!");
-        };
-
-        // ******************************
-        // Internal methods
-        // ******************************
-
-        /**
-         * Search for states... use $timeout to simulate
-         * remote dataservice call.
-         */
-        self.querySearch = function (query) {
-            console.info('querySearch of: ' + query);
-
-            // var results = query ? self.states.filter( self.createFilterFor(query) ) : self.states, deferred;
-
-            self.query = query ? self.states.filter( self.createFilterFor(query) ) : self.states;
-            console.info('results: ' + JSON.stringify(self.query));
-        };
-
-        self.searchTextChange = function (text) {
-            console.info('Text changed to: ' + text);
-            self.querySearch(text);
-        };
-
-        self.selectedItemChange = function (item) {
-            // console.info('Item changed to: ' + JSON.stringify(item));
-        };
-
-        /**
-         * Build `states` list of key/value pairs
-         */
-        self.loadAll = function() {
-            var allStates = 'Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware,\
-              Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana,\
-              Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana,\
-              Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York, North Carolina,\
-              North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina,\
-              South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia,\
-              Wisconsin, Wyoming';
-
-            self.states = allStates.split(/, +/g).map( function (state) {
-                return {
-                    value: state.toLowerCase(),
-                    display: state
-                };
-            });
-        };
-
-        /**
-         * Create filter function for a query string
-         */
-        self.createFilterFor = function (query) {
-            var lowercaseQuery = angular.lowercase(query);
-
-            return function filterFn(state) {
-                return (state.value.indexOf(lowercaseQuery) === 0);
-            };
-        };
-
-        //self.loadEntities();
-        self.loadAll();
+        self.loadEntities();
         return self;
     }
 })();
