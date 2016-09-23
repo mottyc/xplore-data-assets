@@ -94,6 +94,20 @@
             self.isOpenSystemsDlg = false;
         };
 
+        self.selectedSystems = [];
+
+        self.systemChecked = function(event) {
+            var index = self.selectedSystems.indexOf(event.item.systemKey);
+
+            if ((event.item.isChecked == true) && (index < 0)) {
+                self.selectedSystems.push(event.item.systemKey);
+            }
+
+            if ((event.item.isChecked == false) && (index > -1)) {
+                self.selectedSystems.splice(index, 1);
+            }
+        };
+        
         // endregion
 
         // region --- Tabs config --------------------------------------------------------------------------------------

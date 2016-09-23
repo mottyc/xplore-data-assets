@@ -19,7 +19,7 @@
 
     <!-- tabs-->
     <div class="row">
-        <div class="col-md-10">
+        <div class="col-md-8">
             <ul class="nav navbar-nav navbar-primary nav-tabs col-md-12">
                 <li ng-class="(ctrl.tabId == 'info') ? 'active' : ''">
                     <a class="pointer" ng-click="ctrl.tabSelected('info')">Info</a>
@@ -29,11 +29,14 @@
                 </li>
             </ul>
         </div>
-        <div class="col-md-2" ng-show="ctrl.tabId == 'info'">
+        <div class="col-md-4" ng-show="ctrl.tabId == 'info'">
             <button class="btn btn-default pull-right" type="button" ng-click="ctrl.saveChanges()">Save Changes</button>
         </div>
-        <div class="col-md-2" ng-show="ctrl.tabId == 'systems'">
+        <div class="col-md-3" ng-show="ctrl.tabId == 'systems'">
             <button class="btn btn-default pull-right" type="button" ng-click="ctrl.openLinkSystemsDialog()">Link Systems</button>
+        </div>
+        <div class="col-md-1" ng-show="(ctrl.tabId == 'systems') && (ctrl.selectedSystems.length > 0)">
+            <button class="btn btn-default pull-right" type="button" ng-click="ctrl.unLinkSelectedSystems()">Unlink Systems</button>
         </div>
     </div>
 
@@ -117,6 +120,7 @@
         <table class="datatable table table-striped table-bordered">
             <thead>
                 <tr>
+                    <th style="width: 5%"></th>
                     <th>System Name</th>
                     <th>Application</th>
                     <th>Display Name</th>
@@ -124,11 +128,12 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="system in ctrl.relatedSystems">
-                    <td><a ui-sref="system({key: {{system.systemKey}}})" class="pointer">{{ system.systemName }}</a></td>
-                    <td>{{ system.appName }}</td>
-                    <td>{{ system.displayName }}</td>
-                    <td>{{ system.systemDepartment }}</td>
+                <tr ng-repeat="item in ctrl.relatedSystems">
+                    <td><input type="checkbox" value="{{item.systemKey}}" ng-change="ctrl.systemChecked(this)" ng-model="item.isChecked"></td>
+                    <td><a ui-sref="system({key: {{item.systemKey}}})" class="pointer">{{ item.systemName }}</a></td>
+                    <td>{{ item.appName }}</td>
+                    <td>{{ item.displayName }}</td>
+                    <td>{{ item.systemDepartment }}</td>
                 </tr>
             </tbody>
         </table>

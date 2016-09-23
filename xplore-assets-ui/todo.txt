@@ -1,5 +1,3 @@
-// TODO: Unlink Server -> Systems
-// TODO: Unlink Table ->Systems, Entities
 
 // TODO: Columns view -> add type icon
 // TODO: Add Maccabi Icon (powered by xplore.io)
