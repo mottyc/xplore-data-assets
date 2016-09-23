@@ -110,6 +110,8 @@
                 });
         };
 
+        // endregion
+
         // region --- Link Tables Modal dialog -------------------------------------------------------------------------
 
         self.linkTablesTitle = "Link Tables";

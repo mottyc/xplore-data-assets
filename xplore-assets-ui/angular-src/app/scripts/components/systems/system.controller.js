@@ -68,8 +68,82 @@
                     self.relatedEntities = result.list;
                 });
         };
+
+        // Link servers
+        self.linkServers = function(serversKeys) {
+            systemsManager
+                .linkServers(self.key, serversKeys)
+                .then(function (result) {
+                    self.relatedServers = result.list;
+                });
+        };
+
+        // Unlink servers
+        self.unlinkServers = function(serversKeys) {
+            systemsManager
+                .unlinkServers(self.key, serversKeys)
+                .then(function (result) {
+                    self.relatedServers = result.list;
+                });
+        };
+
+        // Link entities
+        self.linkEntities = function(entitiesKeys) {
+            systemsManager
+                .linkEntities(self.key, entitiesKeys)
+                .then(function (result) {
+                    self.relatedEntities = result.list;
+                });
+        };
+
+        // Unlink entities
+        self.unlinkEntities = function(entitiesKeys) {
+            systemsManager
+                .unlinkEntities(self.key, entitiesKeys)
+                .then(function (result) {
+                    self.relatedEntities = result.list;
+                });
+        };
         // endregion
-        
+
+        // region --- Link Servers Modal dialog -------------------------------------------------------------------------
+
+        self.linkServersTitle = "Link Servers";
+
+        self.openLinkServersDialog = function() {
+            self.isOpenServersDlg = true;
+        };
+
+        self.onCloseServersDlg = function() {
+            self.isOpenServersDlg = false;
+        };
+
+        self.onSaveServersDlg = function(selectedItems) {
+            self.linkServers(selectedItems);
+            self.isOpenServersDlg = false;
+        };
+
+        // endregion
+
+        // region --- Link Entities Modal dialog ------------------------------------------------------------------------
+
+        self.linkEntitiesTitle = "Link Entities";
+
+        self.openLinkEntitiesDialog = function() {
+            self.isOpenEntitiesDlg = true;
+        };
+
+        self.onCloseEntitiesDlg = function() {
+            self.isOpenEntitiesDlg = false;
+        };
+
+        self.onSaveEntitiesDlg = function(selectedItems) {
+            self.linkEntities(selectedItems);
+            self.isOpenEntitiesDlg = false;
+        };
+
+        // endregion
+
         // region --- Tabs config --------------------------------------------------------------------------------------
         self.tabId = "info";
         self.tabSelected = function(tab_id) {

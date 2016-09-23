@@ -194,8 +194,67 @@ angular.module('myApp')
                         });
 
                     return deferred.promise;
-                }
+                },
 
+                // Link servers to system
+                linkServers: function (systemKey, serversKeys) {
+                    var deferred = $q.defer();
+
+                    ApiRequest
+                        .put(resourceName + '/' + systemKey + '/servers', {}, serversKeys)
+                        .then(function (response) {
+                            deferred.resolve(response.data);
+                        }, function (error) {
+                            deferred.reject(error);
+                        });
+
+                    return deferred.promise;
+                },
+
+                // Unlink servers from system
+                unlinkServers: function (systemKey, serversKeys) {
+                    var deferred = $q.defer();
+
+                    ApiRequest
+                        .delete(resourceName + '/' + systemKey + '/servers', {}, serversKeys)
+                        .then(function (response) {
+                            deferred.resolve(response.data);
+                        }, function (error) {
+                            deferred.reject(error);
+                        });
+
+                    return deferred.promise;
+                },
+
+                // Link entities to system
+                linkEntities: function (systemKey, entitiesKeys) {
+                    var deferred = $q.defer();
+
+                    ApiRequest
+                        .put(resourceName + '/' + systemKey + '/entities', {}, entitiesKeys)
+                        .then(function (response) {
+                            deferred.resolve(response.data);
+                        }, function (error) {
+                            deferred.reject(error);
+                        });
+
+                    return deferred.promise;
+                },
+
+                // Unlink entities from system
+                unlinkEntities: function (systemKey, entitiesKeys) {
+                    var deferred = $q.defer();
+
+                    ApiRequest
+                        .delete(resourceName + '/' + systemKey + '/entities', {}, entitiesKeys)
+                        .then(function (response) {
+                            deferred.resolve(response.data);
+                        }, function (error) {
+                            deferred.reject(error);
+                        });
+
+                    return deferred.promise;
+                }
                 //endregion
             };
 

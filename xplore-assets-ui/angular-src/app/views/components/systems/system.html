@@ -14,6 +14,7 @@
         </div>
     </div>
 
+
     <div class="row"><p></p></div>
 
     <!-- tabs-->
@@ -33,6 +34,12 @@
         </div>
         <div class="col-md-2" ng-show="ctrl.tabId == 'info'">
             <button class="btn btn-default pull-right" type="button" ng-click="ctrl.saveChanges()">Save Changes</button>
+        </div>
+        <div class="col-md-2" ng-show="ctrl.tabId == 'servers'">
+            <button class="btn btn-default pull-right" type="button" ng-click="ctrl.openLinkServersDialog()">Link Servers</button>
+        </div>
+        <div class="col-md-2" ng-show="ctrl.tabId == 'entities'">
+            <button class="btn btn-default pull-right" type="button" ng-click="ctrl.openLinkEntitiesDialog()">Link Entities</button>
         </div>
     </div>
 
@@ -131,6 +138,12 @@
         </table>
     </div>
 
+
+    <!-- Link Servers modal dialog -->
+    <div select-servers-modal is-open="ctrl.isOpenServersDlg" on-close="ctrl.onCloseServersDlg()" on-save="ctrl.onSaveServersDlg(selectedItems)" title="ctrl.linkServersTitle"></div>
+
+    <!-- Link Entities modal dialog -->
+    <div select-entities-modal is-open="ctrl.isOpenEntitiesDlg" on-close="ctrl.onCloseEntitiesDlg()" on-save="ctrl.onSaveEntitiesDlg(selectedItems)" title="ctrl.linkEntitiesTitle"></div>
 </div>
 
 <!--
