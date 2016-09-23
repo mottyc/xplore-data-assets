@@ -166,8 +166,37 @@ angular.module('myApp')
                         });
 
                     return deferred.promise;
-                }
+                },
 
+                // Link systems to server
+                linkSystems: function (serverKey, systemsKeys) {
+                    var deferred = $q.defer();
+
+                    ApiRequest
+                        .put(resourceName + '/' + serverKey + '/systems', {}, systemsKeys)
+                        .then(function (response) {
+                            deferred.resolve(response.data);
+                        }, function (error) {
+                            deferred.reject(error);
+                        });
+
+                    return deferred.promise;
+                },
+
+                // Unlink systems from server
+                unlinkSystems: function (serverKey, systemsKeys) {
+                    var deferred = $q.defer();
+
+                    ApiRequest
+                        .delete(resourceName + '/' + serverKey + '/systems', {}, systemsKeys)
+                        .then(function (response) {
+                            deferred.resolve(response.data);
+                        }, function (error) {
+                            deferred.reject(error);
+                        });
+
+                    return deferred.promise;
+                }
                 //endregion
             };
 

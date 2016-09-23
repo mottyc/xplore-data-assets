@@ -92,13 +92,7 @@
             entitiesManager
                 .linkSystems(self.key, systemsKeys)
                 .then(function (result) {
-
-                    console.log("Refresh systems");
-                    console.log(angular.toJson(result));
-
                     self.relatedSystems = result.list;
-                    //self.loadRelatedSystems();
-
                 });
         };
 

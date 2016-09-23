@@ -111,26 +111,24 @@
         <div class="panel-heading">
             <h3 class="panel-title">Columns</h3>
         </div>
-        <!--<div class="panel-body">-->
-            <table class="datatable table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>Column</th>
-                        <th>Data Type</th>
-                        <th>Display Name</th>
-                        <th>Primary Key</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="column in ctrl.table.columns">
-                        <td><a ui-sref="column({key: {{column.columnKey}}})" class="pointer">{{ column.columnName }}</a></td>
-                        <td>{{ column.columnDataType }}</td>
-                        <td>{{ column.displayName }}</td>
-                        <td>{{ column.isPk }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        <!--</div>-->
+        <table class="datatable table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Column</th>
+                    <th>Data Type</th>
+                    <th>Display Name</th>
+                    <th>Primary Key</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="column in ctrl.table.columns">
+                    <td><a ui-sref="column({key: {{column.columnKey}}})" class="pointer">{{ column.columnName }}</a></td>
+                    <td>{{ column.columnDataType }}</td>
+                    <td>{{ column.displayName }}</td>
+                    <td>{{ column.isPk }}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
     <!-- List of Related Entities -->

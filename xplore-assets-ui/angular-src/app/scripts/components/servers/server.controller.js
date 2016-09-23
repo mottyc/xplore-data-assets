@@ -58,8 +58,44 @@
                     self.relatedSystems = result.list;
                 });
         };
+
+        self.linkSystems = function(systemsKeys) {
+            serversManager
+                .linkSystems(self.key, systemsKeys)
+                .then(function (result) {
+                    self.relatedSystems = result.list;
+                });
+        };
+
+        self.unlinkSystems = function(systemsKeys) {
+            serversManager
+                .unlinkSystems(self.key, systemsKeys)
+                .then(function (result) {
+                    self.relatedSystems = result.list;
+                });
+        };
+
         // endregion
-        
+
+        // region --- Link Systems Modal dialog ------------------------------------------------------------------------
+
+        self.linkSystemsTitle = "Link Systems";
+
+        self.openLinkSystemsDialog = function() {
+            self.isOpenSystemsDlg = true;
+        };
+
+        self.onCloseSystemsDlg = function() {
+            self.isOpenSystemsDlg = false;
+        };
+
+        self.onSaveSystemsDlg = function(selectedItems) {
+            self.linkSystems(selectedItems);
+            self.isOpenSystemsDlg = false;
+        };
+
+        // endregion
+
         // region --- Tabs config --------------------------------------------------------------------------------------
         self.tabId = "info";
         self.tabSelected = function(tab_id) {
