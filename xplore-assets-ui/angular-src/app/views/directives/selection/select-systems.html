@@ -27,7 +27,6 @@
                             <th style="width: 10%"></th>
                             <th style="width: 30%">System Name</th>
                             <th style="width: 30%">Display Name</th>
-                            <th style="width: 30%">Application</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -35,7 +34,6 @@
                         <td><input type="checkbox" value="{{item.systemKey}}" ng-change="ctrl.itemChanged(this)" ng-model="item.isChecked"></td>
                         <td>{{ item.systemName }}</td>
                         <td>{{ item.displayName }}</td>
-                        <td>{{ item.appName }}</td>
                     </tr>
                     </tbody>
                 </table>

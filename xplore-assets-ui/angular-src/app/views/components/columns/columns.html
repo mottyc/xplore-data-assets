@@ -91,10 +91,10 @@
                 <tr>
                     <th style="width: 5%">Type</th>
                     <th style="width: 20%">Column</th>
-                    <th style="width: 20%">Table</th>
-                    <th style="width: 20%">Schema</th>
                     <th style="width: 10%">Data Type</th>
+                    <th style="width: 20%">Table</th>
                     <th style="width: 20%">Display Name</th>
+                    <th style="width: 20%">Description</th>
                     <th style="width: 5%">Edit</th>
                 </tr>
             </thead>
@@ -102,11 +102,11 @@
                 <tr ng-repeat="item in ctrl.items">
                     <td><span class="fa fa-key" ng-show="item.isPk" data-toggle="tooltip" title="Primary key"></span></td>
                     <td><a ui-sref="column({key: {{item.columnKey}}})" class="pointer">{{ item.columnName }}</a></td>
-                    <td>{{ item.tableName }}</td>
-                    <td>{{ item.schemaName }}</td>
                     <td>{{ item.columnDataType }}</td>
+                    <td>{{ item.tableName }}</td>
 
                     <td><span editable-text="item.displayName" e-name="name" e-form="rowform">{{ item.displayName || "" }}</span>
+                    <td><span editable-text="item.description" e-name="description" e-form="rowform">{{ item.description || "" }}</span>
                     <td>
                         <form editable-form name="rowform" onaftersave="ctrl.saveChanges($data, item)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="false">
                             <button type="submit" ng-disabled="rowform.$waiting"><span class="fa fa-check"></span></button>
