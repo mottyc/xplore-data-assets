@@ -68,8 +68,82 @@
                     self.relatedEntities = result.list;
                 });
         };
+
+        // Link entities
+        self.linkEntities = function(entitiesKeys) {
+            tablesManager
+                .linkEntities(self.key, entitiesKeys)
+                .then(function (result) {
+                    self.relatedEntities = result.list;
+                });
+        };
+
+        // Unlink entities
+        self.unlinkEntities = function(entitiesKeys) {
+            tablesManager
+                .unlinkEntities(self.key, entitiesKeys)
+                .then(function (result) {
+                    self.relatedEntities = result.list;
+                });
+        };
+
+        // Link systems
+        self.linkSystems = function(systemsKeys) {
+            tablesManager
+                .linkSystems(self.key, systemsKeys)
+                .then(function (result) {
+                    self.relatedSystems = result.list;
+                });
+        };
+
+        // Unlink systems
+        self.unlinkSystems = function(systemsKeys) {
+            tablesManager
+                .unlinkSystems(self.key, systemsKeys)
+                .then(function (result) {
+                    self.relatedSystems = result.list;
+                });
+        };
         // endregion
-        
+
+        // region --- Link Entities Modal dialog ------------------------------------------------------------------------
+
+        self.linkEntitiesTitle = "Link Entities";
+
+        self.openLinkEntitiesDialog = function() {
+            self.isOpenEntitiesDlg = true;
+        };
+
+        self.onCloseEntitiesDlg = function() {
+            self.isOpenEntitiesDlg = false;
+        };
+
+        self.onSaveEntitiesDlg = function(selectedItems) {
+            self.linkEntities(selectedItems);
+            self.isOpenEntitiesDlg = false;
+        };
+
+        // endregion
+
+        // region --- Link Systems Modal dialog ------------------------------------------------------------------------
+
+        self.linkSystemsTitle = "Link Systems";
+
+        self.openLinkSystemsDialog = function() {
+            self.isOpenSystemsDlg = true;
+        };
+
+        self.onCloseSystemsDlg = function() {
+            self.isOpenSystemsDlg = false;
+        };
+
+        self.onSaveSystemsDlg = function(selectedItems) {
+            self.linkSystems(selectedItems);
+            self.isOpenSystemsDlg = false;
+        };
+
+        // endregion
+
         // region --- Tabs config --------------------------------------------------------------------------------------
         self.tabId = "info";
         self.tabSelected = function(tab_id) {

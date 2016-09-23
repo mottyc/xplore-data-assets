@@ -34,6 +34,12 @@
         <div class="col-md-2" ng-show="ctrl.tabId == 'info'">
             <button class="btn btn-default pull-right" type="button" ng-click="ctrl.saveChanges()">Save Changes</button>
         </div>
+        <div class="col-md-2" ng-show="ctrl.tabId == 'entities'">
+            <button class="btn btn-default pull-right" type="button" ng-click="ctrl.openLinkEntitiesDialog()">Link Entities</button>
+        </div>
+        <div class="col-md-2" ng-show="ctrl.tabId == 'systems'">
+            <button class="btn btn-default pull-right" type="button" ng-click="ctrl.openLinkSystemsDialog()">Link Systems</button>
+        </div>
     </div>
 
     <!-- General Info -->
@@ -172,6 +178,12 @@
             </tbody>
         </table>
     </div>
+
+    <!-- Link Entities modal dialog -->
+    <div select-tables-modal is-open="ctrl.isOpenEntitiesDlg" on-close="ctrl.onCloseEntitiesDlg()" on-save="ctrl.onSaveEntitiesDlg(selectedItems)" title="ctrl.linkEntitiesTitle"></div>
+
+    <!-- Link Systems modal dialog -->
+    <div select-systems-modal is-open="ctrl.isOpenSystemsDlg" on-close="ctrl.onCloseSystemsDlg()" on-save="ctrl.onSaveSystemsDlg(selectedItems)" title="ctrl.linkSystemsTitle"></div>
 </div>
 
 <!--

@@ -185,6 +185,66 @@ angular.module('myApp')
                         });
 
                     return deferred.promise;
+                },
+
+                // Link entities to table
+                linkEntities: function (tableKey, entitiesKeys) {
+                    var deferred = $q.defer();
+
+                    ApiRequest
+                        .put(resourceName + '/' + tableKey + '/entities', {}, entitiesKeys)
+                        .then(function (response) {
+                            deferred.resolve(response.data);
+                        }, function (error) {
+                            deferred.reject(error);
+                        });
+
+                    return deferred.promise;
+                },
+
+                // Unlink entities from table
+                unlinkEntities: function (tableKey, entitiesKeys) {
+                    var deferred = $q.defer();
+
+                    ApiRequest
+                        .delete(resourceName + '/' + tableKey + '/entities', {}, entitiesKeys)
+                        .then(function (response) {
+                            deferred.resolve(response.data);
+                        }, function (error) {
+                            deferred.reject(error);
+                        });
+
+                    return deferred.promise;
+                },
+
+                // Link systems to table
+                linkSystems: function (tableKey, systemsKeys) {
+                    var deferred = $q.defer();
+
+                    ApiRequest
+                        .put(resourceName + '/' + tableKey + '/systems', {}, systemsKeys)
+                        .then(function (response) {
+                            deferred.resolve(response.data);
+                        }, function (error) {
+                            deferred.reject(error);
+                        });
+
+                    return deferred.promise;
+                },
+
+                // Unlink systems from table
+                unlinkSystems: function (tableKey, systemsKeys) {
+                    var deferred = $q.defer();
+
+                    ApiRequest
+                        .delete(resourceName + '/' + tableKey + '/systems', {}, systemsKeys)
+                        .then(function (response) {
+                            deferred.resolve(response.data);
+                        }, function (error) {
+                            deferred.reject(error);
+                        });
+
+                    return deferred.promise;
                 }
 
                 //endregion
