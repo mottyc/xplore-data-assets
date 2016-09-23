@@ -20,6 +20,7 @@ import io.xplore.assets.service.TableService;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -220,12 +221,11 @@ public class DbTableServiceImpl extends _DbBaseServiceImpl<MdaTableEntity> imple
                             .setParameter("systemKey", systemKey)
                             .getSingleResult();
 
-                    if (rel == null) {
-                        rel = new MdaTableSystemRelEntity();
-                        rel.setTableKey(tableKey);
-                        rel.setSystemKey(systemKey);
-                        em.persist(rel);
-                    }
+                } catch (NoResultException ex) {
+                    MdaTableSystemRelEntity created = new MdaTableSystemRelEntity();
+                    created.setTableKey(tableKey);
+                    created.setSystemKey(systemKey);
+                    em.persist(created);
                 } catch (Exception ex) {
 
                 }
@@ -320,15 +320,12 @@ public class DbTableServiceImpl extends _DbBaseServiceImpl<MdaTableEntity> imple
                             .setParameter("tableKey", tableKey)
                             .getSingleResult();
 
-                    if (rel == null) {
-                        rel = new MdaBusinessEntityTableRelEntity();
-                        rel.setTableKey(tableKey);
-                        rel.setBusinessEntityKey(entityKey);
-                        em.persist(rel);
-                    }
-                } catch (Exception ex) {
-
-                }
+                } catch (NoResultException ex) {
+                    MdaBusinessEntityTableRelEntity created = new MdaBusinessEntityTableRelEntity();
+                    created.setTableKey(tableKey);
+                    created.setBusinessEntityKey(entityKey);
+                    em.persist(created);
+                } catch (Exception ex) {}
             }
             return this.getEntities(tableKey);
         } catch (Exception ex) {

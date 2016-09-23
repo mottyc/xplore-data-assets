@@ -19,6 +19,7 @@ import io.xplore.assets.service.SystemService;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -200,15 +201,12 @@ public class DbSystemServiceImpl extends _DbBaseServiceImpl<MdaSystemEntity> imp
                             .setParameter("systemKey", systemKey)
                             .getSingleResult();
 
-                    if (rel == null) {
-                        rel = new MdaServerSystemRelEntity();
-                        rel.setServerKey(serverKey);
-                        rel.setSystemKey(systemKey);
-                        em.persist(rel);
-                    }
-                } catch (Exception ex) {
-
-                }
+                } catch (NoResultException ex) {
+                    MdaServerSystemRelEntity created = new MdaServerSystemRelEntity();
+                    created.setServerKey(serverKey);
+                    created.setSystemKey(systemKey);
+                    em.persist(created);
+                } catch (Exception ex) { }
             }
             return this.getServers(systemKey);
         } catch (Exception ex) {
@@ -237,9 +235,7 @@ public class DbSystemServiceImpl extends _DbBaseServiceImpl<MdaSystemEntity> imp
                     if (rel != null) {
                         em.remove(rel);
                     }
-                } catch (Exception ex) {
-
-                }
+                } catch (Exception ex) {}
             }
             return this.getServers(systemKey);
         } catch (Exception ex) {
@@ -300,15 +296,12 @@ public class DbSystemServiceImpl extends _DbBaseServiceImpl<MdaSystemEntity> imp
                             .setParameter("systemKey", systemKey)
                             .getSingleResult();
 
-                    if (rel == null) {
-                        rel = new MdaBusinessEntitySystemRelEntity();
-                        rel.setBusinessEntityKey(entityKey);
-                        rel.setSystemKey(systemKey);
-                        em.persist(rel);
-                    }
-                } catch (Exception ex) {
-
-                }
+                } catch (NoResultException ex) {
+                    MdaBusinessEntitySystemRelEntity created = new MdaBusinessEntitySystemRelEntity();
+                    created.setBusinessEntityKey(entityKey);
+                    created.setSystemKey(systemKey);
+                    em.persist(created);
+                } catch (Exception ex) {}
             }
             return this.getEntities(systemKey);
         } catch (Exception ex) {

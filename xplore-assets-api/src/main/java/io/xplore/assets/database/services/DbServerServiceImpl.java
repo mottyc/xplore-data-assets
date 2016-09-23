@@ -23,6 +23,7 @@ import io.xplore.assets.util.StringUtils;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -226,12 +227,11 @@ public class DbServerServiceImpl extends _DbBaseServiceImpl<MdaServerEntity> imp
                             .setParameter("systemKey", systemKey)
                             .getSingleResult();
 
-                    if (rel == null) {
-                        rel = new MdaServerSystemRelEntity();
-                        rel.setServerKey(serverKey);
-                        rel.setSystemKey(systemKey);
-                        em.persist(rel);
-                    }
+                } catch (NoResultException ex) {
+                    MdaServerSystemRelEntity created = new MdaServerSystemRelEntity();
+                    created.setServerKey(serverKey);
+                    created.setSystemKey(systemKey);
+                    em.persist(created);
                 } catch (Exception ex) {
 
                 }
