@@ -1,0 +1,66 @@
+<script type="text/ng-template" id="select-entities-template.html">
+    <div>
+        <!-- Header -->
+        <div class="modal-header">
+            <span><strong>{{title}}</strong></span>
+            <button type="button" class="close" ng-click="close()" aria-hidden="true">
+                <span class="pficon pficon-close"></span>
+            </button>
+        </div>
+
+        <!-- Body -->
+        <div class="modal-body">
+
+            <!-- Toolbar -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div pf-toolbar id="ctrl.toolbar" config="ctrl.toolbarConfig"></div>
+                </div>
+            </div>
+
+            <!-- Table view -->
+            <div class="col-md-12" style="overflow-y: scroll; height:300px;">
+
+                <table class="datatable table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%"></th>
+                            <th style="width: 40%">Business Entity</th>
+                            <th style="width: 40%">Display Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in ctrl.items">
+                        <td><input type="checkbox" value="{{item.businessEntityKey}}" ng-change="ctrl.itemChanged(this)" ng-model="item.isChecked"></td>
+                        <td>{{ item.businessEntityName }}</td>
+                        <td>{{ item.displayName }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+        <div class="row"><p></p></div>
+        <hr>
+        <!-- Footer -->
+        <div class="modal-footer">
+            <button class="btn btn-default" type="button" ng-click="close()"><span class="fa fa-close"></span>Cancel</button>&nbsp;&nbsp;&nbsp;
+            <button class="btn btn-primary pull-right" type="button" ng-click="ctrl.saveChanges()"><span class="fa fa-check"></span>OK</button>
+        </div>
+    </div>
+</script>
+
+<!--
+ * # MdaBusinessEntity
+ * {
+ *    businessEntityKey: int,
+ *    businessEntityName: string,
+ *    displayName: string,
+ *    description: string,
+ *
+ *    createDate: string (ISO8601 date),
+ *    updateDate: string (ISO8601 date),
+ *    updateBy: string
+ * }
+-->
