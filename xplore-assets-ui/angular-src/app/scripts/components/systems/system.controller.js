@@ -9,9 +9,9 @@
     angular.module('myApp')
         .controller('systemController', systemController);
 
-    systemController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'systemsManager', 'MdaSystemModel', 'Notifications'];
+    systemController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'systemsManager', 'MdaSystemModel', 'Notifications', '$mdDialog'];
 
-    function systemController($rootScope, $scope, $state, $stateParams, systemsManager, MdaSystemModel, Notifications) {
+    function systemController($rootScope, $scope, $state, $stateParams, systemsManager, MdaSystemModel, Notifications, $mdDialog) {
 
         var self = this;
         self.key = $stateParams.key;
@@ -114,6 +114,22 @@
             self.isOpenServersDlg = true;
         };
 
+        self.unLinkSelectedServers = function() {
+            var confirm = $mdDialog.confirm()
+                .title('Unlink Servers')
+                .textContent('Unlink selected servers from this system?')
+                .ariaLabel('')
+                .ok('Yes')
+                .cancel('Cancel');
+
+            $mdDialog
+                .show(confirm)
+                .then(function () {
+                    self.unlinkServers(self.selectedServers);
+                    self.selectedServers = [];
+                });
+        };
+
         self.onCloseServersDlg = function() {
             self.isOpenServersDlg = false;
         };
@@ -123,6 +139,19 @@
             self.isOpenServersDlg = false;
         };
 
+        self.selectedServers = [];
+
+        self.serverChecked = function(event) {
+            var index = self.selectedServers.indexOf(event.item.serverKey);
+
+            if ((event.item.isChecked == true) && (index < 0)) {
+                self.selectedServers.push(event.item.serverKey);
+            }
+
+            if ((event.item.isChecked == false) && (index > -1)) {
+                self.selectedServers.splice(index, 1);
+            }
+        };
         // endregion
 
         // region --- Link Entities Modal dialog ------------------------------------------------------------------------
@@ -131,6 +160,22 @@
 
         self.openLinkEntitiesDialog = function() {
             self.isOpenEntitiesDlg = true;
+        };
+
+        self.unLinkSelectedEntities = function() {
+            var confirm = $mdDialog.confirm()
+                .title('Unlink Entities')
+                .textContent('Unlink selected entities from this system?')
+                .ariaLabel('')
+                .ok('Yes')
+                .cancel('Cancel');
+
+            $mdDialog
+                .show(confirm)
+                .then(function () {
+                    self.unlinkEntities(self.selectedEntities);
+                    self.selectedEntities = [];
+                });
         };
 
         self.onCloseEntitiesDlg = function() {
@@ -142,6 +187,19 @@
             self.isOpenEntitiesDlg = false;
         };
 
+        self.selectedEntities = [];
+
+        self.entityChecked = function(event) {
+            var index = self.selectedEntities.indexOf(event.item.businessEntityKey);
+
+            if ((event.item.isChecked == true) && (index < 0)) {
+                self.selectedEntities.push(event.item.businessEntityKey);
+            }
+
+            if ((event.item.isChecked == false) && (index > -1)) {
+                self.selectedEntities.splice(index, 1);
+            }
+        };
         // endregion
 
         // region --- Tabs config --------------------------------------------------------------------------------------

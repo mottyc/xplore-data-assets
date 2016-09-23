@@ -117,9 +117,6 @@
             if ((event.item.isChecked == false) && (index > -1)) {
                 self.selectedItems.splice(index, 1);
             }
-
-            console.log(self.selectedItems);
-
         };
 
         // endregion

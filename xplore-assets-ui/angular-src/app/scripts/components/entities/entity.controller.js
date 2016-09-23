@@ -9,9 +9,9 @@
     angular.module('myApp')
         .controller('entityController', entityController);
 
-    entityController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'entitiesManager', 'MdaBusinessEntityModel', 'Notifications', '$mdDialog', 'ngDialog'];
+    entityController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'entitiesManager', 'MdaBusinessEntityModel', 'Notifications', '$mdDialog'];
 
-    function entityController($rootScope, $scope, $state, $stateParams, entitiesManager, MdaBusinessEntityModel, Notifications, $mdDialog, ngDialog) {
+    function entityController($rootScope, $scope, $state, $stateParams, entitiesManager, MdaBusinessEntityModel, Notifications, $mdDialog) {
 
         var self = this;
         self.key = $stateParams.key;
@@ -114,6 +114,22 @@
             self.isOpenTablesDlg = true;
         };
 
+        self.unLinkSelectedTables = function() {
+            var confirm = $mdDialog.confirm()
+                .title('Unlink Tables')
+                .textContent('Unlink selected tables from this entity?')
+                .ariaLabel('')
+                .ok('Yes')
+                .cancel('Cancel');
+
+            $mdDialog
+                .show(confirm)
+                .then(function () {
+                    self.unlinkTables(self.selectedTables);
+                    self.selectedTables = [];
+                });
+        };
+
         self.onCloseTablesDlg = function() {
             self.isOpenTablesDlg = false;
         };
@@ -124,6 +140,19 @@
             self.isOpenTablesDlg = false;
         };
 
+        self.selectedTables = [];
+
+        self.tableChecked = function(event) {
+            var index = self.selectedTables.indexOf(event.item.tableKey);
+
+            if ((event.item.isChecked == true) && (index < 0)) {
+                self.selectedTables.push(event.item.tableKey);
+            }
+
+            if ((event.item.isChecked == false) && (index > -1)) {
+                self.selectedTables.splice(index, 1);
+            }
+        };
         // endregion
 
         // region --- Link Systems Modal dialog ------------------------------------------------------------------------
@@ -132,6 +161,22 @@
 
         self.openLinkSystemsDialog = function() {
             self.isOpenSystemsDlg = true;
+        };
+
+        self.unLinkSelectedSystems = function() {
+            var confirm = $mdDialog.confirm()
+                .title('Unlink Systems')
+                .textContent('Unlink selected systems from this entity?')
+                .ariaLabel('')
+                .ok('Yes')
+                .cancel('Cancel');
+
+            $mdDialog
+                .show(confirm)
+                .then(function () {
+                    self.unlinkSystems(self.selectedSystems);
+                    self.selectedSystems = [];
+                });
         };
 
         self.onCloseSystemsDlg = function() {
@@ -144,6 +189,20 @@
             self.isOpenSystemsDlg = false;
         };
 
+
+        self.selectedSystems = [];
+
+        self.systemChecked = function(event) {
+            var index = self.selectedSystems.indexOf(event.item.systemKey);
+
+            if ((event.item.isChecked == true) && (index < 0)) {
+                self.selectedSystems.push(event.item.systemKey);
+            }
+
+            if ((event.item.isChecked == false) && (index > -1)) {
+                self.selectedSystems.splice(index, 1);
+            }
+        };
         // endregion
 
         // region --- Tabs config --------------------------------------------------------------------------------------

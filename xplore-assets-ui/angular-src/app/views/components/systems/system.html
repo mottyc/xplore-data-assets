@@ -19,7 +19,7 @@
 
     <!-- tabs-->
     <div class="row">
-        <div class="col-md-10">
+        <div class="col-md-8">
             <ul class="nav navbar-nav navbar-primary nav-tabs col-md-12">
                 <li ng-class="(ctrl.tabId == 'info') ? 'active' : ''">
                     <a class="pointer" ng-click="ctrl.tabSelected('info')">Info</a>
@@ -32,14 +32,22 @@
                 </li>
             </ul>
         </div>
-        <div class="col-md-2" ng-show="ctrl.tabId == 'info'">
+        <div class="col-md-4" ng-show="ctrl.tabId == 'info'">
             <button class="btn btn-default pull-right" type="button" ng-click="ctrl.saveChanges()">Save Changes</button>
         </div>
-        <div class="col-md-2" ng-show="ctrl.tabId == 'servers'">
+
+        <div class="col-md-3" ng-show="ctrl.tabId == 'servers'">
             <button class="btn btn-default pull-right" type="button" ng-click="ctrl.openLinkServersDialog()">Link Servers</button>
         </div>
-        <div class="col-md-2" ng-show="ctrl.tabId == 'entities'">
+        <div class="col-md-1" ng-show="(ctrl.tabId == 'servers') && (ctrl.selectedServers.length > 0)">
+            <button class="btn btn-default pull-right" type="button" ng-click="ctrl.unLinkSelectedServers()">Unlink Servers</button>
+        </div>
+
+        <div class="col-md-3" ng-show="ctrl.tabId == 'entities'">
             <button class="btn btn-default pull-right" type="button" ng-click="ctrl.openLinkEntitiesDialog()">Link Entities</button>
+        </div>
+        <div class="col-md-1" ng-show="(ctrl.tabId == 'entities') && (ctrl.selectedEntities.length > 0)">
+            <button class="btn btn-default pull-right" type="button" ng-click="ctrl.unLinkSelectedEntities()">Unlink Entities</button>
         </div>
     </div>
 
@@ -101,6 +109,7 @@
         <table class="datatable table table-striped table-bordered">
             <thead>
                 <tr>
+                    <th style="width: 5%"></th>
                     <th>Name</th>
                     <th>Display Name</th>
                     <th>Description</th>
@@ -108,11 +117,12 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="server in ctrl.relatedServers">
-                    <td><a ui-sref="server({key: {{server.serverKey}}})" class="pointer">{{ server.serverName }}</a></td>
-                    <td>{{ server.displayName }}</td>
-                    <td>{{ server.description }}</td>
-                    <td>{{ server.serverTypeCd }}</td>
+                <tr ng-repeat="item in ctrl.relatedServers">
+                    <td><input type="checkbox" value="{{item.serverKey}}" ng-change="ctrl.serverChecked(this)" ng-model="item.isChecked"></td>
+                    <td><a ui-sref="server({key: {{item.serverKey}}})" class="pointer">{{ item.serverName }}</a></td>
+                    <td>{{ item.displayName }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>{{ item.serverTypeCd }}</td>
                 </tr>
             </tbody>
         </table>
@@ -123,16 +133,18 @@
         <table class="datatable table table-striped table-bordered">
             <thead>
                 <tr>
+                    <th style="width: 5%"></th>
                     <th>Name</th>
                     <th>Display Name</th>
                     <th>Description</th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="entity in ctrl.relatedEntities">
-                    <td><a ui-sref="entity({key: {{entity.businessEntityKey}}})" class="pointer">{{ entity.businessEntityName }}</a></td>
-                    <td>{{ entity.displayName }}</td>
-                    <td>{{ entity.description }}</td>
+                <tr ng-repeat="item in ctrl.relatedEntities">
+                    <td><input type="checkbox" value="{{item.businessEntityKey}}" ng-change="ctrl.entityChecked(this)" ng-model="item.isChecked"></td>
+                    <td><a ui-sref="entity({key: {{item.businessEntityKey}}})" class="pointer">{{ item.businessEntityName }}</a></td>
+                    <td>{{ item.displayName }}</td>
+                    <td>{{ item.description }}</td>
                 </tr>
             </tbody>
         </table>
