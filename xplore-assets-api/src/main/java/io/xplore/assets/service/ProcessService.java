@@ -54,7 +54,7 @@ public interface ProcessService {
     EntitiesResponse<MdaSystem> getSystems(int processKey);
 
     /**
-     * Link systems to business entity
+     * Link systems to process
      * @param processKey Process key
      * @param systemsKeys List of keys to link
      * @return EntityResponse[MdaSystem]
@@ -62,7 +62,7 @@ public interface ProcessService {
     EntitiesResponse<MdaSystem> linkSystems(int processKey, int[] systemsKeys);
 
     /**
-     * Unlink systems from business entity
+     * Unlink systems from process
      * @param processKey Process key
      * @param systemsKeys List of keys to unlink
      * @return EntityResponse[MdaSystem]
@@ -72,7 +72,7 @@ public interface ProcessService {
     // ------------------ Entity related tables actions ----------------------------------------------------------------
 
     /**
-     * Get business entity related table
+     * Get process related table
      * @param processKey Process key
      * @return EntityResponse[MdaTable]
      */

@@ -8,6 +8,11 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "mda_table_process_rel", schema = "dbo", catalog = "data_asset")
+@NamedQueries({
+        @NamedQuery(name="MdaTableProcessRelEntity.findByTableKey", query="SELECT a FROM MdaTableProcessRelEntity a WHERE a.tableKey = :tableKey"),
+        @NamedQuery(name="MdaTableProcessRelEntity.findByProcessKey", query="SELECT a FROM MdaTableProcessRelEntity a WHERE a.processKey = :processKey"),
+        @NamedQuery(name="MdaTableProcessRelEntity.findByProcessAndTable", query="SELECT a FROM MdaTableProcessRelEntity a WHERE (a.processKey = :processKey) AND (a.tableKey = :tableKey)")
+})
 public class MdaTableProcessRelEntity {
     private int tableProcessRelKey;
     private String tableProcessRelName;
