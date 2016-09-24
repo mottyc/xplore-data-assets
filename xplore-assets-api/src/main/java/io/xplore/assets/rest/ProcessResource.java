@@ -6,8 +6,7 @@ import io.xplore.assets.messages.EntityResponse;
 import io.xplore.assets.messages.QueryResponse;
 import io.xplore.assets.messages.TokenData;
 import io.xplore.assets.model.*;
-import io.xplore.assets.service.BusinessEntityService;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import io.xplore.assets.service.ProcessService;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -19,31 +18,31 @@ import java.util.logging.Logger;
 /**
  * Business entities related services
  */
-@Path("/entities")
+@Path("/processes")
 @RequestScoped
-public class EntityResource extends BaseResource {
+public class ProcessResource extends BaseResource {
 
     @Inject
     private Logger log;
 
     @Inject
-    private BusinessEntityService service;
+    private ProcessService service;
 
     // ------------------ Main entity actions --------------------------------------------------------------------------
     /**
-     * Get list of business entities
+     * Get list of processes
      * @param accessToken Access token
      * @param filter Filter by field in the format of field:value (multiple values)
      * @param sort Sort by field in the format of field:{asc|desc}
      * @param page Page number (for pagination)
      * @param pageSize Number of results per page (default size: 50 items)
-     * @return QueryResponse[MdaBusinessEntity]
+     * @return QueryResponse[MdaProcess]
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/")
-    public QueryResponse<MdaBusinessEntity> find(@HeaderParam("X-Access-Token") String accessToken,
+    public QueryResponse<MdaProcess> find(@HeaderParam("X-Access-Token") String accessToken,
                                                  @QueryParam("filter") @DefaultValue("") List<String> filter,
                                                  @QueryParam("sort") @DefaultValue("") String sort,
                                                  @QueryParam("page") @DefaultValue("1") int page,
@@ -61,25 +60,25 @@ public class EntityResource extends BaseResource {
 
             return this.service.find(page, pageSize, filtering, sorting);
         } catch (Exception e) {
-            return new QueryResponse<MdaBusinessEntity>(e.getMessage());
+            return new QueryResponse<MdaProcess>(e.getMessage());
         }
     }
 
     /**
-     * Search list of entities
+     * Search list of processes
      * @param accessToken Access token
      * @param serverKey Filter by server key
      * @param sort Sort by field in the format of field:{asc|desc}
      * @param page Page number (for pagination)
      * @param pageSize Number of results per page (default size: 50 items)
      * @param filters List of filters by field
-     * @return QueryResponse[MdaBusinessEntity]
+     * @return QueryResponse[MdaProcess]
      */
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/search")
-    public QueryResponse<MdaBusinessEntity> search(@HeaderParam("X-Access-Token") String accessToken,
+    public QueryResponse<MdaProcess> search(@HeaderParam("X-Access-Token") String accessToken,
                                              @QueryParam("server") @DefaultValue("-1") int serverKey,
                                              @QueryParam("sort") @DefaultValue("") String sort,
                                              @QueryParam("page") @DefaultValue("1") int page,
@@ -98,116 +97,115 @@ public class EntityResource extends BaseResource {
 
             return this.service.find(page, pageSize, filtering, sorting);
         } catch (Exception e) {
-            return new QueryResponse<MdaBusinessEntity>(e.getMessage());
+            return new QueryResponse<MdaProcess>(e.getMessage());
         }
     }
 
     /**
-     * Get specific business entity data
+     * Get specific process data
      * @param accessToken Access token
-     * @param entityKey Entity key
-     * @return EntityResponse[MdaBusinessEntity]
+     * @param processKey Process key
+     * @return EntityResponse[MdaProcess]
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/{entityKey}")
-    public EntityResponse<MdaBusinessEntity> get(@HeaderParam("X-Access-Token") String accessToken, @PathParam("entityKey") int entityKey) {
+    @Path("/{processKey}")
+    public EntityResponse<MdaProcess> get(@HeaderParam("X-Access-Token") String accessToken, @PathParam("processKey") int processKey) {
         try {
             // Validation
             TokenData token = this.parseJWT(accessToken);
 
-            return this.service.get(entityKey);
+            return this.service.get(processKey);
         } catch (Exception e) {
-            return new EntityResponse<MdaBusinessEntity>(e.getMessage());
+            return new EntityResponse<MdaProcess>(e.getMessage());
         }
     }
 
     /**
      * Update system data (editable fields only)
      * @param accessToken Access token
-     * @param entityKey Entity key
-     * @param entity Business entity object to update
-     * @return EntityResponse[MdaBusinessEntity]
+     * @param processKey Process key
+     * @param process Process object to update
+     * @return EntityResponse[MdaProcess]
      */
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/{entityKey}")
-    public EntityResponse<MdaBusinessEntity> set(@HeaderParam("X-Access-Token") String accessToken, @PathParam("entityKey") int entityKey, MdaBusinessEntity entity) {
+    @Path("/{processKey}")
+    public EntityResponse<MdaProcess> set(@HeaderParam("X-Access-Token") String accessToken, @PathParam("processKey") int processKey, MdaProcess process) {
         try {
             // Validation
             TokenData token = this.parseJWT(accessToken);
-            return this.service.set(entity);
+            return this.service.set(process);
         } catch (Exception e) {
-            return new EntityResponse<MdaBusinessEntity>(e.getMessage());
+            return new EntityResponse<MdaProcess>(e.getMessage());
         }
     }
 
     // ------------------ Related Systems actions ----------------------------------------------------------------------
 
     /**
-     * Get business entity related systems
+     * Get process related systems
      * @param accessToken Access token
-     * @param entityKey Entity key
+     * @param processKey Process key
      * @return EntityResponse[MdaSystem]
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/{entityKey}/systems")
-    public EntitiesResponse<MdaSystem> getSystems(@HeaderParam("X-Access-Token") String accessToken, @PathParam("entityKey") int entityKey) {
+    @Path("/{processKey}/systems")
+    public EntitiesResponse<MdaSystem> getSystems(@HeaderParam("X-Access-Token") String accessToken, @PathParam("processKey") int processKey) {
         try {
             // Validation
             TokenData token = this.parseJWT(accessToken);
-
-            return this.service.getSystems(entityKey);
+            return this.service.getSystems(processKey);
         } catch (Exception e) {
             return new EntitiesResponse<MdaSystem>(e.getMessage());
         }
     }
 
     /**
-     * Link systems to business entity
+     * Link systems to process
      * @param accessToken Access token
-     * @param entityKey Entity key
+     * @param processKey Process key
      * @param systemsKeys List of system keys to link
      * @return EntityResponse[MdaSystem]
      */
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/{entityKey}/systems")
+    @Path("/{processKey}/systems")
     public EntitiesResponse<MdaSystem> linkSystems(@HeaderParam("X-Access-Token") String accessToken,
-                                                   @PathParam("entityKey") int entityKey,
+                                                   @PathParam("processKey") int processKey,
                                                    int[] systemsKeys) {
         try {
             // Validation
             TokenData token = this.parseJWT(accessToken);
-            return this.service.linkSystems(entityKey, systemsKeys);
+            return this.service.linkSystems(processKey, systemsKeys);
         } catch (Exception e) {
             return new EntitiesResponse<MdaSystem>(e.getMessage());
         }
     }
 
     /**
-     * Unlink systems from business entity
+     * Unlink systems from process
      * @param accessToken Access token
-     * @param entityKey Entity key
+     * @param processKey Process key
      * @param systemsKeys List of systems keys to link
      * @return EntityResponse[MdaSystem]
      */
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/{entityKey}/systems")
+    @Path("/{processKey}/systems")
     public EntitiesResponse<MdaSystem> unlinkSystems(@HeaderParam("X-Access-Token") String accessToken,
-                                                   @PathParam("entityKey") int entityKey,
+                                                   @PathParam("processKey") int processKey,
                                                    int[] systemsKeys) {
         try {
             // Validation
             TokenData token = this.parseJWT(accessToken);
-            return this.service.unlinkSystems(entityKey, systemsKeys);
+            return this.service.unlinkSystems(processKey, systemsKeys);
         } catch (Exception e) {
             return new EntitiesResponse<MdaSystem>(e.getMessage());
         }
@@ -216,21 +214,20 @@ public class EntityResource extends BaseResource {
     // ------------------ Related Tables actions -----------------------------------------------------------------------
 
     /**
-     * Get business entity related tables
+     * Get process related tables
      * @param accessToken Access token
-     * @param entityKey Entity key
+     * @param processKey Process key
      * @return EntityResponse[MdaTable]
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/{entityKey}/tables")
-    public EntitiesResponse<MdaTable> getTables(@HeaderParam("X-Access-Token") String accessToken, @PathParam("entityKey") int entityKey) {
+    @Path("/{processKey}/tables")
+    public EntitiesResponse<MdaTable> getTables(@HeaderParam("X-Access-Token") String accessToken, @PathParam("processKey") int processKey) {
         try {
             // Validation
             TokenData token = this.parseJWT(accessToken);
-
-            return this.service.getTables(entityKey);
+            return this.service.getTables(processKey);
         } catch (Exception e) {
             return new EntitiesResponse<MdaTable>(e.getMessage());
         }
@@ -238,46 +235,46 @@ public class EntityResource extends BaseResource {
 
 
     /**
-     * Link tables to business entity
+     * Link tables to process
      * @param accessToken Access token
-     * @param entityKey Entity key
+     * @param processKey Process key
      * @param tablesKeys List of tables keys to link
      * @return EntityResponse[MdaTable]
      */
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/{entityKey}/tables")
+    @Path("/{processKey}/tables")
     public EntitiesResponse<MdaTable> linkTables(@HeaderParam("X-Access-Token") String accessToken,
-                                                   @PathParam("entityKey") int entityKey,
+                                                   @PathParam("processKey") int processKey,
                                                    int[] tablesKeys) {
         try {
             // Validation
             TokenData token = this.parseJWT(accessToken);
-            return this.service.linkTables(entityKey, tablesKeys);
+            return this.service.linkTables(processKey, tablesKeys);
         } catch (Exception e) {
             return new EntitiesResponse<MdaTable>(e.getMessage());
         }
     }
 
     /**
-     * Unlink tables from business entity
+     * Unlink tables from process
      * @param accessToken Access token
-     * @param entityKey Entity key
+     * @param processKey Process key
      * @param tablesKeys List of tables keys to link
-     * @return EntityResponse[MdaTable]
+     * @return EntityResponse[MdaSystem]
      */
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/{entityKey}/tables")
+    @Path("/{processKey}/tables")
     public EntitiesResponse<MdaTable> unlinkTables(@HeaderParam("X-Access-Token") String accessToken,
-                                                     @PathParam("entityKey") int entityKey,
+                                                     @PathParam("processKey") int processKey,
                                                      int[] tablesKeys) {
         try {
             // Validation
             TokenData token = this.parseJWT(accessToken);
-            return this.service.unlinkTables(entityKey, tablesKeys);
+            return this.service.unlinkTables(processKey, tablesKeys);
         } catch (Exception e) {
             return new EntitiesResponse<MdaTable>(e.getMessage());
         }
