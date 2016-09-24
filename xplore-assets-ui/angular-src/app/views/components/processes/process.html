@@ -1,0 +1,170 @@
+
+<div class="container-fluid container-cards-pf container-pf-nav-pf-vertical panel-default">
+
+    <!-- Notifications Area -->
+    <div pf-toast-notification-list notifications="ctrl.notifications" show-close="ctrl.showClose" close-callback="ctrl.handleClose" update-viewing="ctrl.updateViewing"></div>
+
+    <!-- Top Header -->
+    <div class="row panel-heading">
+        <div class="col-md-10">
+            <h2 class="panel-title">{{ctrl.process.processName}}</h2>
+        </div>
+        <div class="col-md-2">
+            <a ui-sref="processes" class="pointer pull-right">Back to list</a>
+        </div>
+    </div>
+
+
+    <div class="row"><p></p></div>
+
+    <!-- tabs-->
+    <div class="row">
+        <div class="col-md-8">
+            <ul class="nav navbar-nav navbar-primary nav-tabs col-md-12">
+                <li ng-class="(ctrl.tabId == 'info') ? 'active' : ''">
+                    <a class="pointer" ng-click="ctrl.tabSelected('info')">Info</a>
+                </li>
+                <li ng-class="(ctrl.tabId == 'systems') ? 'active' : ''">
+                    <a class="pointer" ng-click="ctrl.tabSelected('systems')">Related Systems</a>
+                </li>
+                <li ng-class="(ctrl.tabId == 'tables') ? 'active' : ''">
+                    <a class="pointer" ng-click="ctrl.tabSelected('tables')">Related Tables</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-4" ng-show="ctrl.tabId == 'info'">
+            <button class="btn btn-default pull-right" type="button" ng-click="ctrl.saveChanges()">Save Changes</button>
+        </div>
+
+        <div class="col-md-3" ng-show="ctrl.tabId == 'systems'">
+            <button class="btn btn-default pull-right" type="button" ng-click="ctrl.openLinkSystemsDialog()">Link Systems</button>
+        </div>
+        <div class="col-md-1" ng-show="(ctrl.tabId == 'systems') && (ctrl.selectedSystems.length > 0)">
+            <button class="btn btn-default pull-right" type="button" ng-click="ctrl.unLinkSelectedSystems()">Unlink Systems</button>
+        </div>
+
+        <div class="col-md-3" ng-show="ctrl.tabId == 'tables'">
+            <button class="btn btn-default pull-right" type="button" ng-click="ctrl.openLinkTablesDialog()">Link Tables</button>
+        </div>
+        <div class="col-md-1 col-offset" ng-show="(ctrl.tabId == 'tables') && (ctrl.selectedTables.length > 0)">
+            <button class="btn btn-default pull-right" type="button" ng-click="ctrl.unLinkSelectedTables()">Unlink Tables</button>
+        </div>
+    </div>
+
+    <div class="row"><p></p></div>
+
+    <!-- General Info -->
+    <div class="row" ng-show="ctrl.tabId == 'info'">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-processKey">Process Key:</label>
+                <span class="col-sm-4" id="text-processKey">{{ctrl.process.processKey}}</span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-processName">Process Name:</label>
+                <span class="col-sm-4" id="text-processName">{{ctrl.process.processName}}</span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-displayName">Display Name:</label>
+                <div class="col-sm-4">
+                    <input type="text" id="text-displayName" class="form-control" ng-model="ctrl.process.displayName">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-description">Description:</label>
+                <div class="col-sm-4">
+                    <input type="text" id="text-description" class="form-control" ng-model="ctrl.process.description">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-createDate">Created On:</label>
+                <span class="col-sm-4" id="text-createDate">{{ctrl.process.createDate}}</span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-updateDate">Updated On:</label>
+                <span class="col-sm-4" id="text-updateDate">{{ctrl.process.updateDate}}</span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="text-updateBy">Updated By:</label>
+                <span class="col-sm-4" id="text-updateBy">{{ctrl.process.updateBy}}</span>
+            </div>
+        </form>
+    </div>
+
+
+    <!-- List of Related Systems -->
+    <div class="row" ng-show="ctrl.tabId == 'systems'">
+        <div class="panel-body">
+            <table class="datatable table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th style="width: 5%"></th>
+                        <th>System Name</th>
+                        <th>Application</th>
+                        <th>Display Name</th>
+                        <th>Department</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in ctrl.relatedSystems">
+                        <td><input type="checkbox" value="{{item.systemKey}}" ng-change="ctrl.systemChecked(this)" ng-model="item.isChecked"></td>
+                        <td><a ui-sref="system({key: {{item.systemKey}}})" class="pointer">{{ item.systemName }}</a></td>
+                        <td>{{ item.appName }}</td>
+                        <td>{{ item.displayName }}</td>
+                        <td>{{ item.systemDepartment }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- List of Related Tables -->
+    <div class="row" ng-show="ctrl.tabId == 'tables'">
+        <div class="panel-body">
+            <table class="datatable table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th style="width: 5%"></th>
+                        <th>Table Name</th>
+                        <th>Display Name</th>
+                        <th># Rows</th>
+                        <th># Columns</th>
+                        <th>Object Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in ctrl.relatedTables">
+                        <td><input type="checkbox" value="{{item.tableKey}}" ng-change="ctrl.tableChecked(this)" ng-model="item.isChecked"></td>
+                        <td><a ui-sref="table({key: {{item.tableKey}}})" class="pointer">{{ item.tableName }}</a></td>
+                        <td>{{ item.displayName }}</td>
+                        <td>{{ item.tableRowCount }}</td>
+                        <td>{{ item.tableNumOfCols }}</td>
+                        <td>{{ item.objectType }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Link Tables modal dialog -->
+    <div select-tables-modal is-open="ctrl.isOpenTablesDlg" on-close="ctrl.onCloseTablesDlg()" on-save="ctrl.onSaveTablesDlg(selectedItems)" title="ctrl.linkTablesTitle"></div>
+
+    <!-- Link Systems modal dialog -->
+    <div select-systems-modal is-open="ctrl.isOpenSystemsDlg" on-close="ctrl.onCloseSystemsDlg()" on-save="ctrl.onSaveSystemsDlg(selectedItems)" title="ctrl.linkSystemsTitle"></div>
+
+</div>
+
+<!--
+ * # MdaProcessModel
+ * {
+ *    processKey: int,
+ *    processName: string,
+ *    displayName: string,
+ *    description: string,
+ *
+ *    createDate: string (ISO8601 date),
+ *    updateDate: string (ISO8601 date),
+ *    updateBy: string
+ *
+ * }
+-->

@@ -55,6 +55,18 @@ angular.module('myApp')
                     controller: 'entityController',
                     controllerAs: 'ctrl'
                 })
+                .state('processes', {
+                    url: '/processes',
+                    templateUrl: 'views/components/processes/processes.html',
+                    controller: 'processesController',
+                    controllerAs: 'ctrl'
+                })
+                .state('process', {
+                    url: '/processes/{key}',
+                    templateUrl: 'views/components/processes/process.html',
+                    controller: 'processController',
+                    controllerAs: 'ctrl'
+                })
                 .state('relations', {
                     url: '/relations',
                     templateUrl: 'views/components/relations/relations.html',
