@@ -52,9 +52,8 @@ public class DbDashboardServiceImpl extends _DbBaseServiceImpl<Statistics> imple
             stats.tablesCount = (long)session.createCriteria(MdaTableEntity.class).setProjection(Projections.rowCount()).uniqueResult();
             stats.columnsCount = (long)session.createCriteria(MdaColumnEntity.class).setProjection(Projections.rowCount()).uniqueResult();
             stats.relationsCount = (long)session.createCriteria(MdaRelationEntity.class).setProjection(Projections.rowCount()).uniqueResult();
+            stats.processesCount = (long)session.createCriteria(MdaProcessEntity.class).setProjection(Projections.rowCount()).uniqueResult();
             stats.usersCount = (long)session.createCriteria(MdaUsernameEntity.class).setProjection(Projections.rowCount()).uniqueResult();
-
-
 
             return new EntityResponse<Statistics>(stats);
         } catch (Exception ex) {

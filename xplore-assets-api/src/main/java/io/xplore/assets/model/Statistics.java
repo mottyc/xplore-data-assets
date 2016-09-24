@@ -57,6 +57,11 @@ public class Statistics implements Serializable {
     public long relationsCount;
 
     /**
+     * Number of processes [read-only]
+     */
+    public long processesCount;
+
+    /**
      * Number of users [read-only]
      */
     public long usersCount;
