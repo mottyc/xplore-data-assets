@@ -27,6 +27,9 @@
         <class>io.xplore.assets.database.model.MdaTableEntity</class>
         <class>io.xplore.assets.database.model.MdaTableSystemRelEntity</class>
         <class>io.xplore.assets.database.model.MdaUsernameEntity</class>
+        <class>io.xplore.assets.database.model.MdaProcessEntity</class>
+        <class>io.xplore.assets.database.model.MdaProcessSystemRelEntity</class>
+        <class>io.xplore.assets.database.model.MdaTableProcessRelEntity</class>
 
 
         <properties>
@@ -40,7 +43,7 @@
             <!-- New properties of JPA 2.1 -->
             <property name="javax.persistence.schema-generation.database.action" value="none"/>
             <property name="toplink.jdbc.url"
-                      value="jdbc:sqlserver://dxpsrvdev.cloudapp.net:1433;databaseName=data_asset"/>
+                      value="jdbc:sqlserver://dxpsrvstag.cloudapp.net:1433;databaseName=data_asset"/>
             <property name="toplink.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
             <property name="toplink.jdbc.user"/>
             <property name="toplink.jdbc.password"/>
