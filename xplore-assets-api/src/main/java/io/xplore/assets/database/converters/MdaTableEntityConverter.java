@@ -25,12 +25,12 @@ public class MdaTableEntityConverter extends _BaseConverter {
         item.tableName = entity.getTableName();
         item.displayName = entity.getTableNameDisplay();
         item.description = entity.getTableDesc();
-        item.tableRowCount = entity.getTableRowCount();
-        item.tableNumOfCols = entity.getTableNumOfCols();
+        item.tableRowCount = (entity.getTableRowCount() == null) ? 0 : entity.getTableRowCount().intValue();
+        item.tableNumOfCols = (entity.getTableNumOfCols() == null) ? 0 : entity.getTableNumOfCols().intValue();
         item.objectType = entity.getObjectType();
         item.tablePk = entity.getTablePk();
-        item.tableId = entity.getTableId();
-        item.dxpTableGk = entity.getDxpTableGk();
+        item.tableId = (entity.getTableId() == null) ? 0 : entity.getTableId().intValue();
+        item.dxpTableGk = (entity.getDxpTableGk() == null) ? 0 : entity.getDxpTableGk().intValue();
 
         item.createDate = convertTime(entity.getCreateDate());
         item.updateDate = convertTime(entity.getUpdateDate());
