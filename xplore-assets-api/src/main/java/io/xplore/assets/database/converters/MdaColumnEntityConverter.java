@@ -33,10 +33,10 @@ public class MdaColumnEntityConverter extends _BaseConverter {
         item.isPk = ((entity.getColumnIsPk() != null) && (entity.getColumnIsPk() > 0));
 
         item.columnPkSource = entity.getColumnPkSource();
-        item.columnId = entity.getColumnId();
-        item.tableId = entity.getTableId();
-        item.dxpColumnGk = entity.getDxpColumnGk();
-        item.dxpTableGk = entity.getDxpTableGk();
+        item.columnId = (entity.getColumnId() == null) ? 0 : entity.getColumnId().intValue();
+        item.tableId = (entity.getTableId() == null) ? 0 : entity.getTableId().intValue();
+        item.dxpColumnGk = (entity.getDxpColumnGk() == null) ? 0 : entity.getDxpColumnGk().intValue();
+        item.dxpTableGk = (entity.getDxpTableGk() == null) ? 0 : entity.getDxpTableGk().intValue();
 
         item.createDate = convertTime(entity.getCreateDate());
         item.updateDate = convertTime(entity.getUpdateDate());
